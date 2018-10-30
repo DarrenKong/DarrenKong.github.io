@@ -23,6 +23,7 @@ sidebar:
 post:
   created: Дата создания записи
   modified: Дата обновления записи
+  updated: Дата обновления записи
   sticky: Ссылка
   posted: Размещено
   in: в категории
