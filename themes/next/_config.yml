@@ -358,7 +358,7 @@ han: false
 #swiftype_key:
 
 # Baidu Analytics ID
-#baidu_analytics:
+baidu_analytics: 07b111eda9fa3884aaff023a8989d516
 
 # Duoshuo ShortName
 #duoshuo_shortname:
