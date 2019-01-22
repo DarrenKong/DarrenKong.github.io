@@ -273,6 +273,188 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/01/22/关于Cocoapods-Spec仓库目录结构/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong的精神港湾">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                <a class="post-title-link" href="/2019/01/22/关于Cocoapods-Spec仓库目录结构/" itemprop="url">关于Cocoapods Spec仓库目录结构</a></h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:45+08:00">
+                2019-01-22
+              </time>
+            
+
+            
+              <span class="post-meta-divider">|</span>
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-check-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">更新于&#58;</span>
+              
+              <time title="更新于" itemprop="dateModified" datetime="2019-01-22T17:17:03+08:00">
+                2019-01-22
+              </time>
+            
+          </span>
+          
+            <span class="post-updated">
+              &nbsp; | &nbsp; 更新于
+              <time itemprop="dateUpdated" datetime="2019-01-22T17:17:03+08:00" content="2019-01-22">
+                2019-01-22
+              </time>
+            </span>
+          
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing">
+                  <a href="/categories/CocoaPods/" itemprop="url" rel="index">
+                    <span itemprop="name">CocoaPods</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+             <span id="/2019/01/22/关于Cocoapods-Spec仓库目录结构/" class="leancloud_visitors" data-flag-title="关于Cocoapods Spec仓库目录结构">
+               <span class="post-meta-divider">|</span>
+               <span class="post-meta-item-icon">
+                 <i class="fa fa-eye"></i>
+               </span>
+               
+                 <span class="post-meta-item-text">阅读次数&#58;</span>
+               
+                 <span class="leancloud-visitors-count"></span>
+             </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <p>前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我刚开始使用CocoaPods时的目录结构不同，具体见下图。</p>
+<p><img src="/关于Cocoapods-Spec仓库目录结构/1.jpg" alt=""></p>
+<p>Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
+<p>看到这个结构，回想毕业后参与的第一个商业项目（一个文件存储相关的项目，涉及到文件的同步、协作、合并、比对等操作，有点类似三五年前使用比较多的SVN版本工具的文件系统功能）。第一个版本的实现方案是一个文件目录下存放所有文件，项目上线后，收到很多用户反馈说这样的文件夹结构，在Windows系统下打开文件夹会比较卡。项目经理（一个建筑类专业的博士）要求我按照他说的优化思路优化。他思路是文件名MD5，取前3位，每一位分一级目录，这与Cocoapods的specs仓库文件夹结构是一致的。<br>按照项目经理的思路实现后，确实打开速度快了很多。我也去了解了Windows系统的一个文件夹最多能存放多少个文件、文件名长度要求多少位以内等相关问题。</p>
+<blockquote>
+<p>Windows系统下，一个文件夹下能存多少个文件，与硬盘格式有直接关系。FAT：512个，FAT32： 65,534个，NTFS ：4,294,967,295个。</p>
+</blockquote>
+<p>CocoaPodsd的specs目录分3级，可能也有上面这个原因的考虑。另外，考虑到有些网站需要展示文件夹的文件列表，分3级，每个文件夹下的库数量就不会很多，读取、渲染文件夹的结构也相对会快一些。还有一个原因是，在终端中使用find命令查找文件夹下的指定文件，查找得出结果需要花好几秒。分3级目录，相当于把之前一个文件下的文件分散到4,096个文件夹下，速度会相应有一定提升。</p>
+<p>至于按照什么规则去分散到对应文件夹下，这个是讲仓库名MD5，取前3位，每一位分一级目录。比如YYKit，使用MD5加密后得到a408542eb2fcd3c332bf83b515cdcf03，对应的目录就是/a/4/0/，再加上YYKit、YYKit的版本号，拼接后最终得到../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
+<p>而我们自己见的私有specs仓库，一般只有一级目录。这主要是私人specs仓库没那么多仓库，也就不需要区分多级目录。Cocoapods中的specs仓库是全世界各地使用者提交，这个specs实在是太大，如果都平级的话，找起来效率不高，并且很麻烦。</p>
+
+          
+        
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2018/10/29/推荐几款我常用Chrome插件/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -320,16 +502,16 @@
               
                 <span class="post-meta-item-text">更新于&#58;</span>
               
-              <time title="更新于" itemprop="dateModified" datetime="2018-10-30T09:16:30+08:00">
-                2018-10-30
+              <time title="更新于" itemprop="dateModified" datetime="2019-01-22T16:28:18+08:00">
+                2019-01-22
               </time>
             
           </span>
           
             <span class="post-updated">
               &nbsp; | &nbsp; 更新于
-              <time itemprop="dateUpdated" datetime="2018-10-30T09:16:30+08:00" content="2018-10-30">
-                2018-10-30
+              <time itemprop="dateUpdated" datetime="2019-01-22T16:28:18+08:00" content="2019-01-22">
+                2019-01-22
               </time>
             </span>
           
@@ -642,7 +824,7 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">3</span>
                   <span class="site-state-item-name">日志</span>
                 </a>
               </div>
@@ -653,7 +835,7 @@
               
               <div class="site-state-item site-state-categories">
                 <a href="/categories/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">分类</span>
                 </a>
               </div>
@@ -664,7 +846,7 @@
               
               <div class="site-state-item site-state-tags">
                 <a href="/tags/index.html">
-                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-count">2</span>
                   <span class="site-state-item-name">标签</span>
                 </a>
               </div>
@@ -717,7 +899,7 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
