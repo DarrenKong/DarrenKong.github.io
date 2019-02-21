@@ -8,7 +8,7 @@ categories:
     - iOS    
 ---
 | 作者：Andrea Bizzotto
-| 原文链接：https://medium.com/coding-with-flutter/dart-vs-swift-a-comparison-6491e945dc17
+| 原文链接：<https://medium.com/coding-with-flutter/dart-vs-swift-a-comparison-6491e945dc17>
 | 转载自：[知识小集-掘金](https://juejin.im/post/5c506a7c51882525c71333d2#heading-20)
 
 Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中广泛使用它们。
@@ -25,9 +25,7 @@ Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中�
 
 以下是两种语言的主要特征（`Dart 2.1` 和 `Swift 4.2`）的比较。由于深入讨论每个功能超出了本文的范围，因此更多的信息可以参考各自的文档。
 
-
-
-## 目录
+# 目录
 
 - 对照表
 - 变量
@@ -58,12 +56,9 @@ Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中�
 - 编译和执行
 - 其它未涵盖功能
 
-
-
 ## 对照表
 
 ![img](/uploads/1689a206b0587832.jpg)
-
 
 ## 变量
 
@@ -236,7 +231,7 @@ foo('Andrea', 34, 1.84);
 > 在 Swift 中，您可以通过在该参数的类型之后为参数赋值来为函数中的任何参数定义默认值。如果定义了默认值，则可以在调用函数时省略该参数。
 
 ```swift
-func foo(name: String, age: Int = 0, height: Double = 0.0) 
+func foo(name: String, age: Int = 0, height: Double = 0.0)
 foo(name: "Andrea", age: 34) // name: "Andrea", age: 34, height: 0.0
 ```
 
@@ -449,7 +444,7 @@ showOptional(5) // prints "5"
 ```dart
 void showNonOptional(int x) {
   assert(x != null);
-  print(x); 	
+  print(x);
 }
 showNonOptional(null) // [runtime error] Uncaught exception: Assertion failed
 showNonOptional(5) // prints "5"
@@ -681,7 +676,7 @@ class Person with NameExtension {
   Person({this.name, this.age, this.height});
   final String name;
   final int age;
-  final double height;	
+  final double height;
 }
 var person = Person(name: 'Andrea', age: 34, height: 1.84);
 print(person.uppercaseName); // 'ANDREA'
@@ -722,7 +717,7 @@ Dart 对枚举有一些非常基本的支持。
 
 ```swift
 enum NetworkResponse {
-  case success(body: Data) 
+  case success(body: Data)
   case failure(error: Error)
 }
 ```
@@ -894,7 +889,7 @@ do {
 
 错误本身是强类型的，所以我们可以有多个 `catch` 块来覆盖所有可能的情况。
 
-### try, try?, try!
+### try?, try!, try
 
 Swift 提供了一种处理错误的不那么繁琐的方法。
 
@@ -1144,7 +1139,7 @@ Swift 有 AOT 编译的主要缺点。即编译时间随着代码库的大小而
 - Future 和 `await/async`
 - Stream 和 `yield/async*`
 
-## 结论
+# 结论
 
 Dart 和 Swift 都是出色的语言，非常适合构建现代移动应用程序及其他应用程序。
 
