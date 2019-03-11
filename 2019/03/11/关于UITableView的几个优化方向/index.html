@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="Stay hungry，stay foolish!">
-<meta name="keywords" content="iOS developer, C#, 女儿控">
-<meta property="og:type" content="website">
-<meta property="og:title" content="categories">
-<meta property="og:url" content="https://www.darrenkong.top/categories/index.html">
+  <meta name="description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
+<meta name="keywords" content="性能优化">
+<meta property="og:type" content="article">
+<meta property="og:title" content="关于UITableView的几个优化方向">
+<meta property="og:url" content="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/index.html">
 <meta property="og:site_name" content="DarrenKong的精神港湾">
-<meta property="og:description" content="Stay hungry，stay foolish!">
+<meta property="og:description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-01-22T10:05:59.901Z">
+<meta property="og:updated_time" content="2019-03-11T07:06:35.961Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="categories">
-<meta name="twitter:description" content="Stay hungry，stay foolish!">
+<meta name="twitter:title" content="关于UITableView的几个优化方向">
+<meta name="twitter:description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
 
 
 
 
 
 
-  <link rel="canonical" href="https://www.darrenkong.top/categories/">
+  <link rel="canonical" href="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>categories | DarrenKong的精神港湾</title>
+  <title>关于UITableView的几个优化方向 | DarrenKong的精神港湾</title>
   
 
 
@@ -241,7 +241,7 @@
         
         
           
-          <li class="menu-item menu-item-categories menu-item-active">
+          <li class="menu-item menu-item-categories">
 
     
     
@@ -314,28 +314,6 @@
   
     
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
   
 
   
@@ -362,81 +340,242 @@
 
   <div id="posts" class="posts-expand">
     
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong的精神港湾">
+    </span>
+
     
-    
-    <div class="post-block page">
       <header class="post-header">
 
-<h1 class="post-title" itemprop="name headline">categories
-
-</h1>
-
-<div class="post-meta">
-  
-  
-
-
-
-</div>
-
-</header>
-
-      
-      
-      
-      <div class="post-body">
         
         
-          <div class="category-all-page">
-            <div class="category-all-title">
+          <h1 class="post-title" itemprop="name headline">关于UITableView的几个优化方向
+
               
-              
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-                
-                  
-                
-              
-              目前共计 5 个分类
-            </div>
-            <div class="category-all">
-              <ul class="category-list"><li class="category-list-item"><a class="category-list-link" href="/categories/Chrome-Extension/">Chrome Extension</a><span class="category-list-count">2</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/CocoaPods/">CocoaPods</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/iOS/">iOS</a><span class="category-list-count">5</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/技术/">技术</a><span class="category-list-count">1</span></li><li class="category-list-item"><a class="category-list-link" href="/categories/生活/">生活</a><span class="category-list-count">1</span></li></ul>
-            </div>
-          </div>
+            
+          </h1>
         
-      </div>
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-11 14:57:24 / 修改时间：15:06:35" itemprop="dateCreated datePublished" datetime="2019-03-11T14:57:24+08:00">2019-03-11</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/03/11/关于UITableView的几个优化方向/" class="leancloud_visitors" data-flag-title="关于UITableView的几个优化方向">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
       
       
+
+      
+        <p>如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：</p>
+<ol>
+<li><p><code>cell</code> 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 <code>heightForRowAtIndexPath:</code>是调用最频繁的方法。</p>
+</li>
+<li><p>滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(<code>SDWebImage</code> 已经实现异 步加载，配合这条性能杠杠的)。</p>
+</li>
+<li><p>正确使用 <code>reuseIdentifier</code> 来重用 <code>Cells</code></p>
+</li>
+<li><p>尽量少用或不用透明图层</p>
+</li>
+<li><p>如果 <code>Cell</code> 内现实的内容来自 <code>web</code>，使用异步加载，缓存请求结果</p>
+</li>
+<li><p>减少 <code>subviews</code> 的数量</p>
+</li>
+<li><p>在 <code>heightForRowAtIndexPath:</code>中尽量不使用 <code>cellForRowAtIndexPath:</code>，如果你需要用到它， 只用一次然后缓存结果</p>
+</li>
+<li><p>所有的子视图都预先创建，如果不需要显示可以设置 <code>hidden</code>，尽量少动态给 <code>Cell</code> 添加 <code>View</code></p>
+</li>
+<li><p>颜色不要使用 <code>alph</code></p>
+</li>
+<li><p>栅格化</p>
+</li>
+<li><p><code>cell</code> 的 <code>subViews</code> 的各级 <code>opaque</code> 值要设成 YES，尽量不要包含透明的子 <code>View</code> <code>opaque</code> 用于辅助绘图系统，表示 <code>UIView</code> 是否透明。在不透明的情况下，渲染视图时需要快速 地渲染，以提􏰀高性能。渲染最慢的操作之一是混合<code>(blending</code>)。提􏰀高性能的方法是减少混合操 作的次数，其实就是 <code>GPU</code> 的不合理使用，这是硬件来完成的(混合操作由 <code>GPU</code> 来执行，因为这 个硬件就是用来做混合操作的，当然不只是混合)。 优化混合操作的关键点是在平衡 <code>CPU</code> 和 <code>GPU</code> 的负载。还有就是 <code>cell</code> 的 <code>layer</code> 的 <code>shouldRasterize</code> 要设成 <code>YES</code>。</p>
+</li>
+<li><p><code>cell</code> 异步加载图片以及缓存</p>
+</li>
+<li><p>异步绘制</p>
+</li>
+</ol>
+<ul>
+<li><p>(1)在绘制字符串时，尽可能使用 <code>drawAtPoint: withFont:</code>，而不要使用更复杂的 <code>drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withFont:(UIFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode</code>; 如果要绘制过长的字符串，建议自己先截 断，然后使用 <code>drawAtPoint: withFont:</code>方法绘制。</p>
+</li>
+<li><p>(2)在绘制图片时，尽量使用 <code>drawAtPoint</code>，而不要使用 <code>drawInRect</code>。<code>drawInRect</code> 如果在绘 制过程中对图片进行放缩，会特别消耗 <code>CPU</code>。</p>
+</li>
+<li>(3)其实，最快的绘制就是你不要做任何绘制。有时通过 <code>UIGraphicsBeginImageContextWithOptions()</code> 或者 <code>CGBitmapContextCeate()</code> 创建位图会显 得更有意义，从位图上面抓取图像，并设置为 <code>CALayer</code> 的内容。 如果你必须实现 <code>-drawRect:</code>，并且你必须绘制大量的东西，这将占用时间。</li>
+<li>(4)如果绘制 <code>cell</code> 过程中，需要下载 <code>cell</code> 中的图片，建议在绘制 <code>cell</code> 一段时间后再开启图 片下载任务。譬如先画一个默认图片，然后在 0.5S 后开始下载本 <code>cell</code> 的图片。</li>
+<li>(5)即使下载 <code>cell</code> 图片是在子线程中进行，在绘制 <code>cell</code> 过程中，也不能开启过多的子线程。 最好只有一个下载图片的子线程在活动。否则也会影响 <code>UITableViewCell</code> 的绘制，因而影响了 <code>UITableViewCell</code> 的滑动速度。(建议结合使用 <code>NSOpeartion</code> 和 <code>NSOperationQueue</code> 来下载图片， 如果想尽可能找的下载图片，可以把<code>[self.queuesetMaxConcurrentOperationCount:4];</code>)</li>
+<li>(6)最好自己写一个 <code>cache</code>，用来缓存 <code>UITableView</code> 中的 <code>UITableViewCell</code>，这样在整个 <code>UITableView</code> 的生命周期里，一个 <code>cell</code> 只需绘制一次，并且如果发生内存不足，也可以有效的 释放掉缓存的 <code>cell</code>。</li>
+</ul>
+<ol start="14">
+<li>不要将 <code>tableview</code> 的背景颜色设置成一个图片。这回严重影响 <code>UITableView</code> 的滑动速度。我曾经翻过一个错误：<code>self.tableView.backgroundColor = [UIColorcolorWithPatternImage:[UIImageimageNamed:@&quot;background.png&quot;]];</code> 通过这种方式设置 <code>UITableView</code> 的背景颜色会严重影响 UTIableView 的滑动流畅性。修改成 <code>self.tableView.backgroundColor = [UIColor clearColor];</code>之后，<code>fps</code> 从 <code>43</code> 上升到 <code>60</code> 左右。 滑动比较流畅。</li>
+</ol>
+
       
     </div>
-    
-
-
 
     
+
     
     
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/03/05/越狱检测的攻与防/" rel="next" title="越狱检测的攻与防">
+                <i class="fa fa-chevron-left"></i> 越狱检测的攻与防
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
   </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -733,6 +872,8 @@
   
 
 
+  
+
 
   
 
@@ -743,38 +884,37 @@
   
   <script>
     
-    function showTime(Counter) {
-      var entries = [];
+    function addCount(Counter) {
       var $visitors = $('.leancloud_visitors');
+      var url = $visitors.attr('id').trim();
+      var title = $visitors.attr('data-flag-title').trim();
 
-      $visitors.each(function() {
-        entries.push( $(this).attr('id').trim() );
-      });
-
-      Counter('get', '/classes/Counter', { where: JSON.stringify({ url: { '$in': entries } }) })
+      Counter('get', '/classes/Counter', { where: JSON.stringify({ url }) })
         .done(function({ results }) {
-          var COUNT_CONTAINER_REF = '.leancloud-visitors-count';
-
-          if (results.length === 0) {
-            $visitors.find(COUNT_CONTAINER_REF).text(0);
-            return;
-          }
-
-          for (var i = 0; i < results.length; i++) {
-            var item = results[i];
-            var url = item.url;
-            var time = item.time;
-            var element = document.getElementById(url);
-
-            $(element).find(COUNT_CONTAINER_REF).text(time);
-          }
-          for (var i = 0; i < entries.length; i++) {
-            var url = entries[i];
-            var element = document.getElementById(url);
-            var countSpan = $(element).find(COUNT_CONTAINER_REF);
-            if (countSpan.text() == '') {
-              countSpan.text(0);
-            }
+          if (results.length > 0) {
+            var counter = results[0];
+            
+            Counter('put', '/classes/Counter/' + counter.objectId, JSON.stringify({ time: { '__op': 'Increment', 'amount': 1 } }))
+            
+              .done(function() {
+                var $element = $(document.getElementById(url));
+                $element.find('.leancloud-visitors-count').text(counter.time + 1);
+              })
+            
+              .fail(function ({ responseJSON }) {
+                console.log('Failed to save Visitor num, with error message: ' + responseJSON.error);
+              })
+          } else {
+            
+              Counter('post', '/classes/Counter', JSON.stringify({ title: title, url: url, time: 1 }))
+                .done(function() {
+                  var $element = $(document.getElementById(url));
+                  $element.find('.leancloud-visitors-count').text(1);
+                })
+                .fail(function() {
+                  console.log('Failed to create');
+                });
+            
           }
         })
         .fail(function ({ responseJSON }) {
@@ -799,9 +939,7 @@
             });
           };
           
-            if ($('.post-title-link').length >= 1) {
-              showTime(Counter);
-            }
+            addCount(Counter);
           
         });
     });
