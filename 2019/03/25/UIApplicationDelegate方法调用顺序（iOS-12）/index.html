@@ -96,25 +96,25 @@
 
 
 
-  <meta name="description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
-<meta name="keywords" content="性能优化">
+  <meta name="description" content="本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。  正常启动 application(_:willFinishLaunchingWithOptions:) application(_:didFinishLaunchingWithOptions:) applicationDidBecomeActive">
+<meta name="keywords" content="iOS">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于UITableView的几个优化方向">
-<meta property="og:url" content="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/index.html">
+<meta property="og:title" content="UIApplicationDelegate方法调用顺序（iOS 12）">
+<meta property="og:url" content="https://www.darrenkong.top/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/index.html">
 <meta property="og:site_name" content="DarrenKong的精神港湾">
-<meta property="og:description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
+<meta property="og:description" content="本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。  正常启动 application(_:willFinishLaunchingWithOptions:) application(_:didFinishLaunchingWithOptions:) applicationDidBecomeActive">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-03-11T07:06:35.961Z">
+<meta property="og:updated_time" content="2019-03-25T06:31:27.948Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="关于UITableView的几个优化方向">
-<meta name="twitter:description" content="如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：  cell 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 heightForRowAtIndexPath:是调用最频繁的方法。  滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(SDWebImage 已经实现异 步加载，配合这条性能杠杠的)。  正确使用 reuseIdent">
+<meta name="twitter:title" content="UIApplicationDelegate方法调用顺序（iOS 12）">
+<meta name="twitter:description" content="本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。  正常启动 application(_:willFinishLaunchingWithOptions:) application(_:didFinishLaunchingWithOptions:) applicationDidBecomeActive">
 
 
 
 
 
 
-  <link rel="canonical" href="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/">
+  <link rel="canonical" href="https://www.darrenkong.top/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/">
 
 
 
@@ -124,7 +124,7 @@
   };
 </script>
 
-  <title>关于UITableView的几个优化方向 | DarrenKong的精神港湾</title>
+  <title>UIApplicationDelegate方法调用顺序（iOS 12） | DarrenKong的精神港湾</title>
   
 
 
@@ -354,7 +354,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
       <meta itemprop="name" content="Darren Kong">
@@ -371,7 +371,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">关于UITableView的几个优化方向
+          <h1 class="post-title" itemprop="name headline">UIApplicationDelegate方法调用顺序（iOS 12）
 
               
             
@@ -397,7 +397,7 @@
                 
               
 
-              <time title="创建时间：2019-03-11 14:57:24 / 修改时间：15:06:35" itemprop="dateCreated datePublished" datetime="2019-03-11T14:57:24+08:00">2019-03-11</time>
+              <time title="创建时间：2019-03-25 12:30:00 / 修改时间：14:31:27" itemprop="dateCreated datePublished" datetime="2019-03-25T12:30:00+08:00">2019-03-25</time>
             
 
             
@@ -434,7 +434,7 @@
 
           
           
-            <span id="/2019/03/11/关于UITableView的几个优化方向/" class="leancloud_visitors" data-flag-title="关于UITableView的几个优化方向">
+            <span id="/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/" class="leancloud_visitors" data-flag-title="UIApplicationDelegate方法调用顺序（iOS 12）">
               <span class="post-meta-divider">|</span>
               <span class="post-meta-item-icon">
                 <i class="fa fa-eye"></i>
@@ -465,47 +465,88 @@
       
 
       
-        <p>如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：</p>
-<ol>
-<li><p><code>cell</code> 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 <code>heightForRowAtIndexPath:</code>是调用最频繁的方法。</p>
+        <blockquote>
+<p>本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。</p>
+</blockquote>
+<h3 id="正常启动"><a href="#正常启动" class="headerlink" title="正常启动"></a>正常启动</h3><ol>
+<li><code>application(_:willFinishLaunchingWithOptions:)</code></li>
+<li><code>application(_:didFinishLaunchingWithOptions:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="正常打开"><a href="#正常打开" class="headerlink" title="正常打开"></a>正常打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过URL-scheme启动"><a href="#通过URL-scheme启动" class="headerlink" title="通过URL scheme启动"></a>通过URL scheme启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">"com.apple.mobilesafari"</span>,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsURLKey</span>: <span class="string">"test://test.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(<code>SDWebImage</code> 已经实现异 步加载，配合这条性能杠杠的)。</p>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
 </li>
-<li><p>正确使用 <code>reuseIdentifier</code> 来重用 <code>Cells</code></p>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:open:options:)</code></p>
 </li>
-<li><p>尽量少用或不用透明图层</p>
-</li>
-<li><p>如果 <code>Cell</code> 内现实的内容来自 <code>web</code>，使用异步加载，缓存请求结果</p>
-</li>
-<li><p>减少 <code>subviews</code> 的数量</p>
-</li>
-<li><p>在 <code>heightForRowAtIndexPath:</code>中尽量不使用 <code>cellForRowAtIndexPath:</code>，如果你需要用到它， 只用一次然后缓存结果</p>
-</li>
-<li><p>所有的子视图都预先创建，如果不需要显示可以设置 <code>hidden</code>，尽量少动态给 <code>Cell</code> 添加 <code>View</code></p>
-</li>
-<li><p>颜色不要使用 <code>alph</code></p>
-</li>
-<li><p>栅格化</p>
-</li>
-<li><p><code>cell</code> 的 <code>subViews</code> 的各级 <code>opaque</code> 值要设成 YES，尽量不要包含透明的子 <code>View</code> <code>opaque</code> 用于辅助绘图系统，表示 <code>UIView</code> 是否透明。在不透明的情况下，渲染视图时需要快速 地渲染，以提􏰀高性能。渲染最慢的操作之一是混合<code>(blending</code>)。提􏰀高性能的方法是减少混合操 作的次数，其实就是 <code>GPU</code> 的不合理使用，这是硬件来完成的(混合操作由 <code>GPU</code> 来执行，因为这 个硬件就是用来做混合操作的，当然不只是混合)。 优化混合操作的关键点是在平衡 <code>CPU</code> 和 <code>GPU</code> 的负载。还有就是 <code>cell</code> 的 <code>layer</code> 的 <code>shouldRasterize</code> 要设成 <code>YES</code>。</p>
-</li>
-<li><p><code>cell</code> 异步加载图片以及缓存</p>
-</li>
-<li><p>异步绘制</p>
+<li><p><code>applicationDidBecomeActive</code></p>
 </li>
 </ol>
-<ul>
-<li><p>(1)在绘制字符串时，尽可能使用 <code>drawAtPoint: withFont:</code>，而不要使用更复杂的 <code>drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withFont:(UIFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode</code>; 如果要绘制过长的字符串，建议自己先截 断，然后使用 <code>drawAtPoint: withFont:</code>方法绘制。</p>
+<h3 id="通过URL-scheme打开"><a href="#通过URL-scheme打开" class="headerlink" title="通过URL scheme打开"></a>通过URL scheme打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:open:options:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过universal-link启动"><a href="#通过universal-link启动" class="headerlink" title="通过universal link启动"></a>通过universal link启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsUserActivityDictionaryKey</span>: &#123;</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityIdentifierKey</span>: <span class="string">"F42C288E-D721-4F5D-9AB5-4FEB1D634D99"</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityKey</span>: <span class="string">"&lt;NSUserActivity: 0x2827146a0&gt;"</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityTypeKey</span>: <span class="built_in">NSUserActivityTypeBrowsingWeb</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">"com.apple.mobilesafari"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 </li>
-<li><p>(2)在绘制图片时，尽量使用 <code>drawAtPoint</code>，而不要使用 <code>drawInRect</code>。<code>drawInRect</code> 如果在绘 制过程中对图片进行放缩，会特别消耗 <code>CPU</code>。</p>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
 </li>
-<li>(3)其实，最快的绘制就是你不要做任何绘制。有时通过 <code>UIGraphicsBeginImageContextWithOptions()</code> 或者 <code>CGBitmapContextCeate()</code> 创建位图会显 得更有意义，从位图上面抓取图像，并设置为 <code>CALayer</code> 的内容。 如果你必须实现 <code>-drawRect:</code>，并且你必须绘制大量的东西，这将占用时间。</li>
-<li>(4)如果绘制 <code>cell</code> 过程中，需要下载 <code>cell</code> 中的图片，建议在绘制 <code>cell</code> 一段时间后再开启图 片下载任务。譬如先画一个默认图片，然后在 0.5S 后开始下载本 <code>cell</code> 的图片。</li>
-<li>(5)即使下载 <code>cell</code> 图片是在子线程中进行，在绘制 <code>cell</code> 过程中，也不能开启过多的子线程。 最好只有一个下载图片的子线程在活动。否则也会影响 <code>UITableViewCell</code> 的绘制，因而影响了 <code>UITableViewCell</code> 的滑动速度。(建议结合使用 <code>NSOpeartion</code> 和 <code>NSOperationQueue</code> 来下载图片， 如果想尽可能找的下载图片，可以把<code>[self.queuesetMaxConcurrentOperationCount:4];</code>)</li>
-<li>(6)最好自己写一个 <code>cache</code>，用来缓存 <code>UITableView</code> 中的 <code>UITableViewCell</code>，这样在整个 <code>UITableView</code> 的生命周期里，一个 <code>cell</code> 只需绘制一次，并且如果发生内存不足，也可以有效的 释放掉缓存的 <code>cell</code>。</li>
-</ul>
-<ol start="14">
-<li>不要将 <code>tableview</code> 的背景颜色设置成一个图片。这回严重影响 <code>UITableView</code> 的滑动速度。我曾经翻过一个错误：<code>self.tableView.backgroundColor = [UIColorcolorWithPatternImage:[UIImageimageNamed:@&quot;background.png&quot;]];</code> 通过这种方式设置 <code>UITableView</code> 的背景颜色会严重影响 UTIableView 的滑动流畅性。修改成 <code>self.tableView.backgroundColor = [UIColor clearColor];</code>之后，<code>fps</code> 从 <code>43</code> 上升到 <code>60</code> 左右。 滑动比较流畅。</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:willContinueUserActivityWithType:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:continue:restorationHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过universal-link打开"><a href="#通过universal-link打开" class="headerlink" title="通过universal link打开"></a>通过universal link打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:willContinueUserActivityWithType:):</code></li>
+<li><code>application(_:continue:restorationHandler:):</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过推送启动"><a href="#通过推送启动" class="headerlink" title="通过推送启动"></a>通过推送启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsRemoteNotificationKey</span>: &#123;</span><br><span class="line">    aps = &#123;</span><br><span class="line">      alert = <span class="string">"Testing.. (0)"</span>;</span><br><span class="line">      badge = <span class="number">1</span>;</span><br><span class="line">      sound = <span class="keyword">default</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过推送打开"><a href="#通过推送打开" class="headerlink" title="通过推送打开"></a>通过推送打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过快捷方式启动"><a href="#通过快捷方式启动" class="headerlink" title="通过快捷方式启动"></a>通过快捷方式启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsShortcutItemKey</span>: &lt;<span class="built_in">UIApplicationShortcutItem</span>: <span class="number">0x283ef6e00</span>; type: com.recoursive.example.shortcutTest, title: Shortcut test&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:performActionFor:completionHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过快捷方式打开"><a href="#通过快捷方式打开" class="headerlink" title="通过快捷方式打开"></a>通过快捷方式打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:performActionFor:completionHandler:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
 </ol>
 
       
@@ -530,7 +571,7 @@
       
         <div class="post-tags">
           
-            <a href="/tags/性能优化/" rel="tag"># 性能优化</a>
+            <a href="/tags/iOS/" rel="tag"># iOS</a>
           
         </div>
       
@@ -543,8 +584,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2019/03/05/越狱检测的攻与防/" rel="next" title="越狱检测的攻与防">
-                <i class="fa fa-chevron-left"></i> 越狱检测的攻与防
+              <a href="/2019/03/11/关于UITableView的几个优化方向/" rel="next" title="关于UITableView的几个优化方向">
+                <i class="fa fa-chevron-left"></i> 关于UITableView的几个优化方向
               </a>
             
           </div>
@@ -552,10 +593,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/" rel="prev" title="UIApplicationDelegate方法调用顺序（iOS 12）">
-                UIApplicationDelegate方法调用顺序（iOS 12） <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -600,8 +637,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope="" itemtype="http://schema.org/Person">
             
@@ -733,6 +779,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#正常启动"><span class="nav-number">1.</span> <span class="nav-text">正常启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正常打开"><span class="nav-number">2.</span> <span class="nav-text">正常打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过URL-scheme启动"><span class="nav-number">3.</span> <span class="nav-text">通过URL scheme启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过URL-scheme打开"><span class="nav-number">4.</span> <span class="nav-text">通过URL scheme打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过universal-link启动"><span class="nav-number">5.</span> <span class="nav-text">通过universal link启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过universal-link打开"><span class="nav-number">6.</span> <span class="nav-text">通过universal link打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过推送启动"><span class="nav-number">7.</span> <span class="nav-text">通过推送启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过推送打开"><span class="nav-number">8.</span> <span class="nav-text">通过推送打开</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过快捷方式启动"><span class="nav-number">9.</span> <span class="nav-text">通过快捷方式启动</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#通过快捷方式打开"><span class="nav-number">10.</span> <span class="nav-text">通过快捷方式打开</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       

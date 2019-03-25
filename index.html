@@ -354,6 +354,260 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/">
+
+    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong的精神港湾">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/" class="post-title-link" itemprop="url">UIApplicationDelegate方法调用顺序（iOS 12）</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+
+            
+            
+            
+
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-03-25 12:30:00 / 修改时间：14:31:27" itemprop="dateCreated datePublished" datetime="2019-03-25T12:30:00+08:00">2019-03-25</time>
+            
+
+            
+              
+
+              
+            
+          </span>
+
+          
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+            <span id="/2019/03/25/UIApplicationDelegate方法调用顺序（iOS-12）/" class="leancloud_visitors" data-flag-title="UIApplicationDelegate方法调用顺序（iOS 12）">
+              <span class="post-meta-divider">|</span>
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+              </span>
+              
+                <span class="post-meta-item-text">阅读次数：</span>
+              
+                <span class="leancloud-visitors-count"></span>
+            </span>
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <blockquote>
+<p>本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。</p>
+</blockquote>
+<h3 id="正常启动"><a href="#正常启动" class="headerlink" title="正常启动"></a>正常启动</h3><ol>
+<li><code>application(_:willFinishLaunchingWithOptions:)</code></li>
+<li><code>application(_:didFinishLaunchingWithOptions:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="正常打开"><a href="#正常打开" class="headerlink" title="正常打开"></a>正常打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过URL-scheme启动"><a href="#通过URL-scheme启动" class="headerlink" title="通过URL scheme启动"></a>通过URL scheme启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">"com.apple.mobilesafari"</span>,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsURLKey</span>: <span class="string">"test://test.com"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:open:options:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过URL-scheme打开"><a href="#通过URL-scheme打开" class="headerlink" title="通过URL scheme打开"></a>通过URL scheme打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:open:options:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过universal-link启动"><a href="#通过universal-link启动" class="headerlink" title="通过universal link启动"></a>通过universal link启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsUserActivityDictionaryKey</span>: &#123;</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityIdentifierKey</span>: <span class="string">"F42C288E-D721-4F5D-9AB5-4FEB1D634D99"</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityKey</span>: <span class="string">"&lt;NSUserActivity: 0x2827146a0&gt;"</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityTypeKey</span>: <span class="built_in">NSUserActivityTypeBrowsingWeb</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">"com.apple.mobilesafari"</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:willContinueUserActivityWithType:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:continue:restorationHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过universal-link打开"><a href="#通过universal-link打开" class="headerlink" title="通过universal link打开"></a>通过universal link打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:willContinueUserActivityWithType:):</code></li>
+<li><code>application(_:continue:restorationHandler:):</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过推送启动"><a href="#通过推送启动" class="headerlink" title="通过推送启动"></a>通过推送启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsRemoteNotificationKey</span>: &#123;</span><br><span class="line">    aps = &#123;</span><br><span class="line">      alert = <span class="string">"Testing.. (0)"</span>;</span><br><span class="line">      badge = <span class="number">1</span>;</span><br><span class="line">      sound = <span class="keyword">default</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过推送打开"><a href="#通过推送打开" class="headerlink" title="通过推送打开"></a>通过推送打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+<h3 id="通过快捷方式启动"><a href="#通过快捷方式启动" class="headerlink" title="通过快捷方式启动"></a>通过快捷方式启动</h3><ol>
+<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
+<p>示例：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsShortcutItemKey</span>: &lt;<span class="built_in">UIApplicationShortcutItem</span>: <span class="number">0x283ef6e00</span>; type: com.recoursive.example.shortcutTest, title: Shortcut test&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+</li>
+<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
+</li>
+<li><p>[如果 1 和 2 都返回 true] <code>application(_:performActionFor:completionHandler:)</code></p>
+</li>
+<li><p><code>applicationDidBecomeActive</code></p>
+</li>
+</ol>
+<h3 id="通过快捷方式打开"><a href="#通过快捷方式打开" class="headerlink" title="通过快捷方式打开"></a>通过快捷方式打开</h3><ol>
+<li><code>applicationWillEnterForeground</code></li>
+<li><code>application(_:performActionFor:completionHandler:)</code></li>
+<li><code>applicationDidBecomeActive</code></li>
+</ol>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+    
+    
+
+    
+
+    
+      
+    
+    
+
+    
+
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/11/关于UITableView的几个优化方向/">
 
     <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
@@ -2755,199 +3009,6 @@
 
 
     
-      
-
-  
-
-  
-  
-  
-
-  
-
-  <article class="post post-type-normal" itemscope="" itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/01/22/关于Cocoapods-Spec仓库目录结构/">
-
-    <span hidden itemprop="author" itemscope="" itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="Darren Kong">
-      <meta itemprop="description" content="Stay hungry，stay foolish!">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope="" itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DarrenKong的精神港湾">
-    </span>
-
-    
-      <header class="post-header">
-
-        
-        
-          <h1 class="post-title" itemprop="name headline">
-                
-                
-                <a href="/2019/01/22/关于Cocoapods-Spec仓库目录结构/" class="post-title-link" itemprop="url">关于Cocoapods Spec仓库目录结构</a>
-              
-            
-          </h1>
-        
-
-        <div class="post-meta">
-          <span class="post-time">
-
-            
-            
-            
-
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">发表于</span>
-              
-
-              
-                
-              
-
-              <time title="创建时间：2019-01-22 16:29:45" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:45+08:00">2019-01-22</time>
-            
-
-            
-              
-
-              
-                
-                <span class="post-meta-divider">|</span>
-                
-
-                <span class="post-meta-item-icon">
-                  <i class="fa fa-calendar-check-o"></i>
-                </span>
-                
-                  <span class="post-meta-item-text">更新于</span>
-                
-                <time title="修改时间：2019-01-23 12:07:49" itemprop="dateModified" datetime="2019-01-23T12:07:49+08:00">2019-01-23</time>
-              
-            
-          </span>
-
-          
-            <span class="post-category">
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">分类于</span>
-              
-              
-                <span itemprop="about" itemscope="" itemtype="http://schema.org/Thing"><a href="/categories/CocoaPods/" itemprop="url" rel="index"><span itemprop="name">CocoaPods</span></a></span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-            
-          
-
-          
-          
-            <span id="/2019/01/22/关于Cocoapods-Spec仓库目录结构/" class="leancloud_visitors" data-flag-title="关于Cocoapods Spec仓库目录结构">
-              <span class="post-meta-divider">|</span>
-              <span class="post-meta-item-icon">
-                <i class="fa fa-eye"></i>
-              </span>
-              
-                <span class="post-meta-item-text">阅读次数：</span>
-              
-                <span class="leancloud-visitors-count"></span>
-            </span>
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <p>前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我最初使用CocoaPods时的目录结构不同，具体见下图。</p>
-<p><img src="/uploads/1.jpg" alt=""></p>
-<p>Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
-<p>看到这个结构，回想毕业后参与的第一个商业项目（一个文件存储相关的项目，涉及到文件的同步、协作、合并、比对等操作，有点类似三五年前使用比较多的SVN版本工具的文件系统功能）。第一个版本的实现方案是一个文件目录下存放所有文件，项目上线后，收到很多用户反馈说这样的文件夹结构，在Windows系统下打开文件夹会比较卡。项目经理（一个建筑类专业的博士）要求我按照他说的优化思路优化。他思路是文件名MD5，取前3位，每一位分一级目录，这与Cocoapods的specs仓库文件夹结构是一致的。<br>按照项目经理的思路实现后，确实打开速度快了很多。我也去了解了Windows系统的一个文件夹最多能存放多少个文件、文件名长度要求多少位以内等相关问题。</p>
-<blockquote>
-<p>Windows系统下，一个文件夹下能存多少个文件，与硬盘格式有直接关系。FAT：512个，FAT32： 65,534个，NTFS ：4,294,967,295个。</p>
-</blockquote>
-<p>CocoaPodsd的specs目录分3级，可能也有上面这个原因的考虑。另外，考虑到有些网站需要展示文件夹的文件列表，分3级，每个文件夹下的库数量就不会很多，读取、渲染文件夹的结构也相对会快一些。还有一个原因是，在终端中使用find命令查找文件夹下的指定文件，查找得出结果需要花好几秒。分3级目录，相当于把之前一个文件下的文件分散到4,096个文件夹下，速度会相应有一定提升。</p>
-<p>至于按照什么规则去分散到对应文件夹下，这个是讲仓库名MD5，取前3位，每一位分一级目录。比如YYKit，使用MD5加密后得到a408542eb2fcd3c332bf83b515cdcf03，对应的目录就是/a/4/0/，再加上YYKit、YYKit的版本号，拼接后最终得到../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
-<p>而我们自己见的私有specs仓库，一般只有一级目录。这主要是私人specs仓库没那么多仓库，也就不需要区分多级目录。Cocoapods中的specs仓库是全世界各地使用者提交，这个specs实在是太大，如果都平级的话，找起来效率不高，并且很麻烦。</p>
-
-          
-        
-      
-    </div>
-
-    
-
-    
-    
-    
-
-    
-
-    
-      
-    
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
-  </div>
-  
-  
-  
-  </article>
-
-
-    
   </section>
 
   
@@ -2995,7 +3056,7 @@
                 
                   <a href="/archives/">
                 
-                    <span class="site-state-item-count">11</span>
+                    <span class="site-state-item-count">12</span>
                     <span class="site-state-item-name">日志</span>
                   </a>
                 </div>
@@ -3061,7 +3122,7 @@
                     
                       
                     
-                    <span class="site-state-item-count">12</span>
+                    <span class="site-state-item-count">13</span>
                     <span class="site-state-item-name">标签</span>
                   </a>
                 </div>
