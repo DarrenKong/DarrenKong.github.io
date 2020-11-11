@@ -1,0 +1,487 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=2">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.2.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.1/css/all.min.css">
+  <link rel="stylesheet" href="//cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css">
+
+<script class="hexo-configurations">
+    var NexT = window.NexT || {};
+    var CONFIG = {"hostname":"www.darrenkong.top","root":"/","images":"/images","scheme":"Mist","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
+  </script>
+
+  <meta name="description" content="Git 规范一般包括两点：分支管理规范、git commit 规范。  分支管理规范一般项目分主分支（master）和其他分支。当需要开发新功能或修复 Bug 时，从 master 分支开一个新的分支。例如项目要从客户端渲染改成服务端渲染，就开一个分支叫 ssr，开发完了再合并回 master 分支。如果需要修复一个 Bug，可以从 master 分支开一个新分支，并用 Bug 号命名（一般小团">
+<meta property="og:type" content="article">
+<meta property="og:title" content="git 规范">
+<meta property="og:url" content="https://www.darrenkong.top/2020/11/11/git-%E8%A7%84%E8%8C%83/index.html">
+<meta property="og:site_name" content="DarrenKong&#39;s Blog">
+<meta property="og:description" content="Git 规范一般包括两点：分支管理规范、git commit 规范。  分支管理规范一般项目分主分支（master）和其他分支。当需要开发新功能或修复 Bug 时，从 master 分支开一个新的分支。例如项目要从客户端渲染改成服务端渲染，就开一个分支叫 ssr，开发完了再合并回 master 分支。如果需要修复一个 Bug，可以从 master 分支开一个新分支，并用 Bug 号命名（一般小团">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2020-11-11T06:55:44.000Z">
+<meta property="article:modified_time" content="2020-11-11T06:55:44.268Z">
+<meta property="article:author" content="Darren Kong">
+<meta property="article:tag" content="规范">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://www.darrenkong.top/2020/11/11/git-%E8%A7%84%E8%8C%83/">
+
+
+<script class="page-configurations">
+  // https://hexo.io/docs/variables.html
+  CONFIG.page = {
+    sidebar: "",
+    isHome : false,
+    isPost : true,
+    lang   : 'zh-CN'
+  };
+</script>
+
+  <title>git 规范 | DarrenKong's Blog</title>
+  
+
+
+
+
+
+
+  <noscript>
+  <style>
+  body { margin-top: 2rem; }
+
+  .use-motion .menu-item,
+  .use-motion .sidebar,
+  .use-motion .post-block,
+  .use-motion .pagination,
+  .use-motion .comments,
+  .use-motion .post-header,
+  .use-motion .post-body,
+  .use-motion .collection-header {
+    visibility: visible;
+  }
+
+  .use-motion .header,
+  .use-motion .site-brand-container .toggle,
+  .use-motion .footer { opacity: initial; }
+
+  .use-motion .site-title,
+  .use-motion .site-subtitle,
+  .use-motion .custom-logo-image {
+    opacity: initial;
+    top: initial;
+  }
+
+  .use-motion .logo-line {
+    transform: scaleX(1);
+  }
+
+  .search-pop-overlay, .sidebar-nav { display: none; }
+  .sidebar-panel { display: block; }
+  </style>
+</noscript>
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">DarrenKong's Blog</h1>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry，stay foolish!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu">
+        <li class="menu-item menu-item-home">
+
+    <a href="/" rel="section"><i class="home fa-fw"></i>首页</a>
+
+  </li>
+        <li class="menu-item menu-item-categories">
+
+    <a href="/categories/" rel="section"><i class="th fa-fw"></i>分类</a>
+
+  </li>
+        <li class="menu-item menu-item-archives">
+
+    <a href="/archives/" rel="section"><i class="archive fa-fw"></i>归档</a>
+
+  </li>
+        <li class="menu-item menu-item-tags">
+
+    <a href="/tags/" rel="section"><i class="tags fa-fw"></i>标签</a>
+
+  </li>
+        <li class="menu-item menu-item-about">
+
+    <a href="/about/" rel="section"><i class="user fa-fw"></i>关于</a>
+
+  </li>
+  </ul>
+</nav>
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%86%E6%94%AF%E7%AE%A1%E7%90%86%E8%A7%84%E8%8C%83"><span class="nav-number">1.</span> <span class="nav-text">分支管理规范</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#git-commit-%E8%A7%84%E8%8C%83"><span class="nav-number">2.</span> <span class="nav-text">git commit 规范</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#type-commit-%E7%9A%84%E7%B1%BB%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">type: commit 的类型</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#fix%EF%BC%88%E4%BF%AE%E5%A4%8D-Bug%EF%BC%89"><span class="nav-number">2.1.1.</span> <span class="nav-text">fix（修复 Bug）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#feat%EF%BC%88%E6%B7%BB%E5%8A%A0%E6%96%B0%E5%8A%9F%E8%83%BD%E6%88%96%E6%96%B0%E9%A1%B5%E9%9D%A2%EF%BC%89"><span class="nav-number">2.1.2.</span> <span class="nav-text">feat（添加新功能或新页面）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#chore%EF%BC%88%E5%85%B6%E4%BB%96%E4%BF%AE%E6%94%B9%EF%BC%89"><span class="nav-number">2.1.3.</span> <span class="nav-text">chore（其他修改）</span></a></li></ol></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E9%AA%8C%E8%AF%81-git-commit-%E8%A7%84%E8%8C%83"><span class="nav-number">2.2.</span> <span class="nav-text">验证 git commit 规范</span></a></li></ol></li></ol></div>
+        </section>
+        <!--/noindex-->
+
+        <section class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Darren Kong</p>
+  <div class="site-description" itemprop="description">Stay hungry，stay foolish!</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+          <a href="/archives/">
+        
+          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+            <a href="/categories/">
+          
+        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+            <a href="/tags/">
+          
+        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author site-overview-item animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DarrenKong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DarrenKong" rel="noopener" target="_blank"><i class="github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kong4221@163.com" title="E-Mail → mailto:kong4221@163.com" rel="noopener" target="_blank"><i class="envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+
+
+        </section>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+      
+
+      
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2020/11/11/git-%E8%A7%84%E8%8C%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          git 规范
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-11-11 14:55:44" itemprop="dateCreated datePublished" datetime="2020-11-11T14:55:44+08:00">2020-11-11</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Git/" itemprop="url" rel="index"><span itemprop="name">Git</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>Git 规范一般包括两点：分支管理规范、git commit 规范。</p>
+</blockquote>
+<h3 id="分支管理规范"><a href="#分支管理规范" class="headerlink" title="分支管理规范"></a>分支管理规范</h3><p>一般项目分主分支（master）和其他分支。<br>当需要开发新功能或修复 Bug 时，从 master 分支开一个新的分支。例如项目要从客户端渲染改成服务端渲染，就开一个分支叫 ssr，开发完了再合并回 master 分支。<br>如果需要修复一个 Bug，可以从 master 分支开一个新分支，并用 Bug 号命名（一般小团队嫌麻烦，没这样做，除非有特别大的 Bug）。</p>
+<h3 id="git-commit-规范"><a href="#git-commit-规范" class="headerlink" title="git commit 规范"></a>git commit 规范</h3><figure class="highlight md"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">type</span>&gt;</span></span>(<span class="xml"><span class="tag">&lt;<span class="name">scope</span>&gt;</span></span>): <span class="xml"><span class="tag">&lt;<span class="name">subject</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">body</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">BLANK</span> <span class="attr">LINE</span>&gt;</span></span></span><br><span class="line"><span class="xml"><span class="tag">&lt;<span class="name">footer</span>&gt;</span></span></span><br></pre></td></tr></table></figure>
+
+<p>大致分为三个部分(使用空行分割):</p>
+<ol>
+<li>标题行: 必填, 描述主要修改类型和内容。</li>
+<li>主题内容: 描述为什么修改, 做了什么样的修改, 以及开发的思路等等。</li>
+<li>页脚注释: 可以写注释，Bug 号链接。</li>
+</ol>
+<h4 id="type-commit-的类型"><a href="#type-commit-的类型" class="headerlink" title="type: commit 的类型"></a>type: commit 的类型</h4><ul>
+<li>feat: 新功能、新特性</li>
+<li>fix: 修改 bug</li>
+<li>perf: 更改代码，以提高性能</li>
+<li>refactor: 代码重构（重构，在不影响代码内部行为、功能下的代码修改）</li>
+<li>docs: 文档修改</li>
+<li>style: 代码格式修改, 注意不是 css 修改（例如分号修改）</li>
+<li>test: 测试用例新增、修改</li>
+<li>build: 影响项目构建或依赖项修改</li>
+<li>revert: 恢复上一次提交</li>
+<li>ci: 持续集成相关文件修改</li>
+<li>chore: 其他修改（不在上述类型中的修改）</li>
+<li>release: 发布新版本</li>
+<li>workflow: 工作流相关文件修改</li>
+</ul>
+<ol>
+<li>scope: commit 影响的范围, 比如: route, component, utils, build…</li>
+<li>subject: commit 的概述</li>
+<li>body: commit 具体修改内容, 可以分为多行.</li>
+<li>footer: 一些备注, 通常是 BREAKING CHANGE 或修复的 bug 的链接.</li>
+</ol>
+<p>示例</p>
+<h5 id="fix（修复-Bug）"><a href="#fix（修复-Bug）" class="headerlink" title="fix（修复 Bug）"></a>fix（修复 Bug）</h5><p>如果修复的这个 Bug 只影响当前修改的文件，可不加范围。如果影响的范围比较大，要加上范围描述。</p>
+<p>例如这次 Bug 修复影响到全局，可以加个 global。如果影响的是某个目录或某个功能，可以加上该目录的路径，或者对应的功能名称。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 示例1</span></span><br><span class="line">fix(<span class="built_in">global</span>):修复checkbox不能复选的问题</span><br><span class="line"><span class="comment">// 示例2 下面圆括号里的 common 为通用管理的名称</span></span><br><span class="line">fix(common): 修复字体过小的BUG，将通用管理下所有页面的默认字体大小修改为 <span class="number">14</span>px</span><br><span class="line"><span class="comment">// 示例3</span></span><br><span class="line">fix: value.length -&gt; values.length</span><br></pre></td></tr></table></figure>
+
+<h5 id="feat（添加新功能或新页面）"><a href="#feat（添加新功能或新页面）" class="headerlink" title="feat（添加新功能或新页面）"></a>feat（添加新功能或新页面）</h5><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">feat: 添加网站主页静态页面</span><br><span class="line"></span><br><span class="line">这是一个示例，假设对点检任务静态页面进行了一些描述。</span><br><span class="line"></span><br><span class="line">这里是备注，可以是放BUG链接或者一些重要性的东西。</span><br></pre></td></tr></table></figure>
+
+<h5 id="chore（其他修改）"><a href="#chore（其他修改）" class="headerlink" title="chore（其他修改）"></a>chore（其他修改）</h5><p>chore 的中文翻译为日常事务、例行工作，顾名思义，即不在其他 commit 类型中的修改，都可以用 chore 表示。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">chore: 将表格中的查看详情改为详情</span><br></pre></td></tr></table></figure>
+
+<p>其他类型的 commit 和上面三个示例差不多，就不说了。</p>
+<h4 id="验证-git-commit-规范"><a href="#验证-git-commit-规范" class="headerlink" title="验证 git commit 规范"></a>验证 git commit 规范</h4><p>验证 git commit 规范，主要通过 git 的 <code>pre-commit</code> 钩子函数来进行。当然，你还需要下载一个辅助工具来帮助你进行验证。</p>
+<p>下载辅助工具</p>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -D husky</span><br></pre></td></tr></table></figure>
+
+<p>在 <code>package.json</code> 加上下面的代码</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">&quot;husky&quot;: &#123;</span><br><span class="line">  &quot;hooks&quot;: &#123;</span><br><span class="line">    &quot;pre-commit&quot;: &quot;npm run lint&quot;,</span><br><span class="line">    &quot;commit-msg&quot;: &quot;node script/verify-commit.js&quot;,</span><br><span class="line">    &quot;pre-push&quot;: &quot;npm test&quot;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>然后在你项目根目录下新建一个文件夹 <code>script</code>，并在下面新建一个文件 <code>verify-commit.js</code>，输入以下代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> msgPath = process.env.HUSKY_GIT_PARAMS</span><br><span class="line"><span class="keyword">const</span> msg = <span class="built_in">require</span>(<span class="string">&#x27;fs&#x27;</span>)</span><br><span class="line">.readFileSync(msgPath, <span class="string">&#x27;utf-8&#x27;</span>)</span><br><span class="line">.trim()</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> commitRE = <span class="regexp">/^(feat|fix|docs|style|refactor|perf|test|workflow|build|ci|chore|release|workflow)(\(.+\))?: .&#123;1,50&#125;/</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (!commitRE.test(msg)) &#123;</span><br><span class="line">    <span class="built_in">console</span>.log()</span><br><span class="line">    <span class="built_in">console</span>.error(<span class="string">`</span></span><br><span class="line"><span class="string">        不合法的 commit 消息格式。</span></span><br><span class="line"><span class="string">        请查看 git commit 提交规范：https://github.com/woai3c/Front-end-articles/blob/master/git%20commit%20style.md</span></span><br><span class="line"><span class="string">    `</span>)</span><br><span class="line"></span><br><span class="line">    process.exit(<span class="number">1</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>现在来解释下各个钩子的含义：</p>
+<ol>
+<li><code>&quot;pre-commit&quot;: &quot;npm run lint&quot;</code>，在 <code>git commit</code> 前执行 <code>npm run lint</code> 检查代码格式。</li>
+<li><code>&quot;commit-msg&quot;: &quot;node script/verify-commit.js&quot;</code>，在 <code>git commit</code> 时执行脚本 <code>verify-commit.js</code> 验证 commit 消息。如果不符合脚本中定义的格式，将会报错。</li>
+<li><code>&quot;pre-push&quot;: &quot;npm test&quot;</code>，在你执行 <code>git push</code> 将代码推送到远程仓库前，执行 <code>npm test</code> 进行测试。如果测试失败，将不会执行这次推送。</li>
+</ol>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E8%A7%84%E8%8C%83/" rel="tag"># 规范</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/11/06/App-%E5%90%AF%E5%8A%A8%E9%80%9F%E5%BA%A6%E4%BC%98%E5%8C%96/" rel="prev" title="App 启动速度优化">
+                  <i class="fa fa-chevron-left"></i> App 启动速度优化
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+      
+
+<script>
+  window.addEventListener('tabs:register', () => {
+    let { activeClass } = CONFIG.comments;
+    if (CONFIG.comments.storage) {
+      activeClass = localStorage.getItem('comments_active') || activeClass;
+    }
+    if (activeClass) {
+      const activeTab = document.querySelector(`a[href="#comment-${activeClass}"]`);
+      if (activeTab) {
+        activeTab.click();
+      }
+    }
+  });
+  if (CONFIG.comments.storage) {
+    window.addEventListener('tabs:click', event => {
+      if (!event.target.matches('.tabs-comment .tab-content .tab-pane')) return;
+      const commentClass = event.target.classList[1];
+      localStorage.setItem('comments_active', commentClass);
+    });
+  }
+</script>
+
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+      
+
+      
+
+<div class="copyright">
+  
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2020</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Darren Kong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" class="theme-link" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" class="theme-link" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="//cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js"></script>
+<script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+  
+
+  
+
+</body>
+</html>
