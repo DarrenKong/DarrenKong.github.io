@@ -24,23 +24,23 @@
     var CONFIG = {"hostname":"www.darrenkong.top","root":"/","images":"/images","scheme":"Mist","version":"8.0.2","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"fancybox":false,"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}};
   </script>
 
-  <meta name="description" content="前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我最初使用CocoaPods时的目录结构不同，具体见下图。  Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是..&#x2F;a&#x2F;4&#x2F;0&#x2F;YYKit&#x2F;1.0.9&#x2F;YYKit.podspec.json。 看到这个结构，回想毕业后参与的第一个商业项">
+  <meta name="description" content="最近在查看后台 API 文档，在自己电脑上需要搭建 Go 环境。网上很多基于 macOS、VSCode 的环境搭建教程都落后了，不够与时俱进，顾将这次 macOS + VSCode + Go 环境搭建记录下来。  本文介绍以下几个问题：  Go 环境的安装 VSCode 集成 Go 开发环境及插件 Go 环境的卸载  Go 环境的安装 Go 安装可以通过图形可视化安装官网下载链接。本文是基于 m">
 <meta property="og:type" content="article">
-<meta property="og:title" content="关于Cocoapods Spec仓库目录结构">
-<meta property="og:url" content="https://www.darrenkong.top/2019/01/22/%E5%85%B3%E4%BA%8ECocoapods-Spec%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:title" content="macOS+VSCode环境下,安装和卸载Go环境">
+<meta property="og:url" content="https://www.darrenkong.top/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/index.html">
 <meta property="og:site_name" content="DarrenKong&#39;s Blog">
-<meta property="og:description" content="前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我最初使用CocoaPods时的目录结构不同，具体见下图。  Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是..&#x2F;a&#x2F;4&#x2F;0&#x2F;YYKit&#x2F;1.0.9&#x2F;YYKit.podspec.json。 看到这个结构，回想毕业后参与的第一个商业项">
+<meta property="og:description" content="最近在查看后台 API 文档，在自己电脑上需要搭建 Go 环境。网上很多基于 macOS、VSCode 的环境搭建教程都落后了，不够与时俱进，顾将这次 macOS + VSCode + Go 环境搭建记录下来。  本文介绍以下几个问题：  Go 环境的安装 VSCode 集成 Go 开发环境及插件 Go 环境的卸载  Go 环境的安装 Go 安装可以通过图形可视化安装官网下载链接。本文是基于 m">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://www.darrenkong.top/uploads/1.jpg">
-<meta property="article:published_time" content="2019-01-22T08:29:45.000Z">
-<meta property="article:modified_time" content="2020-11-06T02:53:21.010Z">
+<meta property="og:image" content="https://www.darrenkong.top/uploads/image-20201112162352406.png">
+<meta property="article:published_time" content="2020-11-12T08:43:06.000Z">
+<meta property="article:modified_time" content="2020-11-12T08:44:44.576Z">
 <meta property="article:author" content="Darren Kong">
-<meta property="article:tag" content="CocoaPods">
+<meta property="article:tag" content="Go">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://www.darrenkong.top/uploads/1.jpg">
+<meta name="twitter:image" content="https://www.darrenkong.top/uploads/image-20201112162352406.png">
 
 
-<link rel="canonical" href="https://www.darrenkong.top/2019/01/22/%E5%85%B3%E4%BA%8ECocoapods-Spec%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">
+<link rel="canonical" href="https://www.darrenkong.top/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/">
 
 
 <script class="page-configurations">
@@ -53,7 +53,7 @@
   };
 </script>
 
-  <title>关于Cocoapods Spec仓库目录结构 | DarrenKong's Blog</title>
+  <title>macOS+VSCode环境下,安装和卸载Go环境 | DarrenKong's Blog</title>
   
 
 
@@ -174,7 +174,7 @@
 
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -187,6 +187,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <section class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E7%8E%AF%E5%A2%83%E7%9A%84%E5%AE%89%E8%A3%85"><span class="nav-number">1.</span> <span class="nav-text">Go 环境的安装</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Go%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E9%85%8D%E7%BD%AE"><span class="nav-number">1.1.</span> <span class="nav-text">Go环境变量配置</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#VSCode-%E5%AE%89%E8%A3%85-Go-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.</span> <span class="nav-text">VSCode 安装 Go 插件</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Go-%E7%8E%AF%E5%A2%83%E7%9A%84%E5%8D%B8%E8%BD%BD"><span class="nav-number">3.</span> <span class="nav-text">Go 环境的卸载</span></a></li></ol></div>
         </section>
         <!--/noindex-->
 
@@ -262,7 +263,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/01/22/%E5%85%B3%E4%BA%8ECocoapods-Spec%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -275,7 +276,7 @@
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          关于Cocoapods Spec仓库目录结构
+          macOS+VSCode环境下,安装和卸载Go环境
         </h1>
 
         <div class="post-meta-container">
@@ -285,23 +286,17 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
+      
 
-      <time title="创建时间：2019-01-22 16:29:45" itemprop="dateCreated datePublished" datetime="2019-01-22T16:29:45+08:00">2019-01-22</time>
+      <time title="创建时间：2020-11-12 16:43:06 / 修改时间：16:44:44" itemprop="dateCreated datePublished" datetime="2020-11-12T16:43:06+08:00">2020-11-12</time>
     </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-06 10:53:21" itemprop="dateModified" datetime="2020-11-06T10:53:21+08:00">2020-11-06</time>
-      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
       </span>
       <span class="post-meta-item-text">分类于</span>
         <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/CocoaPods/" itemprop="url" rel="index"><span itemprop="name">CocoaPods</span></a>
+          <a href="/categories/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index"><span itemprop="name">开发环境</span></a>
         </span>
     </span>
 
@@ -315,16 +310,55 @@
     
     
     <div class="post-body" itemprop="articleBody">
-        <p>前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我最初使用CocoaPods时的目录结构不同，具体见下图。</p>
-<p><img src="/uploads/1.jpg"></p>
-<p>Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
-<p>看到这个结构，回想毕业后参与的第一个商业项目（一个文件存储相关的项目，涉及到文件的同步、协作、合并、比对等操作，有点类似三五年前使用比较多的SVN版本工具的文件系统功能）。第一个版本的实现方案是一个文件目录下存放所有文件，项目上线后，收到很多用户反馈说这样的文件夹结构，在Windows系统下打开文件夹会比较卡。项目经理（一个建筑类专业的博士）要求我按照他说的优化思路优化。他思路是文件名MD5，取前3位，每一位分一级目录，这与Cocoapods的specs仓库文件夹结构是一致的。<br>按照项目经理的思路实现后，确实打开速度快了很多。我也去了解了Windows系统的一个文件夹最多能存放多少个文件、文件名长度要求多少位以内等相关问题。</p>
-<blockquote>
-<p>Windows系统下，一个文件夹下能存多少个文件，与硬盘格式有直接关系。FAT：512个，FAT32： 65,534个，NTFS ：4,294,967,295个。</p>
+        <blockquote>
+<p>最近在查看后台 API 文档，在自己电脑上需要搭建 Go 环境。网上很多基于 macOS、VSCode 的环境搭建教程都落后了，不够与时俱进，顾将这次 macOS + VSCode + Go 环境搭建记录下来。</p>
 </blockquote>
-<p>CocoaPodsd的specs目录分3级，可能也有上面这个原因的考虑。另外，考虑到有些网站需要展示文件夹的文件列表，分3级，每个文件夹下的库数量就不会很多，读取、渲染文件夹的结构也相对会快一些。还有一个原因是，在终端中使用find命令查找文件夹下的指定文件，查找得出结果需要花好几秒。分3级目录，相当于把之前一个文件下的文件分散到4,096个文件夹下，速度会相应有一定提升。</p>
-<p>至于按照什么规则去分散到对应文件夹下，这个是讲仓库名MD5，取前3位，每一位分一级目录。比如YYKit，使用MD5加密后得到a408542eb2fcd3c332bf83b515cdcf03，对应的目录就是/a/4/0/，再加上YYKit、YYKit的版本号，拼接后最终得到../a/4/0/YYKit/1.0.9/YYKit.podspec.json。</p>
-<p>而我们自己见的私有specs仓库，一般只有一级目录。这主要是私人specs仓库没那么多仓库，也就不需要区分多级目录。Cocoapods中的specs仓库是全世界各地使用者提交，这个specs实在是太大，如果都平级的话，找起来效率不高，并且很麻烦。</p>
+<p>本文介绍以下几个问题：</p>
+<ol>
+<li>Go 环境的安装</li>
+<li>VSCode 集成 Go 开发环境及插件</li>
+<li>Go 环境的卸载</li>
+</ol>
+<h2 id="Go-环境的安装"><a href="#Go-环境的安装" class="headerlink" title="Go 环境的安装"></a>Go 环境的安装</h2><blockquote>
+<p>Go 安装可以通过图形可视化安装<a target="_blank" rel="noopener" href="https://golang.org/dl/">官网下载链接</a>。本文是基于 macOS，通过 HomeBrew，命令行安装更简便，后续升级维护简便。</p>
+</blockquote>
+<p>直接执行以下命令来安装Go：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install go</span><br></pre></td></tr></table></figure>
+
+<p>此时可能会卡在 Updating Homebrew，可以通过切换中科大源来解决：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 替换brew.git:</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span></span><br><span class="line">git remote set-url origin https://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"></span><br><span class="line">// 替换homebrew-core.git:</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core&quot;</span></span><br><span class="line">git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以顺利安装了。安装完成后，可以在终端执行以下命令来测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+
+<p>此时会在终端显示go版本：</p>
+<p><img src="/uploads/image-20201112162352406.png" alt="img"></p>
+<h3 id="Go环境变量配置"><a href="#Go环境变量配置" class="headerlink" title="Go环境变量配置"></a>Go环境变量配置</h3><p>在 Go 1.13 之后，无需再通过设置系统环境变量的方式来修改，可以通过 go env -w 命令来设置 Go 的环境变量。<br>需要设置的环境变量如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于存放依赖包以及编译文件，比较随意，只要不和GOROOT重名即可，官方禁止这一行为</span></span><br><span class="line">go env -w GOPATH=<span class="regexp">/Users/u</span>sername/go</span><br><span class="line"><span class="comment">// 设置代理后，在未翻墙的情况下，打开vscode后gopls工具的加载会很快</span></span><br><span class="line">go env -w GOPROXY=https:<span class="comment">//goproxy.cn,direct</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="VSCode-安装-Go-插件"><a href="#VSCode-安装-Go-插件" class="headerlink" title="VSCode 安装 Go 插件"></a>VSCode 安装 Go 插件</h2><p>在插件商店中搜索 Go(Publish By Go Team at Google)，并点击安装即可。</p>
+<blockquote>
+<p>插件安装好后，用 VSCode 打开一个 .go 的文件，会提示安装 Go 相关插件，根据个人需求点击提示上的 “Install” 或者 “Install All”，稍等片刻会看到插件都已经安装 SUCCSESS。</p>
+</blockquote>
+<h2 id="Go-环境的卸载"><a href="#Go-环境的卸载" class="headerlink" title="Go 环境的卸载"></a>Go 环境的卸载</h2><ol>
+<li><p>删除 /usr/local 下的 go 目录。</p>
+<blockquote>
+<p>备注：这个目录是安装 go 的时候自动生成的。 如果删除完，终端中使用 go version 命令，会报找不到 go 命令。</p>
+</blockquote>
+</li>
+<li><p>删除 Path 环境变量。</p>
+<blockquote>
+<p>备注：这里，我只是想删除一个 Go 版本， 所以， GOPATH 还是需要的。</p>
+</blockquote>
+</li>
+<li><p>删除配置文件信息：在 /etc/profile 或者 $HOME/.profile 或者 $HOME/.bahs_profile 中删除 bin 的设置。</p>
+</li>
+<li><p>删除 macOS 的安装包文件，在 /etc/paths.d/go 目录下。</p>
+<blockquote>
+<p>我只用了第一步，重新安装，其他都还继续使用。</p>
+</blockquote>
+</li>
+</ol>
 
     </div>
 
@@ -334,21 +368,18 @@
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/CocoaPods/" rel="tag"># CocoaPods</a>
+              <a href="/tags/Go/" rel="tag"># Go</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2018/10/29/%E6%8E%A8%E8%8D%90%E5%87%A0%E6%AC%BE%E6%88%91%E5%B8%B8%E7%94%A8Chrome%E6%8F%92%E4%BB%B6/" rel="prev" title="推荐几款我常用Chrome插件（扩展程序）">
-                  <i class="fa fa-chevron-left"></i> 推荐几款我常用Chrome插件（扩展程序）
+                <a href="/2020/11/11/git-%E8%A7%84%E8%8C%83/" rel="prev" title="git 规范">
+                  <i class="fa fa-chevron-left"></i> git 规范
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2019/01/24/Chrome%E4%B9%A6%E7%AD%BE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/" rel="next" title="Chrome书签结构分析">
-                  Chrome书签结构分析 <i class="fa fa-chevron-right"></i>
-                </a>
             </div>
           </div>
     </footer>

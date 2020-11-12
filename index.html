@@ -196,20 +196,20 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">14</span>
+          <span class="site-state-item-count">15</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-categories">
             <a href="/categories/">
           
-        <span class="site-state-item-count">6</span>
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">分类</span></a>
       </div>
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">15</span>
+        <span class="site-state-item-count">16</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -249,6 +249,129 @@
       
 
       
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/" class="post-title-link" itemprop="url">macOS+VSCode环境下,安装和卸载Go环境</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+      
+
+      <time title="创建时间：2020-11-12 16:43:06 / 修改时间：16:44:44" itemprop="dateCreated datePublished" datetime="2020-11-12T16:43:06+08:00">2020-11-12</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E5%BC%80%E5%8F%91%E7%8E%AF%E5%A2%83/" itemprop="url" rel="index"><span itemprop="name">开发环境</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>最近在查看后台 API 文档，在自己电脑上需要搭建 Go 环境。网上很多基于 macOS、VSCode 的环境搭建教程都落后了，不够与时俱进，顾将这次 macOS + VSCode + Go 环境搭建记录下来。</p>
+</blockquote>
+<p>本文介绍以下几个问题：</p>
+<ol>
+<li>Go 环境的安装</li>
+<li>VSCode 集成 Go 开发环境及插件</li>
+<li>Go 环境的卸载</li>
+</ol>
+<h2 id="Go-环境的安装"><a href="#Go-环境的安装" class="headerlink" title="Go 环境的安装"></a>Go 环境的安装</h2><blockquote>
+<p>Go 安装可以通过图形可视化安装<a target="_blank" rel="noopener" href="https://golang.org/dl/">官网下载链接</a>。本文是基于 macOS，通过 HomeBrew，命令行安装更简便，后续升级维护简便。</p>
+</blockquote>
+<p>直接执行以下命令来安装Go：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">brew install go</span><br></pre></td></tr></table></figure>
+
+<p>此时可能会卡在 Updating Homebrew，可以通过切换中科大源来解决：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">// 替换brew.git:</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>&quot;</span></span><br><span class="line">git remote set-url origin https://mirrors.ustc.edu.cn/brew.git</span><br><span class="line"></span><br><span class="line">// 替换homebrew-core.git:</span><br><span class="line"><span class="built_in">cd</span> <span class="string">&quot;<span class="subst">$(brew --repo)</span>/Library/Taps/homebrew/homebrew-core&quot;</span></span><br><span class="line">git remote set-url origin https://mirrors.ustc.edu.cn/homebrew-core.git</span><br></pre></td></tr></table></figure>
+
+<p>然后就可以顺利安装了。安装完成后，可以在终端执行以下命令来测试：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">go version</span><br></pre></td></tr></table></figure>
+
+<p>此时会在终端显示go版本：</p>
+<p><img src="/uploads/image-20201112162352406.png" alt="img"></p>
+<h3 id="Go环境变量配置"><a href="#Go环境变量配置" class="headerlink" title="Go环境变量配置"></a>Go环境变量配置</h3><p>在 Go 1.13 之后，无需再通过设置系统环境变量的方式来修改，可以通过 go env -w 命令来设置 Go 的环境变量。<br>需要设置的环境变量如下：</p>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于存放依赖包以及编译文件，比较随意，只要不和GOROOT重名即可，官方禁止这一行为</span></span><br><span class="line">go env -w GOPATH=<span class="regexp">/Users/u</span>sername/go</span><br><span class="line"><span class="comment">// 设置代理后，在未翻墙的情况下，打开vscode后gopls工具的加载会很快</span></span><br><span class="line">go env -w GOPROXY=https:<span class="comment">//goproxy.cn,direct</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="VSCode-安装-Go-插件"><a href="#VSCode-安装-Go-插件" class="headerlink" title="VSCode 安装 Go 插件"></a>VSCode 安装 Go 插件</h2><p>在插件商店中搜索 Go(Publish By Go Team at Google)，并点击安装即可。</p>
+<blockquote>
+<p>插件安装好后，用 VSCode 打开一个 .go 的文件，会提示安装 Go 相关插件，根据个人需求点击提示上的 “Install” 或者 “Install All”，稍等片刻会看到插件都已经安装 SUCCSESS。</p>
+</blockquote>
+<h2 id="Go-环境的卸载"><a href="#Go-环境的卸载" class="headerlink" title="Go 环境的卸载"></a>Go 环境的卸载</h2><ol>
+<li><p>删除 /usr/local 下的 go 目录。</p>
+<blockquote>
+<p>备注：这个目录是安装 go 的时候自动生成的。 如果删除完，终端中使用 go version 命令，会报找不到 go 命令。</p>
+</blockquote>
+</li>
+<li><p>删除 Path 环境变量。</p>
+<blockquote>
+<p>备注：这里，我只是想删除一个 Go 版本， 所以， GOPATH 还是需要的。</p>
+</blockquote>
+</li>
+<li><p>删除配置文件信息：在 /etc/profile 或者 $HOME/.profile 或者 $HOME/.bahs_profile 中删除 bin 的设置。</p>
+</li>
+<li><p>删除 macOS 的安装包文件，在 /etc/paths.d/go 目录下。</p>
+<blockquote>
+<p>我只用了第一步，重新安装，其他都还继续使用。</p>
+</blockquote>
+</li>
+</ol>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
     
 
 
@@ -885,132 +1008,6 @@
 <li><code>applicationWillEnterForeground</code></li>
 <li><code>application(_:performActionFor:completionHandler:)</code></li>
 <li><code>applicationDidBecomeActive</code></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/11/%E5%85%B3%E4%BA%8EUITableView%E7%9A%84%E5%87%A0%E4%B8%AA%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Darren Kong">
-      <meta itemprop="description" content="Stay hungry，stay foolish!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DarrenKong's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/11/%E5%85%B3%E4%BA%8EUITableView%E7%9A%84%E5%87%A0%E4%B8%AA%E4%BC%98%E5%8C%96%E6%96%B9%E5%90%91/" class="post-title-link" itemprop="url">关于UITableView的几个优化方向</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-03-11 14:57:24" itemprop="dateCreated datePublished" datetime="2019-03-11T14:57:24+08:00">2019-03-11</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-06 10:53:21" itemprop="dateModified" datetime="2020-11-06T10:53:21+08:00">2020-11-06</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>如何优化复杂的UITableView卡顿的问题, 一般可以从以下几个方向着手优化：</p>
-<ol>
-<li><p><code>cell</code> 的行高不是固定值，需要计算，则要尽可能缓存行高值，避免重复计算行高。因为 <code>heightForRowAtIndexPath:</code>是调用最频繁的方法。</p>
-</li>
-<li><p>滑动时按需加载，这个在大量图片展示，网络加载的时候很管用!(<code>SDWebImage</code> 已经实现异 步加载，配合这条性能杠杠的)。</p>
-</li>
-<li><p>正确使用 <code>reuseIdentifier</code> 来重用 <code>Cells</code></p>
-</li>
-<li><p>尽量少用或不用透明图层</p>
-</li>
-<li><p>如果 <code>Cell</code> 内现实的内容来自 <code>web</code>，使用异步加载，缓存请求结果</p>
-</li>
-<li><p>减少 <code>subviews</code> 的数量</p>
-</li>
-<li><p>在 <code>heightForRowAtIndexPath:</code>中尽量不使用 <code>cellForRowAtIndexPath:</code>，如果你需要用到它， 只用一次然后缓存结果</p>
-</li>
-<li><p>所有的子视图都预先创建，如果不需要显示可以设置 <code>hidden</code>，尽量少动态给 <code>Cell</code> 添加 <code>View</code></p>
-</li>
-<li><p>颜色不要使用 <code>alph</code></p>
-</li>
-<li><p>栅格化</p>
-</li>
-<li><p><code>cell</code> 的 <code>subViews</code> 的各级 <code>opaque</code> 值要设成 YES，尽量不要包含透明的子 <code>View</code> <code>opaque</code> 用于辅助绘图系统，表示 <code>UIView</code> 是否透明。在不透明的情况下，渲染视图时需要快速 地渲染，以提􏰀高性能。渲染最慢的操作之一是混合<code>(blending</code>)。提􏰀高性能的方法是减少混合操 作的次数，其实就是 <code>GPU</code> 的不合理使用，这是硬件来完成的(混合操作由 <code>GPU</code> 来执行，因为这 个硬件就是用来做混合操作的，当然不只是混合)。 优化混合操作的关键点是在平衡 <code>CPU</code> 和 <code>GPU</code> 的负载。还有就是 <code>cell</code> 的 <code>layer</code> 的 <code>shouldRasterize</code> 要设成 <code>YES</code>。</p>
-</li>
-<li><p><code>cell</code> 异步加载图片以及缓存</p>
-</li>
-<li><p>异步绘制</p>
-</li>
-</ol>
-<ul>
-<li><p>(1)在绘制字符串时，尽可能使用 <code>drawAtPoint: withFont:</code>，而不要使用更复杂的 <code>drawAtPoint:(CGPoint)point forWidth:(CGFloat)width withFont:(UIFont *)font lineBreakMode:(UILineBreakMode)lineBreakMode</code>; 如果要绘制过长的字符串，建议自己先截 断，然后使用 <code>drawAtPoint: withFont:</code>方法绘制。</p>
-</li>
-<li><p>(2)在绘制图片时，尽量使用 <code>drawAtPoint</code>，而不要使用 <code>drawInRect</code>。<code>drawInRect</code> 如果在绘 制过程中对图片进行放缩，会特别消耗 <code>CPU</code>。</p>
-</li>
-<li><p>(3)其实，最快的绘制就是你不要做任何绘制。有时通过 <code>UIGraphicsBeginImageContextWithOptions()</code> 或者 <code>CGBitmapContextCeate()</code> 创建位图会显 得更有意义，从位图上面抓取图像，并设置为 <code>CALayer</code> 的内容。 如果你必须实现 <code>-drawRect:</code>，并且你必须绘制大量的东西，这将占用时间。</p>
-</li>
-<li><p>(4)如果绘制 <code>cell</code> 过程中，需要下载 <code>cell</code> 中的图片，建议在绘制 <code>cell</code> 一段时间后再开启图 片下载任务。譬如先画一个默认图片，然后在 0.5S 后开始下载本 <code>cell</code> 的图片。</p>
-</li>
-<li><p>(5)即使下载 <code>cell</code> 图片是在子线程中进行，在绘制 <code>cell</code> 过程中，也不能开启过多的子线程。 最好只有一个下载图片的子线程在活动。否则也会影响 <code>UITableViewCell</code> 的绘制，因而影响了 <code>UITableViewCell</code> 的滑动速度。(建议结合使用 <code>NSOpeartion</code> 和 <code>NSOperationQueue</code> 来下载图片， 如果想尽可能找的下载图片，可以把<code>[self.queuesetMaxConcurrentOperationCount:4];</code>)</p>
-</li>
-<li><p>(6)最好自己写一个 <code>cache</code>，用来缓存 <code>UITableView</code> 中的 <code>UITableViewCell</code>，这样在整个 <code>UITableView</code> 的生命周期里，一个 <code>cell</code> 只需绘制一次，并且如果发生内存不足，也可以有效的 释放掉缓存的 <code>cell</code>。</p>
-</li>
-</ul>
-<ol start="14">
-<li>不要将 <code>tableview</code> 的背景颜色设置成一个图片。这回严重影响 <code>UITableView</code> 的滑动速度。我曾经翻过一个错误：<code>self.tableView.backgroundColor = [UIColorcolorWithPatternImage:[UIImageimageNamed:@&quot;background.png&quot;]];</code> 通过这种方式设置 <code>UITableView</code> 的背景颜色会严重影响 UTIableView 的滑动流畅性。修改成 <code>self.tableView.backgroundColor = [UIColor clearColor];</code>之后，<code>fps</code> 从 <code>43</code> 上升到 <code>60</code> 左右。 滑动比较流畅。</li>
 </ol>
 
       
