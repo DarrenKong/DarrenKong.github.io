@@ -196,7 +196,7 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">15</span>
+          <span class="site-state-item-count">16</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -209,7 +209,7 @@
       <div class="site-state-item site-state-tags">
             <a href="/tags/">
           
-        <span class="site-state-item-count">16</span>
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -257,6 +257,91 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2020/12/21/iOS-5G-%E7%BD%91%E7%BB%9C%E7%9B%91%E6%B5%8B%E5%8F%8A%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/12/21/iOS-5G-%E7%BD%91%E7%BB%9C%E7%9B%91%E6%B5%8B%E5%8F%8A%E5%8F%AF%E8%83%BD%E9%81%87%E5%88%B0%E7%9A%84%E5%9D%91/" class="post-title-link" itemprop="url">iOS 5G 网络监测及可能遇到的坑</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-12-21 11:24:28" itemprop="dateCreated datePublished" datetime="2020-12-21T11:24:28+08:00">2020-12-21</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h3 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h3><p> 最近在 review 项目时，发现项目上的网络监测没有适配 5G 网络，欲适配之。然在测试过程中发现，缺少在 iOS 14.0.1 的设备上，启动会闪退。debug 发现是 CTRadioAccessTechnologyNRNSA 在 iOS 14.0.1 下不存在，导致闪退。</p>
+<h3 id="Apple-的-CTTelephonyNetworkInfo-h-中的定义"><a href="#Apple-的-CTTelephonyNetworkInfo-h-中的定义" class="headerlink" title="Apple 的 CTTelephonyNetworkInfo.h 中的定义"></a>Apple 的 CTTelephonyNetworkInfo.h 中的定义</h3> <figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/*</span></span><br><span class="line"><span class="comment"> * Radio Access Technology values</span></span><br><span class="line"><span class="comment"> */</span></span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyGPRS</span>          API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyEdge</span>          API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyWCDMA</span>         API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyHSDPA</span>         API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyHSUPA</span>         API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyCDMA1x</span>        API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyCDMAEVDORev0</span>  API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyCDMAEVDORevA</span>  API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyCDMAEVDORevB</span>  API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyeHRPD</span>         API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyLTE</span>           API_AVAILABLE(ios(<span class="number">7.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyNRNSA</span>         API_AVAILABLE(ios(<span class="number">14.0</span>)) API_UNAVAILABLE(macos);</span><br><span class="line">CORETELEPHONY_EXTERN <span class="built_in">NSString</span> * <span class="keyword">const</span> <span class="built_in">CTRadioAccessTechnologyNR</span>            API_AVAILABLE(ios(<span class="number">14.0</span>)) API_UNAVAILABLE(macos);</span><br></pre></td></tr></table></figure>
+
+<p>从 CTTelephonyNetworkInfo.h 中可以发现，5G 网络新增了 CTRadioAccessTechnologyNRNSA、CTRadioAccessTechnologyNR 2 个 value，并且都是 API_AVAILABLE(ios(14.0)) ，即都是从 iOS 14.0 开始可以使用。</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 故适配 5G 网络只需增加</span></span><br><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __IPHONE_14_0</span></span><br><span class="line">        <span class="keyword">if</span> (@available(iOS <span class="number">14.0</span>, *)) &#123;</span><br><span class="line">            <span class="keyword">self</span>.type5G = @[<span class="built_in">CTRadioAccessTechnologyNRNSA</span>,</span><br><span class="line">                            <span class="built_in">CTRadioAccessTechnologyNR</span>];</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>然而，debug 时会发现，在 iOS 14.0.1 的设备在 CTRadioAccessTechnologyNRNSA 报 crash 错误。回想之前 Apple Pay 的适配时出现的问题，将适配代码修改成如下：</p>
+<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#<span class="meta-keyword">ifdef</span> __IPHONE_14_1</span></span><br><span class="line">        <span class="keyword">if</span> (@available(iOS <span class="number">14.1</span>, *)) &#123;</span><br><span class="line">            <span class="keyword">self</span>.type5G = @[<span class="built_in">CTRadioAccessTechnologyNRNSA</span>,</span><br><span class="line">                            <span class="built_in">CTRadioAccessTechnologyNR</span>];</span><br><span class="line">        &#125;</span><br><span class="line"><span class="meta">#<span class="meta-keyword">endif</span></span></span><br></pre></td></tr></table></figure>
+
+<p>修改成 @available(iOS 14.1, *) 后，在 iOS 14.0.1 的设备上运行正常。</p>
+<p>之后在网络上搜索发现，我不是第一个遇到这个问题的开发者。参见 <a target="_blank" rel="noopener" href="https://blog.csdn.net/myiphon/article/details/109842362">blog</a> 及回复。</p>
+<h3 id="思考"><a href="#思考" class="headerlink" title="思考"></a>思考</h3><p>自 iOS 13 发布以来，iOS 系统爆发了好几次比较严重的问题。希望 Cook 未来最优可能的继任者 <a target="_blank" rel="noopener" href="https://www.apple.com.cn/leadership/craig-federighi/">Craig Federighi</a> 能扭转这一问题，保持 iOS 系统的研发稳定有序迭代。</p>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
     <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2020/11/12/macOS-VSCode%E7%8E%AF%E5%A2%83%E4%B8%8B-%E5%AE%89%E8%A3%85%E5%92%8C%E5%8D%B8%E8%BD%BDGo%E7%8E%AF%E5%A2%83/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -281,10 +366,16 @@
         <i class="far fa-calendar"></i>
       </span>
       <span class="post-meta-item-text">发表于</span>
-      
 
-      <time title="创建时间：2020-11-12 16:43:06 / 修改时间：16:44:44" itemprop="dateCreated datePublished" datetime="2020-11-12T16:43:06+08:00">2020-11-12</time>
+      <time title="创建时间：2020-11-12 16:43:06" itemprop="dateCreated datePublished" datetime="2020-11-12T16:43:06+08:00">2020-11-12</time>
     </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">更新于</span>
+        <time title="修改时间：2020-11-13 14:50:17" itemprop="dateModified" datetime="2020-11-13T14:50:17+08:00">2020-11-13</time>
+      </span>
     <span class="post-meta-item">
       <span class="post-meta-item-icon">
         <i class="far fa-folder"></i>
@@ -328,27 +419,37 @@
 
 <p>此时会在终端显示go版本：</p>
 <p><img src="/uploads/image-20201112162352406.png" alt="img"></p>
-<h3 id="Go环境变量配置"><a href="#Go环境变量配置" class="headerlink" title="Go环境变量配置"></a>Go环境变量配置</h3><p>在 Go 1.13 之后，无需再通过设置系统环境变量的方式来修改，可以通过 go env -w 命令来设置 Go 的环境变量。<br>需要设置的环境变量如下：</p>
+<h3 id="Go环境变量配置"><a href="#Go环境变量配置" class="headerlink" title="Go环境变量配置"></a>Go环境变量配置</h3><p>在 <code>Go 1.13</code> 之后，无需再通过设置系统环境变量的方式来修改，可以通过 <code>go env -w</code> 命令来设置 Go 的环境变量。<br>需要设置的环境变量如下：</p>
 <figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 用于存放依赖包以及编译文件，比较随意，只要不和GOROOT重名即可，官方禁止这一行为</span></span><br><span class="line">go env -w GOPATH=<span class="regexp">/Users/u</span>sername/go</span><br><span class="line"><span class="comment">// 设置代理后，在未翻墙的情况下，打开vscode后gopls工具的加载会很快</span></span><br><span class="line">go env -w GOPROXY=https:<span class="comment">//goproxy.cn,direct</span></span><br></pre></td></tr></table></figure>
 
-<h2 id="VSCode-安装-Go-插件"><a href="#VSCode-安装-Go-插件" class="headerlink" title="VSCode 安装 Go 插件"></a>VSCode 安装 Go 插件</h2><p>在插件商店中搜索 Go(Publish By Go Team at Google)，并点击安装即可。</p>
-<blockquote>
-<p>插件安装好后，用 VSCode 打开一个 .go 的文件，会提示安装 Go 相关插件，根据个人需求点击提示上的 “Install” 或者 “Install All”，稍等片刻会看到插件都已经安装 SUCCSESS。</p>
-</blockquote>
+<h3 id="VSCode-集成-Go-开发环境及插件"><a href="#VSCode-集成-Go-开发环境及插件" class="headerlink" title="VSCode 集成 Go 开发环境及插件"></a>VSCode 集成 Go 开发环境及插件</h3><ol>
+<li><p>VSCode 安装 Go 插件<br>在插件商店中搜索 <code>Go(Publish By Go Team at Google)</code>，并点击安装即可。<br>插件安装好后，用 VSCode 打开一个 <code>.go</code> 的文件，会提示安装 Go 相关插件，根据个人需求点击提示上的 <code>Install</code> 或者 <code>Install All</code>，稍等片刻会看到插件都已经安装 <code>SUCCSESS</code>。</p>
+</li>
+<li><p>使用Git下载源代码安装<br>先在自己的 <code>$GOPATH</code> 的 <code>src</code> 目录下创建 <code>golang.org/x</code> 的目录，查看 <code>$GOPATH</code> 使用命令 <code>go env</code></p>
+</li>
+<li><p>打开终端，<code>cd</code> 到 <code>$GOPATH/golang.org/x</code> 目录下</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 执行命令，这步不需要任何代理，国内网站即可完成，无需设置任何的GOPROXY</span></span><br><span class="line">git <span class="built_in">clone</span> https://github.com/golang/tools.git tools</span><br><span class="line">git <span class="built_in">clone</span> https://github.com/golang/lint.git</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>打开 <code>VSCode</code>，按下 <code>command+shift+p</code>，再次执行 <code>Go:Install/Update Tools</code> 命令，在弹出窗口中全选并点击确定，然后就会出现全部<code>SUCCESSED</code></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><span class="line">Tools environment: GOPATH=/Users/darren/go</span><br><span class="line">Installing 18 tools at /Users/darren/go/bin <span class="keyword">in</span> module mode.</span><br><span class="line"> gocode</span><br><span class="line"> gopkgs</span><br><span class="line"> go-outline</span><br><span class="line"> go-symbols</span><br><span class="line"> guru</span><br><span class="line"> gorename</span><br><span class="line"> gotests</span><br><span class="line"> gomodifytags</span><br><span class="line"> impl</span><br><span class="line"> fillstruct</span><br><span class="line"> goplay</span><br><span class="line"> godoctor</span><br><span class="line"> dlv</span><br><span class="line"> gocode-gomod</span><br><span class="line"> godef</span><br><span class="line"> goreturns</span><br><span class="line"> golint</span><br><span class="line"> gopls</span><br><span class="line"></span><br><span class="line"> Installing github.com/mdempsky/gocode (/Users/darren/go/bin/gocode) SUCCEEDED</span><br><span class="line"> Installing github.com/uudashr/gopkgs/v2/cmd/gopkgs (/Users/darren/go/bin/gopkgs) SUCCEEDED</span><br><span class="line"> Installing github.com/ramya-rao-a/go-outline (/Users/darren/go/bin/go-outline) SUCCEEDED</span><br><span class="line"> Installing github.com/acroca/go-symbols (/Users/darren/go/bin/go-symbols) SUCCEEDED</span><br><span class="line"> Installing golang.org/x/tools/cmd/guru (/Users/darren/go/bin/guru) SUCCEEDED</span><br><span class="line"> Installing golang.org/x/tools/cmd/gorename (/Users/darren/go/bin/gorename) SUCCEEDED</span><br><span class="line"> Installing github.com/cweill/gotests/... (/Users/darren/go/bin/gotests) SUCCEEDED</span><br><span class="line"> Installing github.com/fatih/gomodifytags (/Users/darren/go/bin/gomodifytags) SUCCEEDED</span><br><span class="line"> Installing github.com/josharian/impl (/Users/darren/go/bin/impl) SUCCEEDED</span><br><span class="line"> Installing github.com/davidrjenni/reftools/cmd/fillstruct (/Users/darren/go/bin/fillstruct) SUCCEEDED</span><br><span class="line"> Installing github.com/haya14busa/goplay/cmd/goplay (/Users/darren/go/bin/goplay) SUCCEEDED</span><br><span class="line"> Installing github.com/godoctor/godoctor (/Users/darren/go/bin/godoctor) SUCCEEDED</span><br><span class="line"> Installing github.com/go-delve/delve/cmd/dlv (/Users/darren/go/bin/dlv) SUCCEEDED</span><br><span class="line"> Installing github.com/stamblerre/gocode (/Users/darren/go/bin/gocode-gomod) SUCCEEDED</span><br><span class="line"> Installing github.com/rogpeppe/godef (/Users/darren/go/bin/godef) SUCCEEDED</span><br><span class="line"> Installing github.com/sqs/goreturns (/Users/darren/go/bin/goreturns) SUCCEEDED</span><br><span class="line"> Installing golang.org/x/lint/golint (/Users/darren/go/bin/golint) SUCCEEDED</span><br><span class="line"> Installing golang.org/x/tools/gopls (/Users/darren/go/bin/gopls) SUCCEEDED</span><br><span class="line"></span><br><span class="line"> All tools successfully installed. You are ready to Go :).</span><br></pre></td></tr></table></figure>
+
+<p> 至此，所有 Golang 基础插件都安装完成。</p>
+</li>
+</ol>
 <h2 id="Go-环境的卸载"><a href="#Go-环境的卸载" class="headerlink" title="Go 环境的卸载"></a>Go 环境的卸载</h2><ol>
-<li><p>删除 /usr/local 下的 go 目录。</p>
+<li><p>删除 <code>/usr/local</code> 下的 <code>go</code> 目录。</p>
 <blockquote>
-<p>备注：这个目录是安装 go 的时候自动生成的。 如果删除完，终端中使用 go version 命令，会报找不到 go 命令。</p>
+<p>备注：这个目录是安装 <code>go</code> 的时候自动生成的。 如果删除完，终端中使用 <code>go version</code> 命令，会报找不到 <code>go</code> 命令。</p>
 </blockquote>
 </li>
 <li><p>删除 Path 环境变量。</p>
 <blockquote>
-<p>备注：这里，我只是想删除一个 Go 版本， 所以， GOPATH 还是需要的。</p>
+<p>备注：这里，我只是想删除一个 Go 版本， 所以， <code>GOPATH</code> 还是需要的。</p>
 </blockquote>
 </li>
-<li><p>删除配置文件信息：在 /etc/profile 或者 $HOME/.profile 或者 $HOME/.bahs_profile 中删除 bin 的设置。</p>
+<li><p>删除配置文件信息：在 <code>/etc/profile</code> 或者 <code>$HOME/.profile</code> 或者 <code>$HOME/.bahs_profile</code> 中删除 <code>bin</code> 的设置。</p>
 </li>
-<li><p>删除 macOS 的安装包文件，在 /etc/paths.d/go 目录下。</p>
+<li><p>删除 macOS 的安装包文件，在 <code>/etc/paths.d/go</code> 目录下。</p>
 <blockquote>
 <p>我只用了第一步，重新安装，其他都还继续使用。</p>
 </blockquote>
@@ -864,173 +965,10 @@
 
 
 
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://www.darrenkong.top/2019/03/25/UIApplicationDelegate%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F%EF%BC%88iOS-12%EF%BC%89/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Darren Kong">
-      <meta itemprop="description" content="Stay hungry，stay foolish!">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="DarrenKong's Blog">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          
-            <a href="/2019/03/25/UIApplicationDelegate%E6%96%B9%E6%B3%95%E8%B0%83%E7%94%A8%E9%A1%BA%E5%BA%8F%EF%BC%88iOS-12%EF%BC%89/" class="post-title-link" itemprop="url">UIApplicationDelegate方法调用顺序（iOS 12）</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2019-03-25 12:30:00" itemprop="dateCreated datePublished" datetime="2019-03-25T12:30:00+08:00">2019-03-25</time>
-    </span>
-      <span class="post-meta-item">
-        <span class="post-meta-item-icon">
-          <i class="far fa-calendar-check"></i>
-        </span>
-        <span class="post-meta-item-text">更新于</span>
-        <time title="修改时间：2020-11-06 10:53:21" itemprop="dateModified" datetime="2020-11-06T10:53:21+08:00">2020-11-06</time>
-      </span>
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-folder"></i>
-      </span>
-      <span class="post-meta-item-text">分类于</span>
-        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
-        </span>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <blockquote>
-<p>本文将作为iOS上响应某些操作调用UIApplicationDelegate方法的顺序的指南。除非另有说明，否则本文内容基于iOS 12.1。</p>
-</blockquote>
-<h3 id="正常启动"><a href="#正常启动" class="headerlink" title="正常启动"></a>正常启动</h3><ol>
-<li><code>application(_:willFinishLaunchingWithOptions:)</code></li>
-<li><code>application(_:didFinishLaunchingWithOptions:)</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-<h3 id="正常打开"><a href="#正常打开" class="headerlink" title="正常打开"></a>正常打开</h3><ol>
-<li><code>applicationWillEnterForeground</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-<h3 id="通过URL-scheme启动"><a href="#通过URL-scheme启动" class="headerlink" title="通过URL scheme启动"></a>通过URL scheme启动</h3><ol>
-<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
-<p>示例：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">&quot;com.apple.mobilesafari&quot;</span>,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsURLKey</span>: <span class="string">&quot;test://test.com&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
-</li>
-<li><p>[如果 1 和 2 都返回 true] <code>application(_:open:options:)</code></p>
-</li>
-<li><p><code>applicationDidBecomeActive</code></p>
-</li>
-</ol>
-<h3 id="通过URL-scheme打开"><a href="#通过URL-scheme打开" class="headerlink" title="通过URL scheme打开"></a>通过URL scheme打开</h3><ol>
-<li><code>applicationWillEnterForeground</code></li>
-<li><code>application(_:open:options:)</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-<h3 id="通过universal-link启动"><a href="#通过universal-link启动" class="headerlink" title="通过universal link启动"></a>通过universal link启动</h3><ol>
-<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
-<p>示例：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsUserActivityDictionaryKey</span>: &#123;</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityIdentifierKey</span>: <span class="string">&quot;F42C288E-D721-4F5D-9AB5-4FEB1D634D99&quot;</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityKey</span>: <span class="string">&quot;&lt;NSUserActivity: 0x2827146a0&gt;&quot;</span>,</span><br><span class="line">    <span class="built_in">UIApplicationLaunchOptionsUserActivityTypeKey</span>: <span class="built_in">NSUserActivityTypeBrowsingWeb</span>,</span><br><span class="line">  &#125;,</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsSourceApplicationKey</span>: <span class="string">&quot;com.apple.mobilesafari&quot;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
-</li>
-<li><p>[如果 1 和 2 都返回 true] <code>application(_:willContinueUserActivityWithType:)</code></p>
-</li>
-<li><p>[如果 1 和 2 都返回 true] <code>application(_:continue:restorationHandler:)</code></p>
-</li>
-<li><p><code>applicationDidBecomeActive</code></p>
-</li>
-</ol>
-<h3 id="通过universal-link打开"><a href="#通过universal-link打开" class="headerlink" title="通过universal link打开"></a>通过universal link打开</h3><ol>
-<li><code>applicationWillEnterForeground</code></li>
-<li><code>application(_:willContinueUserActivityWithType:):</code></li>
-<li><code>application(_:continue:restorationHandler:):</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-<h3 id="通过推送启动"><a href="#通过推送启动" class="headerlink" title="通过推送启动"></a>通过推送启动</h3><ol>
-<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
-<p>示例：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsRemoteNotificationKey</span>: &#123;</span><br><span class="line">    aps = &#123;</span><br><span class="line">      alert = <span class="string">&quot;Testing.. (0)&quot;</span>;</span><br><span class="line">      badge = <span class="number">1</span>;</span><br><span class="line">      sound = <span class="keyword">default</span>;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
-</li>
-<li><p><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></p>
-</li>
-<li><p><code>applicationDidBecomeActive</code></p>
-</li>
-</ol>
-<h3 id="通过推送打开"><a href="#通过推送打开" class="headerlink" title="通过推送打开"></a>通过推送打开</h3><ol>
-<li><code>applicationWillEnterForeground</code></li>
-<li><code>userNotificationCenter(_:didReceive:withCompletionHandler:)</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-<h3 id="通过快捷方式启动"><a href="#通过快捷方式启动" class="headerlink" title="通过快捷方式启动"></a>通过快捷方式启动</h3><ol>
-<li><p><code>application(_:willFinishLaunchingWithOptions:)</code></p>
-<p>示例：</p>
-<figure class="highlight objc"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="built_in">UIApplicationLaunchOptionsShortcutItemKey</span>: &lt;<span class="built_in">UIApplicationShortcutItem</span>: <span class="number">0x283ef6e00</span>; type: com.recoursive.example.shortcutTest, title: Shortcut test&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-</li>
-<li><p><code>application(_:didFinishLaunchingWithOptions:)</code></p>
-</li>
-<li><p>[如果 1 和 2 都返回 true] <code>application(_:performActionFor:completionHandler:)</code></p>
-</li>
-<li><p><code>applicationDidBecomeActive</code></p>
-</li>
-</ol>
-<h3 id="通过快捷方式打开"><a href="#通过快捷方式打开" class="headerlink" title="通过快捷方式打开"></a>通过快捷方式打开</h3><ol>
-<li><code>applicationWillEnterForeground</code></li>
-<li><code>application(_:performActionFor:completionHandler:)</code></li>
-<li><code>applicationDidBecomeActive</code></li>
-</ol>
-
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
 
   
   <nav class="pagination">
-    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><a class="page-number" href="/page/3/">3</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
+    <span class="page-number current">1</span><a class="page-number" href="/page/2/">2</a><span class="space">&hellip;</span><a class="page-number" href="/page/4/">4</a><a class="extend next" rel="next" href="/page/2/"><i class="fa fa-angle-right" aria-label="下一页"></i></a>
   </nav>
 
 
