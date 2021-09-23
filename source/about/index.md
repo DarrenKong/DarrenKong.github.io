@@ -12,5 +12,5 @@ date: 2017-10-23 13:14:17
 ## Contact
 
 > * email：<kong4221@163.com>
-> * blog：[www.DarrenKong.top](https://www.darrenkong.top/)
+> * blog：[DarrenKong](https://darrenkong.github.io/)
 > * github：[https://github.com/DarrenKong](https://github.com/DarrenKong)
