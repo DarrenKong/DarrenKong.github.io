@@ -136,7 +136,7 @@ categories:
 
 图片摘自：[Objective-C 消息发送与转发机制原理](https://link.juejin.im/?target=http%3A%2F%2Fyulingtianxia.com%2Fblog%2F2016%2F06%2F15%2FObjective-C-Message-Sending-and-Forwarding%2F)
 
-![](/uploads/168e72062c64f37c.jpg)
+![](/images/upload/168e72062c64f37c.jpg)
 
 > 使用命令：*thread backtrace*查看线程堆栈
 

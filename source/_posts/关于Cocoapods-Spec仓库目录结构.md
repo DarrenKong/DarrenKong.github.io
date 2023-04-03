@@ -9,7 +9,7 @@ categories:
 
 前阵子项目重构，使用private-specs时看到CocoaPods Specs的目录结构有改变，与我最初使用CocoaPods时的目录结构不同，具体见下图。
 
-![](/uploads/1.jpg)
+![](/images/upload/1.jpg)
 
 Specs目录下，并不是直接是以库的名称来命名文件夹，而是分3层目录，每层以0-f来命名。比如YYKit的位置是../a/4/0/YYKit/1.0.9/YYKit.podspec.json。
 

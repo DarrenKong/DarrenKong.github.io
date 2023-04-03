@@ -114,13 +114,13 @@ struct Structure {
 
 > 如果采用`面向对象编程`，则需要既要继承动物，还要继承交通工具，但是父类交通工具有些功能马是不需要的。由此可见**继承**，作为**代码复用**的一种方式，**耦合性**还是太强。**事物往往是一系列特质的组合，而不单单是以一脉相承并逐渐扩展的方式构建的。**`以后慢慢会发现面向对象很多时候其实不能很好地对事物进行抽象。`
 
-![img](/uploads/168eb6e344f65ff4.jpg)
+![img](/images/upload/168eb6e344f65ff4.jpg)
 
 
 
 > 如果采用`面向协议编程`，马只需要实现出行协议就可以拥有交通工具的功能了。**面向协议就是这样的抽离方式，更好的职责划分，更加具象化，职责更加单一。很明显面向协议的目的是为了降低代码的耦合性**。
 
-![img](/uploads/168eb6e6d02aaef6.jpg)
+![img](/images/upload/168eb6e6d02aaef6.jpg)
 
 
 
@@ -298,7 +298,7 @@ anotherViewController.myMethod()
 
 上面的例子中，如果我们有多继承，那么 `ViewController` 和 `AnotherViewController` 的关系可能会是这样的：
 
-![img](/uploads/168eb6ee7e40fa00.jpg)
+![img](/images/upload/168eb6ee7e40fa00.jpg)
 
 
 

@@ -46,7 +46,7 @@ go version
 
 此时会在终端显示go版本：
 
-![img](/uploads/image-20201112162352406.png)
+![img](/images/upload/image-20201112162352406.png)
 
 ### Go环境变量配置
 
