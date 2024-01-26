@@ -105,5 +105,5 @@ theme: next
 deploy:
   type: git
   repo: https://github.com/DarrenKong/DarrenKong.github.io.git
-  branch: gh-pages
+  branch: main
   message: 
