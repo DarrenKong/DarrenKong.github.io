@@ -1,0 +1,828 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="| 作者：Andrea Bizzotto| 原文链接：https:&#x2F;&#x2F;medium.com&#x2F;coding-with-flutter&#x2F;dart-vs-swift-a-comparison-6491e945dc17| 转载自：知识小集-掘金 Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中广泛使用它们。 本文提供了 Dart 和 Swift 之间的比较，旨在：  突出显示两者之间的">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dart vs Swift">
+<meta property="og:url" content="http://example.com/2019/02/16/Dart-vs-Swift/index.html">
+<meta property="og:site_name" content="DarrenKong&#39;s Blog">
+<meta property="og:description" content="| 作者：Andrea Bizzotto| 原文链接：https:&#x2F;&#x2F;medium.com&#x2F;coding-with-flutter&#x2F;dart-vs-swift-a-comparison-6491e945dc17| 转载自：知识小集-掘金 Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中广泛使用它们。 本文提供了 Dart 和 Swift 之间的比较，旨在：  突出显示两者之间的">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/upload/1689a206b0587832.jpg">
+<meta property="article:published_time" content="2019-02-16T03:49:13.000Z">
+<meta property="article:modified_time" content="2023-09-27T02:30:01.449Z">
+<meta property="article:author" content="Darren Kong">
+<meta property="article:tag" content="Swift">
+<meta property="article:tag" content="Dart">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/upload/1689a206b0587832.jpg">
+
+
+<link rel="canonical" href="http://example.com/2019/02/16/Dart-vs-Swift/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/02/16/Dart-vs-Swift/","path":"2019/02/16/Dart-vs-Swift/","title":"Dart vs Swift"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Dart vs Swift | DarrenKong's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DarrenKong's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry，stay foolish!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%AF%B9%E7%85%A7%E8%A1%A8"><span class="nav-number">1.1.</span> <span class="nav-text">对照表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%98%E9%87%8F"><span class="nav-number">1.2.</span> <span class="nav-text">变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB%E5%9E%8B%E6%8E%A8%E6%96%AD"><span class="nav-number">1.3.</span> <span class="nav-text">类型推断</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%9B%B4%E5%A4%9A%E7%BB%86%E8%8A%82"><span class="nav-number">1.3.1.</span> <span class="nav-text">更多细节</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%8A%A8%E6%80%81%E7%B1%BB%E5%9E%8B"><span class="nav-number">1.3.1.1.</span> <span class="nav-text">动态类型</span></a></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E5%8F%98-x2F-%E4%B8%8D%E5%8F%AF%E5%8F%98%E5%8F%98%E9%87%8F"><span class="nav-number">1.4.</span> <span class="nav-text">可变&#x2F;不可变变量</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%BD%E6%95%B0"><span class="nav-number">1.5.</span> <span class="nav-text">函数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%91%BD%E5%90%8D%E5%8F%8A%E6%9C%AA%E5%91%BD%E5%90%8D-un-named-%E5%8F%82%E6%95%B0"><span class="nav-number">1.6.</span> <span class="nav-text">命名及未命名(un-named)参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8F%AF%E9%80%89%E5%92%8C%E9%BB%98%E8%AE%A4%E5%8F%82%E6%95%B0"><span class="nav-number">1.7.</span> <span class="nav-text">可选和默认参数</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%97%AD%E5%8C%85"><span class="nav-number">1.8.</span> <span class="nav-text">闭包</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%83%E7%BB%84"><span class="nav-number">1.9.</span> <span class="nav-text">元组</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A7%E5%88%B6%E6%B5%81"><span class="nav-number">1.10.</span> <span class="nav-text">控制流</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%9B%86%E5%90%88-arrays-sets-maps"><span class="nav-number">1.11.</span> <span class="nav-text">集合(arrays, sets, maps)</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Arrays-x2F-Lists"><span class="nav-number">1.11.1.</span> <span class="nav-text">Arrays &#x2F; Lists</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Sets"><span class="nav-number">1.11.2.</span> <span class="nav-text">Sets</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Maps-x2F-Dictionaries"><span class="nav-number">1.11.3.</span> <span class="nav-text">Maps &#x2F; Dictionaries</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Nullability-amp-Optionals"><span class="nav-number">1.12.</span> <span class="nav-text">Nullability &amp; Optionals</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%B1%BB"><span class="nav-number">1.13.</span> <span class="nav-text">类</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%AF%AD%E6%B3%95"><span class="nav-number">1.13.1.</span> <span class="nav-text">语法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E5%8E%82%E6%9E%84%E9%80%A0%E5%87%BD%E6%95%B0"><span class="nav-number">1.13.2.</span> <span class="nav-text">工厂构造函数</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%A7%E6%89%BF"><span class="nav-number">1.14.</span> <span class="nav-text">继承</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7"><span class="nav-number">1.15.</span> <span class="nav-text">属性</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B1%9E%E6%80%A7%E8%A7%82%E5%AF%9F%E8%80%85"><span class="nav-number">1.15.1.</span> <span class="nav-text">属性观察者</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE-x2F-%E6%8A%BD%E8%B1%A1%E7%B1%BB"><span class="nav-number">1.16.</span> <span class="nav-text">协议&#x2F;抽象类</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Mixins"><span class="nav-number">1.17.</span> <span class="nav-text">Mixins</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%A9%E5%B1%95"><span class="nav-number">1.18.</span> <span class="nav-text">扩展</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9E%9A%E4%B8%BE"><span class="nav-number">1.19.</span> <span class="nav-text">枚举</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%93%E6%9E%84%E4%BD%93"><span class="nav-number">1.20.</span> <span class="nav-text">结构体</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%94%99%E8%AF%AF%E5%A4%84%E7%90%86"><span class="nav-number">1.21.</span> <span class="nav-text">错误处理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#try-try-try"><span class="nav-number">1.21.1.</span> <span class="nav-text">try?, try!, try</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%B3%9B%E5%9E%8B"><span class="nav-number">1.22.</span> <span class="nav-text">泛型</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%AE%BF%E9%97%AE%E6%8E%A7%E5%88%B6"><span class="nav-number">1.23.</span> <span class="nav-text">访问控制</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%EF%BC%9AFuture"><span class="nav-number">1.24.</span> <span class="nav-text">异步编程：Future</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%BC%82%E6%AD%A5%E7%BC%96%E7%A8%8B%EF%BC%9AStream"><span class="nav-number">1.25.</span> <span class="nav-text">异步编程：Stream</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%86%85%E5%AD%98%E7%AE%A1%E7%90%86"><span class="nav-number">1.26.</span> <span class="nav-text">内存管理</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E8%AF%91%E5%92%8C%E6%89%A7%E8%A1%8C"><span class="nav-number">1.27.</span> <span class="nav-text">编译和执行</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#JIT"><span class="nav-number">1.27.1.</span> <span class="nav-text">JIT</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#AOT"><span class="nav-number">1.27.2.</span> <span class="nav-text">AOT</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B6%E5%AE%83%E6%9C%AA%E6%B6%B5%E7%9B%96%E5%8A%9F%E8%83%BD"><span class="nav-number">1.28.</span> <span class="nav-text">其它未涵盖功能</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B9%B6%E5%8F%91"><span class="nav-number">1.28.1.</span> <span class="nav-text">并发</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Dart-%E4%B8%AD%E7%BC%BA%E5%A4%B1%E7%9A%84%E9%82%A3%E4%BA%9B%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84-Swift-%E7%89%B9%E6%80%A7"><span class="nav-number">1.29.</span> <span class="nav-text">Dart 中缺失的那些我喜欢的 Swift 特性</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#Swift-%E4%B8%AD%E7%BC%BA%E5%A4%B1%E7%9A%84%E9%82%A3%E4%BA%9B%E6%88%91%E5%96%9C%E6%AC%A2%E7%9A%84-Dart-%E7%89%B9%E6%80%A7"><span class="nav-number">1.30.</span> <span class="nav-text">Swift 中缺失的那些我喜欢的 Dart 特性</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%BB%93%E8%AE%BA"><span class="nav-number">2.</span> <span class="nav-text">结论</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Darren Kong</p>
+  <div class="site-description" itemprop="description">Stay hungry，stay foolish!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DarrenKong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DarrenKong" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kong4221@163.com" title="E-Mail → mailto:kong4221@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/16/Dart-vs-Swift/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Dart vs Swift | DarrenKong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Dart vs Swift
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-16 11:49:13" itemprop="dateCreated datePublished" datetime="2019-02-16T11:49:13+08:00">2019-02-16</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-27 10:30:01" itemprop="dateModified" datetime="2023-09-27T10:30:01+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>| 作者：Andrea Bizzotto<br>| 原文链接：<a target="_blank" rel="noopener" href="https://medium.com/coding-with-flutter/dart-vs-swift-a-comparison-6491e945dc17">https://medium.com/coding-with-flutter/dart-vs-swift-a-comparison-6491e945dc17</a><br>| 转载自：<a target="_blank" rel="noopener" href="https://juejin.im/post/5c506a7c51882525c71333d2#heading-20">知识小集-掘金</a></p>
+<p>Dart 和 Swift 是我最喜欢的编程语言。我在商业和开源代码中广泛使用它们。</p>
+<p>本文提供了 Dart 和 Swift 之间的比较，旨在：</p>
+<ul>
+<li>突出显示两者之间的差异；</li>
+<li>作为开发人员从一种语言转移到另一种语言（或使用两者）的参考。</li>
+</ul>
+<p>一些背景：</p>
+<ul>
+<li>Dart 支持 Flutter，这是 Google 用于从单一代码库构建漂亮的本机应用程序的框架。</li>
+<li>Swift 通过 iOS，macOS，tvOS 和 watchOS 为 Apple 的 SDK 提供支持。</li>
+</ul>
+<p>以下是两种语言的主要特征（<code>Dart 2.1</code> 和 <code>Swift 4.2</code>）的比较。由于深入讨论每个功能超出了本文的范围，因此更多的信息可以参考各自的文档。</p>
+<h1 id="目录"><a href="#目录" class="headerlink" title="目录"></a>目录</h1><ul>
+<li>对照表</li>
+<li>变量</li>
+<li>类型推断</li>
+<li>可变&#x2F;不可变变量</li>
+<li>函数</li>
+<li>命名和未命名参数</li>
+<li>可选和默认参数</li>
+<li>闭包</li>
+<li>元组</li>
+<li>控制流</li>
+<li>集合</li>
+<li>Nullability &amp; Optionals</li>
+<li>类</li>
+<li>继承</li>
+<li>属性</li>
+<li>协议&#x2F;抽象类</li>
+<li>Mixins</li>
+<li>扩展</li>
+<li>枚举</li>
+<li>结构体</li>
+<li>错误处理</li>
+<li>泛型</li>
+<li>访问控制</li>
+<li>异步编程：Future</li>
+<li>异步编程：Stream</li>
+<li>内存管理</li>
+<li>编译和执行</li>
+<li>其它未涵盖功能</li>
+</ul>
+<h2 id="对照表"><a href="#对照表" class="headerlink" title="对照表"></a>对照表</h2><p><img src="/images/upload/1689a206b0587832.jpg" alt="img"></p>
+<h2 id="变量"><a href="#变量" class="headerlink" title="变量"></a>变量</h2><p>Dart 中变量<strong>声明</strong>语法如下：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> name;</span><br><span class="line"><span class="built_in">int</span> age;</span><br><span class="line"><span class="built_in">double</span> height;</span><br></pre></td></tr></table></figure>
+
+<p>Swift 中是如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line"><span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line"><span class="keyword">var</span> height: <span class="type">Double</span></span><br></pre></td></tr></table></figure>
+
+<p>Dart 中变量<strong>初始化</strong>语法如下：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name = <span class="string">&#x27;Andrea&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> age = <span class="number">34</span>;</span><br><span class="line"><span class="keyword">var</span> height = <span class="number">1.84</span>;</span><br></pre></td></tr></table></figure>
+
+<p>Swift 中是如下：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> name <span class="operator">=</span> <span class="string">&quot;Andrea&quot;</span></span><br><span class="line"><span class="keyword">var</span> age <span class="operator">=</span> <span class="number">34</span></span><br><span class="line"><span class="keyword">var</span> height <span class="operator">=</span> <span class="number">1.84</span></span><br></pre></td></tr></table></figure>
+
+<p>在此示例中，不需要类型注释。这是因为两种语言都可以从赋值右侧的表达式推断出类型。</p>
+<h2 id="类型推断"><a href="#类型推断" class="headerlink" title="类型推断"></a>类型推断</h2><p>类型推断意味着我们可以在 Dart 中编写以下代码：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arguments = &#123;<span class="string">&#x27;argA&#x27;</span>: <span class="string">&#x27;hello&#x27;</span>, <span class="string">&#x27;argB&#x27;</span>: <span class="number">42</span>&#125;; <span class="comment">// Map&lt;String, Object&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>编译器会自动解析 <code>arguments</code> 的类型。</p>
+<p>在 Swift 中，同样可以写成：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> arguments <span class="operator">=</span> [ <span class="string">&quot;argA&quot;</span>: <span class="string">&quot;hello&quot;</span>, <span class="string">&quot;argB&quot;</span>: <span class="number">42</span> ] <span class="comment">// [ String : Any ]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="更多细节"><a href="#更多细节" class="headerlink" title="更多细节"></a>更多细节</h3><p>Dart 文档有如下描述：</p>
+<blockquote>
+<p>分析器可以推断字段、方法、局部变量和大多数泛型类型参数的类型。当分析器没有足够的信息来推断特定类型时，将使用动态类型。</p>
+</blockquote>
+<p>Swift 文档中有如下描述：</p>
+<p>Swift 广泛使用类型推断，允许您省略代码中许多变量和表达式的类型或部分类型。例如，不是写 <code>var x:Int = 0</code>，而是可以写 <code>var x = 0</code>，完全省略类型 - 编译器正确地推断出 x 为 <code>Int</code> 类型的值。</p>
+<h4 id="动态类型"><a href="#动态类型" class="headerlink" title="动态类型"></a>动态类型</h4><p>可以使用 Dart 中的 <code>dynamic</code> 关键字和 Swift 中的 <code>Any</code> 关键字声明可以是任何类型的变量。</p>
+<p>在读取 <code>JSON</code> 等数据时，通常会使用动态类型。</p>
+<h2 id="可变-x2F-不可变变量"><a href="#可变-x2F-不可变变量" class="headerlink" title="可变&#x2F;不可变变量"></a>可变&#x2F;不可变变量</h2><p>变量可以声明为<strong>可变</strong>或<strong>不可变</strong>。</p>
+<p>为了声明<strong>可变</strong>变量，两种语言都使用 <code>var</code> 关键字。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="number">10</span>; <span class="comment">// int (Dart)</span></span><br><span class="line">a <span class="operator">=</span> <span class="number">20</span>; <span class="comment">// ok</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="number">10</span> <span class="comment">// Int (Swift)</span></span><br><span class="line">a <span class="operator">=</span> <span class="number">20</span> <span class="comment">// ok</span></span><br></pre></td></tr></table></figure>
+
+<p>为了声明<strong>不可变</strong>变量，Dart 使用 <code>final</code>，Swift 使用 <code>let</code>。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> a <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">a <span class="operator">=</span> <span class="number">20</span>; <span class="comment">// &#x27;a&#x27;: a final variable, can only be set once.</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">let</span> a <span class="operator">=</span> <span class="number">10</span></span><br><span class="line">a <span class="operator">=</span> <span class="number">20</span> <span class="comment">// Cannot assign to value: &#x27;a&#x27; is a &#x27;let&#x27; constant</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：Dart 文档定义了两个关键字 <code>final</code> 和 <code>const</code>，其工作方式如下：</p>
+<blockquote>
+<p>如果您不打算更改变量值，请使用 <code>final</code> 或 <code>const</code>，而不是 <code>var</code> 或类型。<code>final</code> 变量只能设置一次；<code>const</code> 变量是编译时常量。（<code>Const</code> 变量是隐式 <code>final</code>。）final 顶层类型变量或类变量在第一次使用时被初始化。</p>
+</blockquote>
+<p>在 Dart 网站上的<a href="https://link.juejin.im/?target=https://news.dartlang.org/2012/06/const-static-final-oh-my.html">这篇文章</a>中可以找到进一步的解释：</p>
+<blockquote>
+<p>final 意味着一次赋值。final 变量或字段必须具有 <code>initializer</code>。 一旦赋值，就不能改变 final 变量的值。</p>
+</blockquote>
+<p>在 Swift 中，我们用 <code>let</code> 声明常量。</p>
+<blockquote>
+<p>常量声明会在程序中引入常量命名值。使用 <code>let</code> 关键字声明常量，并具有以下形式：</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> constant name: type <span class="operator">=</span> expression</span><br></pre></td></tr></table></figure>
+
+<p>常量声明定义常量名称和初始化表达式值之间的不可变绑定；设置常量值后，无法更改。</p>
+<h2 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h2><p>函数在 Swift 和 Dart 中都是一等公民。</p>
+<p>这意味着就像对象一样，函数可以作为参数传递，保存为属性或作为结果返回。</p>
+<p>作为初始比较，我们可以看到如何声明不带参数的函数。</p>
+<p>在 Dart 中，返回类型在方法名称之前：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> foo();</span><br><span class="line"><span class="built_in">int</span> bar();</span><br></pre></td></tr></table></figure>
+
+<p>在 Swift 中，我们使用 <code>-&gt; T</code> 表示法作为后缀。如果没有返回值（Void），则不需要这样做：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">foo</span>()</span><br><span class="line"><span class="keyword">func</span> <span class="title function_">bar</span>() -&gt; <span class="type">Int</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="命名及未命名-un-named-参数"><a href="#命名及未命名-un-named-参数" class="headerlink" title="命名及未命名(un-named)参数"></a>命名及未命名(un-named)参数</h2><p>两种语言都支持命名和未命名的参数。</p>
+<p>在 Swift 中，参数默认为<strong>命名参数</strong>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">foo</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>, <span class="params">height</span>: <span class="type">Double</span>)</span><br><span class="line">foo(name: <span class="string">&quot;Andrea&quot;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中，我们使用花括号（{}）定义命名参数：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> foo(&#123;<span class="built_in">String</span> name, <span class="built_in">int</span> age, <span class="built_in">double</span> height&#125;);</span><br><span class="line">foo(name: <span class="string">&#x27;Andrea&#x27;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>);</span><br></pre></td></tr></table></figure>
+
+<p>在 Swift 中，我们使用<code>下划线(_)</code> 作为外部参数来定义未命名的参数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">foo</span>(<span class="keyword">_</span> <span class="params">name</span>: <span class="type">String</span>, <span class="keyword">_</span> <span class="params">age</span>: <span class="type">Int</span>, <span class="keyword">_</span> <span class="params">height</span>: <span class="type">Double</span>)</span><br><span class="line">foo(<span class="string">&quot;Andrea&quot;</span>, <span class="number">34</span>, <span class="number">1.84</span>)</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中，我们通过省略花括号（{}）来定义未命名的参数：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> foo(<span class="built_in">String</span> name, <span class="built_in">int</span> age, <span class="built_in">double</span> height);</span><br><span class="line">foo(<span class="string">&#x27;Andrea&#x27;</span>, <span class="number">34</span>, <span class="number">1.84</span>);</span><br></pre></td></tr></table></figure>
+
+<h2 id="可选和默认参数"><a href="#可选和默认参数" class="headerlink" title="可选和默认参数"></a>可选和默认参数</h2><p>两种语言都支持默认参数。</p>
+<blockquote>
+<p>在 Swift 中，您可以通过在该参数的类型之后为参数赋值来为函数中的任何参数定义默认值。如果定义了默认值，则可以在调用函数时省略该参数。</p>
+</blockquote>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">foo</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span> <span class="operator">=</span> <span class="number">0</span>, <span class="params">height</span>: <span class="type">Double</span> <span class="operator">=</span> <span class="number">0.0</span>)</span><br><span class="line">foo(name: <span class="string">&quot;Andrea&quot;</span>, age: <span class="number">34</span>) <span class="comment">// name: &quot;Andrea&quot;, age: 34, height: 0.0</span></span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中，可选参数可以是位置参数，也可以是命名参数，但不能同时。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// positional optional parameters</span></span><br><span class="line"><span class="keyword">void</span> foo(<span class="built_in">String</span> name, [<span class="built_in">int</span> age = <span class="number">0</span>, <span class="built_in">double</span> height = <span class="number">0.0</span>]);</span><br><span class="line">foo(<span class="string">&#x27;Andrea&#x27;</span>, <span class="number">34</span>); <span class="comment">// name: &#x27;Andrea&#x27;, age: 34, height: 0.0</span></span><br><span class="line"><span class="comment">// named optional parameters</span></span><br><span class="line"><span class="keyword">void</span> foo(&#123;<span class="built_in">String</span> name, <span class="built_in">int</span> age = <span class="number">0</span>, <span class="built_in">double</span> height = <span class="number">0.0</span>&#125;);</span><br><span class="line">foo(name: <span class="string">&#x27;Andrea&#x27;</span>, age: <span class="number">34</span>); <span class="comment">// name: &#x27;Andrea&#x27;, age: 34, height: 0.0</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="闭包"><a href="#闭包" class="headerlink" title="闭包"></a>闭包</h2><p>作为顶层(first-class)对象，函数可以作为参数传递给其他函数，或者分配给变量。</p>
+<p>在此上下文中，函数也称为<strong>闭包</strong>。</p>
+<p>这是一个函数的 Dart 示例，它迭代一个 item 列表，使用闭包来打印每个项目的索引和内容：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> list = [<span class="string">&#x27;apples&#x27;</span>, <span class="string">&#x27;bananas&#x27;</span>, <span class="string">&#x27;oranges&#x27;</span>];</span><br><span class="line">list.forEach((item) =&gt; <span class="built_in">print</span>(<span class="string">&#x27;<span class="subst">$&#123;list.indexOf(item)&#125;</span>: <span class="subst">$item</span>&#x27;</span>));</span><br></pre></td></tr></table></figure>
+
+<p>闭包带有一个参数（<code>item</code>），打印该项的索引和值，并且不返回任何值。</p>
+<p>注意使用<code>箭头符号(=&gt;)</code>。这可以代替花括号内的单个 <code>return</code> 语句：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach((item) &#123; <span class="built_in">print</span>(<span class="string">&#x27;<span class="subst">$&#123;list.indexOf(item)&#125;</span>: <span class="subst">$item</span>&#x27;</span>); &#125;);</span><br></pre></td></tr></table></figure>
+
+<p>Swift 中的相同代码如下所示：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> list <span class="operator">=</span> [<span class="string">&quot;apples&quot;</span>, <span class="string">&quot;bananas&quot;</span>, <span class="string">&quot;oranges&quot;</span>]</span><br><span class="line">list.forEach(&#123;<span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(String(describing: list.firstIndex(of: <span class="variable">$0</span>)))</span> <span class="subst">\(<span class="variable">$0</span>)</span>&quot;</span>)&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>在这种情况下，我们不为传递给闭包的参数指定名称，而使用 <code>$0</code> 代替第一个参数。这完全是可选的，我们仍然可以使用命名参数：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">list.forEach(&#123; item <span class="keyword">in</span> <span class="built_in">print</span>(<span class="string">&quot;<span class="subst">\(String(describing: list.firstIndex(of: item)))</span> <span class="subst">\(item)</span>&quot;</span>)&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>闭包通常用作 Swift 中异步代码的完成块（请参阅下面有关<code>异步编程</code>的部分）。</p>
+<h2 id="元组"><a href="#元组" class="headerlink" title="元组"></a>元组</h2><p>Swift 文档的描述如下：</p>
+<blockquote>
+<p>元组将多个值分组为单个复合值。元组中的值可以是任何类型，并且不必具有相同的类型。</p>
+</blockquote>
+<p>这些可以用作小型轻量级类型，在定义具有多个返回值的函数时非常有用。</p>
+<p>以下是如何在 Swift 中使用元组：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> t <span class="operator">=</span> (<span class="string">&quot;Andrea&quot;</span>, <span class="number">34</span>, <span class="number">1.84</span>)</span><br><span class="line"><span class="built_in">print</span>(t.<span class="number">0</span>) <span class="comment">// prints &quot;Andrea&quot;</span></span><br><span class="line"><span class="built_in">print</span>(t.<span class="number">1</span>) <span class="comment">// prints 34</span></span><br><span class="line"><span class="built_in">print</span>(t.<span class="number">2</span>) <span class="comment">// prints 1.84</span></span><br></pre></td></tr></table></figure>
+
+<p>Dart 中有一个单独<a href="https://link.juejin.im/?target=https://pub.dartlang.org/packages/tuple">三方包</a>支持元组：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> t = <span class="keyword">const</span> Tuple3&lt;<span class="built_in">String</span>, <span class="built_in">int</span>, <span class="built_in">double</span>&gt;(<span class="string">&#x27;Andrea&#x27;</span>, <span class="number">34</span>, <span class="number">1.84</span>);</span><br><span class="line"><span class="built_in">print</span>(t.item1); <span class="comment">// prints &#x27;Andrea&#x27;</span></span><br><span class="line"><span class="built_in">print</span>(t.item2); <span class="comment">// prints 34</span></span><br><span class="line"><span class="built_in">print</span>(t.item3); <span class="comment">// prints 1.84</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="控制流"><a href="#控制流" class="headerlink" title="控制流"></a>控制流</h2><p>两种语言都提供多种控制流语句。</p>
+<p>例如，if、for、while、switch 语句。</p>
+<p>在这里介绍这些将是相当冗长的，所以请参考官方文档。</p>
+<h2 id="集合-arrays-sets-maps"><a href="#集合-arrays-sets-maps" class="headerlink" title="集合(arrays, sets, maps)"></a>集合(arrays, sets, maps)</h2><h3 id="Arrays-x2F-Lists"><a href="#Arrays-x2F-Lists" class="headerlink" title="Arrays &#x2F; Lists"></a>Arrays &#x2F; Lists</h3><p>数组是有序的对象组。</p>
+<p>在 Dart 中，使用 <code>List</code> 对象来表示数组：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyList = &lt;<span class="built_in">int</span>&gt;[]; <span class="comment">// empty list</span></span><br><span class="line"><span class="keyword">var</span> list = [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]; <span class="comment">// list literal</span></span><br><span class="line">list.length; <span class="comment">// 3</span></span><br><span class="line">list[<span class="number">1</span>]; <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<p>Swift 中数组是内置类型：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyArray <span class="operator">=</span> [<span class="type">Int</span>]() <span class="comment">// empty array</span></span><br><span class="line"><span class="keyword">var</span> array <span class="operator">=</span> [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>] <span class="comment">// array literal</span></span><br><span class="line">array.count <span class="comment">// 3</span></span><br><span class="line">array[<span class="number">1</span>] <span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Sets"><a href="#Sets" class="headerlink" title="Sets"></a>Sets</h3><p>Swift 文档中的描述：</p>
+<blockquote>
+<p>Set 在集合中存储相同类型的不同值，没有定义的顺序。当项目的顺序不重要时，或者当您需要确保元素仅出现一次时，您可以使用集合而不是数组。</p>
+</blockquote>
+<p>Dart 中 Set 类的定义：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyFruits = <span class="built_in">Set</span>&lt;<span class="built_in">String</span>&gt;();</span><br><span class="line"><span class="keyword">var</span> fruits = <span class="built_in">Set</span>&lt;<span class="built_in">String</span>&gt;.from([<span class="string">&#x27;apple&#x27;</span>, <span class="string">&#x27;banana&#x27;</span>]); <span class="comment">// set from Iterable</span></span><br></pre></td></tr></table></figure>
+
+<p>Swift 中的示例：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> emptyFruits <span class="operator">=</span> <span class="type">Set</span>&lt;<span class="type">String</span>&gt;()</span><br><span class="line"><span class="keyword">var</span> fruits <span class="operator">=</span> <span class="type">Set</span>&lt;<span class="type">String</span>&gt;([<span class="string">&quot;apple&quot;</span>, <span class="string">&quot;banana&quot;</span>])</span><br></pre></td></tr></table></figure>
+
+<h3 id="Maps-x2F-Dictionaries"><a href="#Maps-x2F-Dictionaries" class="headerlink" title="Maps &#x2F; Dictionaries"></a>Maps &#x2F; Dictionaries</h3><p>Swift 文档对 <code>map/dictionary</code> 有一个很好的定义：</p>
+<blockquote>
+<p>字典存储相同类型的键与集合中相同类型的值之间的关联，而没有特定的排序。每个值都与唯一键相关联，该唯一键充当字典中该值的标识符。</p>
+</blockquote>
+<p>Dart 中的 map 定义如下：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> namesOfIntegers = <span class="built_in">Map</span>&lt;Int,<span class="built_in">String</span>&gt;(); <span class="comment">// empty map</span></span><br><span class="line"><span class="keyword">var</span> airports = &#123; <span class="string">&#x27;YYZ&#x27;</span>: <span class="string">&#x27;Toronto Pearson&#x27;</span>, <span class="string">&#x27;DUB&#x27;</span>: <span class="string">&#x27;Dublin&#x27;</span> &#125;; <span class="comment">// map literal</span></span><br></pre></td></tr></table></figure>
+
+<p>Swift 中 <code>map</code> 称为字典：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> namesOfIntegers <span class="operator">=</span> [<span class="type">Int</span>: <span class="type">String</span>]() <span class="comment">// empty dictionary</span></span><br><span class="line"><span class="keyword">var</span> airports <span class="operator">=</span> [<span class="string">&quot;YYZ&quot;</span>: <span class="string">&quot;Toronto Pearson&quot;</span>, <span class="string">&quot;DUB&quot;</span>: <span class="string">&quot;Dublin&quot;</span>] <span class="comment">// dictionary literal</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Nullability-amp-Optionals"><a href="#Nullability-amp-Optionals" class="headerlink" title="Nullability &amp; Optionals"></a>Nullability &amp; Optionals</h2><p>在Dart中，任何对象都可以为 <code>null</code>。并且尝试访问 <code>null</code> 对象的方法或变量会导致空指针异常。这是计算机程序中最常见的错误来源。</p>
+<p>从一开始，<code>Swift</code> 就多了一个选择，一个内置的语言功能，用于声明对象是否可以有值。看看文档：</p>
+<blockquote>
+<p>您可以在可能缺少值的情况下使用 Optional。<code>Optional</code> 表示两种可能性：要么存在值，您可以解开可选项以访问该值，或者根本没有值。</p>
+</blockquote>
+<p>与此相反，我们可以使用非 Optional 变量来保证它们始终具有值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> x: <span class="type">Int</span>? <span class="comment">// optional</span></span><br><span class="line"><span class="keyword">var</span> y: <span class="type">Int</span> <span class="operator">=</span> <span class="number">1</span> <span class="comment">// non-optional, must be initialized</span></span><br></pre></td></tr></table></figure>
+
+<p>注意：说 Swift 变量是可选的与 Dart 变量可以为 null 是大致相同。</p>
+<p>如果没有对选项的语言级支持，我们只能在运行时检查变量是否为 <code>null</code>。</p>
+<p>使用 Optional，我们在编译时对这些信息进行编码。我们可以解开 Optional 以安全地检查它们是否包含值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">showOptional</span>(<span class="params">x</span>: <span class="type">Int</span>?) &#123;</span><br><span class="line">  <span class="comment">// use `guard let` rather than `if let` as best practice</span></span><br><span class="line">  <span class="keyword">if</span> <span class="keyword">let</span> x <span class="operator">=</span> x &#123; <span class="comment">// unwrap optional</span></span><br><span class="line">    <span class="built_in">print</span>(x)</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;no value&quot;</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">showOptional(x: <span class="literal">nil</span>) <span class="comment">// prints &quot;no value&quot;</span></span><br><span class="line">showOptional(x: <span class="number">5</span>) <span class="comment">// prints &quot;5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们知道变量必须有值，我们可以使用 <code>non-optional</code> 的值：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">showNonOptional</span>(<span class="params">x</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">  <span class="built_in">print</span>(x)</span><br><span class="line">&#125;</span><br><span class="line">showNonOptional(x: <span class="literal">nil</span>) <span class="comment">// [compile error] Nil is not compatible with expected argument type &#x27;Int&#x27;</span></span><br><span class="line">showNonOptional(x: <span class="number">5</span>) <span class="comment">// prints &quot;5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的第一个例子在 Dart 中的实现如下：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> showOptional(<span class="built_in">int</span> x) &#123;</span><br><span class="line">  <span class="keyword">if</span> (x != <span class="keyword">null</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(x);</span><br><span class="line">  &#125; <span class="keyword">else</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&#x27;no value&#x27;</span>);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line">showOptional(<span class="keyword">null</span>) <span class="comment">// prints &quot;no value&quot;</span></span><br><span class="line">showOptional(<span class="number">5</span>) <span class="comment">// prints &quot;5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>第二个如下实现：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">void</span> showNonOptional(<span class="built_in">int</span> x) &#123;</span><br><span class="line">  <span class="keyword">assert</span>(x != <span class="keyword">null</span>);</span><br><span class="line">  <span class="built_in">print</span>(x);</span><br><span class="line">&#125;</span><br><span class="line">showNonOptional(<span class="keyword">null</span>) <span class="comment">// [runtime error] Uncaught exception: Assertion failed</span></span><br><span class="line">showNonOptional(<span class="number">5</span>) <span class="comment">// prints &quot;5&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>有 optional 意味着我们可以在<strong>编译时</strong>而不是在<strong>运行时</strong>捕获错误。及早捕获错误会让代码更安全，错误更少。</p>
+<p>Dart 缺乏对 optional 的支持在某种程度上通过使用断言（以及用于命名参数的 <a href="https://link.juejin.im/?target=https://pub.dartlang.org/documentation/meta/latest/meta/required-constant.html">@required 注释</a>）得到缓解。</p>
+<p>这些在 <code>Flutter SDK</code> 中广泛使用，但会产生额外的样板代码。</p>
+<h2 id="类"><a href="#类" class="headerlink" title="类"></a>类</h2><p>类是用面向对象语言编写程序的主要构建块。</p>
+<p>Dart 和 Swift 都支持类，但有一些差异。</p>
+<h3 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h3><p>这里有一个带有 <code>initializer</code> 和三个成员变量的 <code>Swift</code> 类：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">let</span> age: <span class="type">Int</span></span><br><span class="line">  <span class="keyword">let</span> height: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>, <span class="params">height</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    <span class="keyword">self</span>.age <span class="operator">=</span> age</span><br><span class="line">    <span class="keyword">self</span>.height <span class="operator">=</span> height</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  Person(&#123;<span class="keyword">this</span>.name, <span class="keyword">this</span>.age, <span class="keyword">this</span>.height&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> name;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> age;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> height;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意在 Dart 构造函数中使用的 <code>this.[propertyName]</code>。这是用于在构造函数运行之前设置实例成员变量的语法糖。</p>
+<h3 id="工厂构造函数"><a href="#工厂构造函数" class="headerlink" title="工厂构造函数"></a>工厂构造函数</h3><p>在 Dart 中，可以使用工厂构造函数。</p>
+<blockquote>
+<p>在实现并不总是创建其类的新实例的构造函数时，请使用 <code>factory</code> 关键字。</p>
+</blockquote>
+<p>工厂构造函数的一个实际用例是从 JSON 创建模型类时：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> </span>&#123;</span><br><span class="line">  Person(&#123;<span class="keyword">this</span>.name, <span class="keyword">this</span>.age, <span class="keyword">this</span>.height&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> name;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> age;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> height;</span><br><span class="line">  <span class="keyword">factory</span> Person.fromJSON(<span class="built_in">Map</span>&lt;<span class="built_in">dynamic</span>, <span class="built_in">dynamic</span>&gt; json) &#123;</span><br><span class="line">    <span class="built_in">String</span> name = json[<span class="string">&#x27;name&#x27;</span>];</span><br><span class="line">    <span class="built_in">int</span> age = json[<span class="string">&#x27;age&#x27;</span>];</span><br><span class="line">    <span class="built_in">double</span> height = json[<span class="string">&#x27;height&#x27;</span>];</span><br><span class="line">    <span class="keyword">return</span> Person(name: name, age: age, height: height);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> p = Person.fromJSON(&#123;</span><br><span class="line">  <span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;Andrea&#x27;</span>,</span><br><span class="line">  <span class="string">&#x27;age&#x27;</span>: <span class="number">34</span>,</span><br><span class="line">  <span class="string">&#x27;height&#x27;</span>: <span class="number">1.84</span>,</span><br><span class="line">&#125;);</span><br></pre></td></tr></table></figure>
+
+<h2 id="继承"><a href="#继承" class="headerlink" title="继承"></a>继承</h2><p>Swift 使用单继承模型，这意味着任何类只能有一个超类。Swift类可以实现多个接口（也称为协议）。</p>
+<p>Dart 类具有基于 <code>mixin</code> 的继承。如文档描述：</p>
+<blockquote>
+<p>每个对象都是一个类的实例，所有类都来自 <code>Object</code>。基于 <code>Mixin</code> 的继承意味着虽然每个类（除了Object）只有一个超类，但是类体可以在多个类层次结构中重用。</p>
+</blockquote>
+<p>以下是 Swift 中的单继承：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> wheelCount: <span class="type">Int</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">wheelCount</span>: <span class="type">Int</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.wheelCount <span class="operator">=</span> wheelCount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Bicycle</span>: <span class="title class_">Vehicle</span> &#123;</span><br><span class="line">  <span class="keyword">init</span>() &#123;</span><br><span class="line">    <span class="keyword">super</span>.<span class="keyword">init</span>(wheelCount: <span class="number">2</span>)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">  Vehicle(&#123;<span class="keyword">this</span>.wheelCount&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> wheelCount;</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Bicycle</span> <span class="keyword">extends</span> <span class="title">Vehicle</span> </span>&#123;</span><br><span class="line">  Bicycle() : <span class="keyword">super</span>(wheelCount: <span class="number">2</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="属性"><a href="#属性" class="headerlink" title="属性"></a>属性</h2><p>这些在 Dart 中称为实例变量，在 Swift 中只是属性。</p>
+<p>在 Swift 中，存储和计算属性之间存在区别：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Circle</span> &#123;</span><br><span class="line">  <span class="keyword">init</span>(<span class="params">radius</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.radius <span class="operator">=</span> radius</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">let</span> radius: <span class="type">Double</span> <span class="comment">// stored property</span></span><br><span class="line">  <span class="keyword">var</span> diameter: <span class="type">Double</span> &#123; <span class="comment">// read-only computed property</span></span><br><span class="line">    <span class="keyword">return</span> radius <span class="operator">*</span> <span class="number">2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中，我们有相同的区分：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Circle</span> </span>&#123;</span><br><span class="line">  Circle(&#123;<span class="keyword">this</span>.radius&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> radius; <span class="comment">// stored property</span></span><br><span class="line">  <span class="built_in">double</span> <span class="keyword">get</span> diameter =&gt; radius * <span class="number">2.0</span>; <span class="comment">// computed property</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>除了计算属性的 <code>getter</code> 之外，我们还可以定义 <code>setter</code>。</p>
+<p>使用上面的例子，我们可以重写 <code>diameter</code> 属性以包含一个 <code>setter</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> diameter: <span class="type">Double</span> &#123; <span class="comment">// computed property</span></span><br><span class="line">  <span class="keyword">get</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> radius <span class="operator">*</span> <span class="number">2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">set</span> &#123;</span><br><span class="line">    radius <span class="operator">=</span> newValue <span class="operator">/</span> <span class="number">2.0</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Dart 中，我们可以像这样添加一个单独的 <code>setter</code>：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">set</span> diameter(<span class="built_in">double</span> value) =&gt; radius = value / <span class="number">2.0</span>;</span><br></pre></td></tr></table></figure>
+
+<h3 id="属性观察者"><a href="#属性观察者" class="headerlink" title="属性观察者"></a>属性观察者</h3><p>这是 Swift 的一个特有功能。如文档描述：</p>
+<blockquote>
+<p>属性观察者负责观察并响应属性值的变化。每次设置属性值时都会调用属性观察者，即使新值与属性的当前值相同。</p>
+</blockquote>
+<p>这是他们的使用方式：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> diameter: <span class="type">Double</span> &#123; <span class="comment">// read-only computed property</span></span><br><span class="line">  <span class="keyword">willSet</span>(newDiameter) &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;old value: <span class="subst">\(diameter)</span>, new value: <span class="subst">\(newDiameter)</span>&quot;</span>)  </span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">didSet</span> &#123;</span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;old value: <span class="subst">\(oldValue)</span>, new value: <span class="subst">\(diameter)</span>&quot;</span>)  </span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="协议-x2F-抽象类"><a href="#协议-x2F-抽象类" class="headerlink" title="协议&#x2F;抽象类"></a>协议&#x2F;抽象类</h2><p>这里我们讨论用于定义方法和属性，而不指定它们的实现方式的结构。这在其他语言中称为接口。</p>
+<p>在 Swift 中，接口称为协议。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">protocol</span> <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">area</span>() -&gt; <span class="type">Double</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Square</span>: <span class="title class_">Shape</span> &#123;</span><br><span class="line">  <span class="keyword">let</span> side: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">side</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.side <span class="operator">=</span> side</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">area</span>() -&gt; <span class="type">Double</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> side <span class="operator">*</span> side</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dart有一个类似的结构，称为抽象类。抽象类无法实例化。但是，他们可以定义具有实现的方法。</p>
+<p>上面的例子在 Dart 中可以这样写：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  <span class="built_in">double</span> area();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Square</span> <span class="keyword">extends</span> <span class="title">Shape</span> </span>&#123;</span><br><span class="line">  Square(&#123;<span class="keyword">this</span>.side&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> side;</span><br><span class="line">  <span class="built_in">double</span> area() =&gt; side * side;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Mixins"><a href="#Mixins" class="headerlink" title="Mixins"></a>Mixins</h2><p>在 Dart 中，<code>mixin</code> 只是一个常规类，可以在多个类层次结构中重用。</p>
+<p>以下代码演示了我们使用 <code>NameExtension mixin</code> 扩展我们之前定义的 <code>Person</code> 类：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">abstract</span> <span class="class"><span class="keyword">class</span> <span class="title">NameExtension</span> </span>&#123;</span><br><span class="line">  <span class="built_in">String</span> <span class="keyword">get</span> name;</span><br><span class="line">  <span class="built_in">String</span> <span class="keyword">get</span> uppercaseName =&gt; name.toUpperCase();</span><br><span class="line">  <span class="built_in">String</span> <span class="keyword">get</span> lowercaseName =&gt; name.toLowerCase();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Person</span> <span class="title">with</span> <span class="title">NameExtension</span> </span>&#123;</span><br><span class="line">  Person(&#123;<span class="keyword">this</span>.name, <span class="keyword">this</span>.age, <span class="keyword">this</span>.height&#125;);</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> name;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">int</span> age;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">double</span> height;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = Person(name: <span class="string">&#x27;Andrea&#x27;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>);</span><br><span class="line"><span class="built_in">print</span>(person.uppercaseName); <span class="comment">// &#x27;ANDREA&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="扩展"><a href="#扩展" class="headerlink" title="扩展"></a>扩展</h2><p>扩展是 Swift 语言的一个特性。如文档描述：</p>
+<blockquote>
+<p>扩展为现有的类，结构，枚举或协议类型添加新功能。这包括扩展那些无法访问原始源代码的类型的能力（称为追溯建模）。</p>
+</blockquote>
+<p>在 Dart 中使用 <code>mixins</code> 是无法实现这一点的。</p>
+<p>借用上面的例子，我们可以像这样扩展 <code>Person</code> 类：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">extension</span> Person &#123;</span><br><span class="line">  <span class="keyword">var</span> uppercaseName: <span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> name.uppercased()</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">var</span> lowercaseName: <span class="built_in">String</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> name.lowercased()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> person = Person(name: <span class="string">&quot;Andrea&quot;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>)</span><br><span class="line"><span class="built_in">print</span>(person.uppercaseName) <span class="comment">// &quot;ANDREA&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>扩展的内容比我在这里介绍的要多得多，特别是当它们与协议和泛型一起使用时。</p>
+<p>扩展的一个非常常见的用例是为现有类型添加协议一致性。例如，我们可以使用扩展来为现有模型类添加序列化功能。</p>
+<h2 id="枚举"><a href="#枚举" class="headerlink" title="枚举"></a>枚举</h2><p>Dart 对枚举有一些非常基本的支持。</p>
+<p>而 Swift 中的枚举非常强大，因为它们支持关联类型：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">NetworkResponse</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> success(body: <span class="type">Data</span>)</span><br><span class="line">  <span class="keyword">case</span> failure(error: <span class="type">Error</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>这使得编写这样的逻辑成为可能：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">switch</span> (response) &#123;</span><br><span class="line">  <span class="keyword">case</span> .success(<span class="keyword">let</span> data):</span><br><span class="line">    <span class="comment">// do something with (non-optional) data</span></span><br><span class="line">  <span class="keyword">case</span> .failure(<span class="keyword">let</span> error):</span><br><span class="line">    <span class="comment">// do something with (non-optional) error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意 <code>data</code> 和 <code>error</code> 参数是如何互斥的。</p>
+<p>在 Dart 中，我们无法将其他值与枚举相关联，上面的代码可以按以下方式实现：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">NetworkResponse</span> </span>&#123;</span><br><span class="line">  NetworkResponse(&#123;<span class="keyword">this</span>.data, <span class="keyword">this</span>.error&#125;)</span><br><span class="line">  <span class="comment">// assertion to make data and error mutually exclusive</span></span><br><span class="line">  : <span class="keyword">assert</span>(data != <span class="keyword">null</span> &amp;&amp; error == <span class="keyword">null</span> || data == <span class="keyword">null</span> &amp;&amp; error != <span class="keyword">null</span>);</span><br><span class="line">  <span class="keyword">final</span> Uint8List data;</span><br><span class="line">  <span class="keyword">final</span> <span class="built_in">String</span> error;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> response = NetworkResponse(data: Uint8List(<span class="number">0</span>), error: <span class="keyword">null</span>);</span><br><span class="line"><span class="keyword">if</span> (response.data != <span class="keyword">null</span>) &#123;</span><br><span class="line">  <span class="comment">// use data</span></span><br><span class="line">&#125; <span class="keyword">else</span> &#123;</span><br><span class="line">  <span class="comment">// use error</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>几个注意事项：</p>
+<ul>
+<li>在这里，我们使用断言来弥补我们没有 optional 的事实。</li>
+<li>编译器无法帮助我们检查所有可能的情况。这是因为我们不使用 <code>switch</code> 来处理响应。</li>
+</ul>
+<p>总之，Swift 枚举比 Dart 强大且富有表现力。</p>
+<p>像 <a href="https://link.juejin.im/?target=https://github.com/fluttercommunity/dart_sealed_unions">Dart Sealed Unions</a> 这样的第三方库提供了类似于 Swift 枚举的功能，可以帮助填补空白。</p>
+<h2 id="结构体"><a href="#结构体" class="headerlink" title="结构体"></a>结构体</h2><p>在 Swift 中，我们可以定义结构和类。</p>
+<p>这两种结构都有许多共同点，也有一些不同之处。</p>
+<p>主要区别在于：</p>
+<blockquote>
+<p>类是引用类型，结构体是值类型</p>
+</blockquote>
+<p>文档中的描述如下：</p>
+<blockquote>
+<p>值类型是一种类型，其值在被赋值给变量或常量时被复制，或者在传递给函数时被复制。 Swift 中所有结构和枚举都是值类型。这意味着您创建的任何结构和枚举实例 - 以及它们所有的值类型的属性 - 在代码中传递时始终会被复制。 与值类型不同，引用类型在分配给变量或常量时或者传递给函数时不会被复制。而是使用对同一现有实例的引用。</p>
+</blockquote>
+<p>要了解这意味着什么，请考虑以下示例，其中我们重新使用 Person 类使其变为可变：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line">  <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>, <span class="params">height</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    <span class="keyword">self</span>.age <span class="operator">=</span> age</span><br><span class="line">    <span class="keyword">self</span>.height <span class="operator">=</span> height</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="type">Person</span>(name: <span class="string">&quot;Andrea&quot;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>)</span><br><span class="line"><span class="keyword">var</span> b <span class="operator">=</span> a</span><br><span class="line">b.age <span class="operator">=</span> <span class="number">35</span></span><br><span class="line"><span class="built_in">print</span>(a.age) <span class="comment">// prints 35</span></span><br></pre></td></tr></table></figure>
+
+<p>如果我们将 Person 重新定义为 <code>struct</code>，我们有：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Person</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> name: <span class="type">String</span></span><br><span class="line">  <span class="keyword">var</span> age: <span class="type">Int</span></span><br><span class="line">  <span class="keyword">var</span> height: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">name</span>: <span class="type">String</span>, <span class="params">age</span>: <span class="type">Int</span>, <span class="params">height</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.name <span class="operator">=</span> name</span><br><span class="line">    <span class="keyword">self</span>.age <span class="operator">=</span> age</span><br><span class="line">    <span class="keyword">self</span>.height <span class="operator">=</span> height</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">var</span> a <span class="operator">=</span> <span class="type">Person</span>(name: <span class="string">&quot;Andrea&quot;</span>, age: <span class="number">34</span>, height: <span class="number">1.84</span>)</span><br><span class="line"><span class="keyword">var</span> b <span class="operator">=</span> a</span><br><span class="line">b.age <span class="operator">=</span> <span class="number">35</span></span><br><span class="line"><span class="built_in">print</span>(a.age) <span class="comment">// prints 34</span></span><br></pre></td></tr></table></figure>
+
+<p>结构体的内容比我在这里介绍的要多得多。</p>
+<p>结构体可用于处理 Swift 中的数据和模型，从而产生具有更少错误的强大代码。</p>
+<h2 id="错误处理"><a href="#错误处理" class="headerlink" title="错误处理"></a>错误处理</h2><p>使用 Swift 文档中的定义：</p>
+<blockquote>
+<p>错误处理是响应程序中的错误条件并从中恢复的过程。</p>
+</blockquote>
+<p>Dart 和 Swift 都使用 <code>try/catch</code> 作为处理错误的技术，但存在一些差异。</p>
+<p>在 Dart 中，任何方法都可以抛出任何类型的异常。</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">BankAccount</span> </span>&#123;</span><br><span class="line">  BankAccount(&#123;<span class="keyword">this</span>.balance&#125;);</span><br><span class="line">  <span class="built_in">double</span> balance;</span><br><span class="line">  <span class="keyword">void</span> withdraw(<span class="built_in">double</span> amount) &#123;</span><br><span class="line">    <span class="keyword">if</span> (amount &gt; balance) &#123;</span><br><span class="line">      <span class="keyword">throw</span> Exception(<span class="string">&#x27;Insufficient funds&#x27;</span>);</span><br><span class="line">    &#125;</span><br><span class="line">    balance -= amount;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>可以使用 <code>try/catch</code> 块捕获异常：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> account = BankAccount(balance: <span class="number">100</span>);</span><br><span class="line"><span class="keyword">try</span> &#123;</span><br><span class="line">  account.withdraw(<span class="number">50</span>); <span class="comment">// ok</span></span><br><span class="line">  account.withdraw(<span class="number">200</span>); <span class="comment">// throws</span></span><br><span class="line">&#125; <span class="keyword">catch</span> (e) &#123;</span><br><span class="line">  <span class="built_in">print</span>(e); <span class="comment">// prints &#x27;Exception: Insufficient funds&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Swift 中，我们显式声明方法何时可以抛出异常。这是通过 <code>throws</code> 关键字完成的，并且任何错误都必须符合错误协议：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">enum</span> <span class="title class_">AccountError</span>: <span class="title class_">Error</span> &#123;</span><br><span class="line">  <span class="keyword">case</span> insufficientFunds</span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">class</span> <span class="title class_">BankAccount</span> &#123;</span><br><span class="line">  <span class="keyword">var</span> balance: <span class="type">Double</span></span><br><span class="line">  <span class="keyword">init</span>(<span class="params">balance</span>: <span class="type">Double</span>) &#123;</span><br><span class="line">    <span class="keyword">self</span>.balance <span class="operator">=</span> balance</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">func</span> <span class="title function_">withdraw</span>(<span class="params">amount</span>: <span class="type">Double</span>) <span class="keyword">throws</span> &#123;</span><br><span class="line">    <span class="keyword">if</span> amount <span class="operator">&gt;</span> balance &#123;</span><br><span class="line">      <span class="keyword">throw</span> <span class="type">AccountError</span>.insufficientFunds</span><br><span class="line">    &#125;</span><br><span class="line">    balance <span class="operator">-=</span> amount</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在处理错误时，我们在 <code>do/catch</code> 块内使用 <code>try</code> 关键字。</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> account <span class="operator">=</span> <span class="type">BankAccount</span>(balance: <span class="number">100</span>)</span><br><span class="line"><span class="keyword">do</span> &#123;</span><br><span class="line">  <span class="keyword">try</span> account.withdraw(amount: <span class="number">50</span>) <span class="comment">// ok</span></span><br><span class="line">  <span class="keyword">try</span> account.withdraw(amount: <span class="number">200</span>) <span class="comment">// throws</span></span><br><span class="line">&#125; <span class="keyword">catch</span> <span class="type">AccountError</span>.insufficientFunds &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&quot;Insufficient Funds&quot;</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>请注意，当调用抛出异常的方法时，<code>try</code> 关键字是如何使用的。</p>
+<p>错误本身是强类型的，所以我们可以有多个 <code>catch</code> 块来覆盖所有可能的情况。</p>
+<h3 id="try-try-try"><a href="#try-try-try" class="headerlink" title="try?, try!, try"></a>try?, try!, try</h3><p>Swift 提供了一种处理错误的不那么繁琐的方法。</p>
+<p>我们可以使用不带 <code>do/catch</code> 块的 <code>try?</code>。这将会忽略任何异常：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> account <span class="operator">=</span> <span class="type">BankAccount</span>(balance: <span class="number">100</span>)</span><br><span class="line"><span class="keyword">try?</span> account.withdraw(amount: <span class="number">50</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="keyword">try?</span> account.withdraw(amount: <span class="number">200</span>) <span class="comment">// fails silently</span></span><br></pre></td></tr></table></figure>
+
+<p>或者，如果我们确定某个方法不会抛出异常，我们可以使用 <code>try!</code>：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> account <span class="operator">=</span> <span class="type">BankAccount</span>(balance: <span class="number">100</span>)</span><br><span class="line"><span class="keyword">try!</span> account.withdraw(amount: <span class="number">50</span>) <span class="comment">// ok</span></span><br><span class="line"><span class="keyword">try!</span> account.withdraw(amount: <span class="number">200</span>) <span class="comment">// crash</span></span><br></pre></td></tr></table></figure>
+
+<p>上面的示例将导致程序崩溃。所以，在生产代码中不建议使用 <code>try!</code>，它更适合编写测试。</p>
+<p>总之，Swift 中错误处理的显式性质在 API 设计中非常有益，因为它可以很容易地知道方法是否可以抛出。</p>
+<p>同样，在方法调用时使用 <code>try</code> 让我们能关注到可能抛出错误的代码，迫使我们考虑错误情况。</p>
+<p>在这方面，错误处理让 Swift 比 Dart 更安全、更可靠。</p>
+<h2 id="泛型"><a href="#泛型" class="headerlink" title="泛型"></a>泛型</h2><p>Swift 文档描述：</p>
+<blockquote>
+<p>泛型代码使您能够根据需求编写可以使用任何类型的灵活的可重用的函数和类型。您可以编写避免重复的代码，并以清晰、抽象的方式表达其意图。</p>
+</blockquote>
+<p>两种语言都支持泛型。</p>
+<p>泛型的最常见用例之一是集合，例如数组、集合和映射。</p>
+<p>我们可以使用它们来定义我们自己的类型。以下是我们如何在 Swift 中定义通用 Stack 类型：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">struct</span> <span class="title class_">Stack</span>&lt;<span class="title class_">Element</span>&gt; &#123;</span><br><span class="line">  <span class="keyword">var</span> items <span class="operator">=</span> [<span class="type">Element</span>]()</span><br><span class="line">  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">push</span>(<span class="keyword">_</span> <span class="params">item</span>: <span class="type">Element</span>) &#123;</span><br><span class="line">    items.append(item)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">mutating</span> <span class="keyword">func</span> <span class="title function_">pop</span>() -&gt; <span class="type">Element</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> items.removeLast()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>类似的，在 Dart 中可以这样写：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">Stack</span>&lt;<span class="title">Element</span>&gt; </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> items = &lt;<span class="built_in">Element</span>&gt;[]</span><br><span class="line">  <span class="keyword">void</span> push(<span class="built_in">Element</span> item) &#123;</span><br><span class="line">    items.add(item)</span><br><span class="line">  &#125;</span><br><span class="line">  <span class="keyword">void</span> pop() -&gt; <span class="built_in">Element</span> &#123;</span><br><span class="line">    <span class="keyword">return</span> items.removeLast()</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>泛型在 Swift 中非常有用非常强大，它们可用于在协议中定义类型约束和相关类型。</p>
+<h2 id="访问控制"><a href="#访问控制" class="headerlink" title="访问控制"></a>访问控制</h2><p>Swift 文档描述如下：</p>
+<blockquote>
+<p>访问控制限制从其他源文件和模块中的代码访问你的代码。此功能可以隐藏代码的实现细节，并指定一个首选接口，通过该接口可以访问和使用该代码。</p>
+</blockquote>
+<p>Swift 有五个访问级别：<code>open</code>, <code>public</code>, <code>internal</code>, <code>file-private</code> 和 <code>private</code>。</p>
+<p>这些关键字用于处理模块和源文件的上下文中。文档描述如下：</p>
+<blockquote>
+<p>模块是一个代码分发单元 - 一个框架或应用程序，它作为一个单元构建和发布，可以在另一个模块中使用 Swift 的 <code>import</code> 关键字导入。</p>
+</blockquote>
+<p><code>open</code> 和 <code>public</code> 访问级别可让代码在模块外部访问。</p>
+<p><code>private</code> 和 <code>file-private</code> 访问级别可让代码无法在其定义的文件之外访问。</p>
+<p>例如：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">SomePublicClass</span> &#123;&#125;</span><br><span class="line"><span class="keyword">internal</span> <span class="keyword">class</span> <span class="title class_">SomeInternalClass</span> &#123;&#125;</span><br><span class="line"><span class="keyword">fileprivate</span> <span class="keyword">class</span> <span class="title class_">SomeFilePrivateClass</span> &#123;&#125;</span><br><span class="line"><span class="keyword">private</span> <span class="keyword">class</span> <span class="title class_">SomePrivateClass</span> &#123;&#125;</span><br></pre></td></tr></table></figure>
+
+<p>Dart 中的访问级别更简单，仅限于 <code>public</code> 和 <code>private</code>。文档描述如下：</p>
+<blockquote>
+<p>与 Java 不同，Dart 没有关键字 <code>public</code>，<code>protected</code> 和 <code>private</code>。如果标识符以下划线 <code>_</code> 开头，则它私有的。</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">HomePage</span> <span class="keyword">extends</span> <span class="title">StatefulWidget</span> </span>&#123; <span class="comment">// public</span></span><br><span class="line">  <span class="meta">@override</span></span><br><span class="line">  _HomePageState createState() =&gt; _HomePageState();</span><br><span class="line">&#125;</span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">_HomePageState</span> <span class="keyword">extends</span> <span class="title">State</span>&lt;<span class="title">HomePage</span>&gt; </span>&#123; ... &#125; <span class="comment">// private</span></span><br></pre></td></tr></table></figure>
+
+<p>Dart 和 Swift 中访问控制的设计目标不同。因此，访问级别非常不同。</p>
+<h2 id="异步编程：Future"><a href="#异步编程：Future" class="headerlink" title="异步编程：Future"></a>异步编程：Future</h2><p>异步编程是 Dart 中真正闪耀的地方。</p>
+<p>在处理任务时需要某种形式的异步编程，例如：</p>
+<ul>
+<li>从 Web 下载内容</li>
+<li>与后端服务通信</li>
+<li>执行长时间运行的操作</li>
+</ul>
+<p>在这些情况下，最好不要阻塞执行的主线程，这可能会使我们的程序卡住。</p>
+<p>Dart 文档描述如下：</p>
+<blockquote>
+<p>异步操作可让您的程序在等待某个任务完成时去执行其它操作。Dart 使用 Future 对象来表示异步操作的结果。要使用 Future，可以使用 <code>async/await</code> 或 <code>Future API</code>。</p>
+</blockquote>
+<p>作为一个例子，让我们看看我们如何使用异步编程：</p>
+<ul>
+<li>使用服务器验证用户</li>
+<li>存储访问令牌以保护存储</li>
+<li>获取用户个人资料信息</li>
+</ul>
+<p>在 Dart 中，这可以通过结合使用 <code>Future</code> 和 <code>async/await</code> 来完成：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Future&lt;UserProfile&gt; getUserProfile(UserCredentials credentials) <span class="keyword">async</span> &#123;</span><br><span class="line">  <span class="keyword">final</span> accessToken = <span class="keyword">await</span> networkService.signIn(credentials);</span><br><span class="line">  <span class="keyword">await</span> secureStorage.storeToken(accessToken, forUserCredentials: credentials);</span><br><span class="line">  <span class="keyword">return</span> <span class="keyword">await</span> networkService.getProfile(accessToken);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在 Swift 中，不支持 <code>async/await</code>，我们只能通过闭包来实现这一点：</p>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">func</span> <span class="title function_">getUserProfile</span>(<span class="params">credentials</span>: <span class="type">UserCredentials</span>, <span class="params">completion</span>: (<span class="keyword">_</span> result: <span class="type">UserProfile</span>) -&gt; <span class="type">Void</span>) &#123;</span><br><span class="line">  networkService.signIn(credentials) &#123; accessToken <span class="keyword">in</span></span><br><span class="line">    secureStorage.storeToken(accessToken) &#123;</span><br><span class="line">      networkService.getProfile(accessToken, completion: completion)</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>由于嵌套的 <code>completion</code> 块，这导致了“**厄运金字塔(pyramid of doom)**”。在这种情况下，错误处理变得非常困难。</p>
+<p>在 Dart 中，上面代码中的处理错误只需在代码周围添加一个 <code>try/catch</code> 块到 <code>getUserProfile</code> 方法即可。</p>
+<p>作为参考，有人建议将来向 Swift 中添加 <code>async/await</code>。在下面这个 proposal 中有详细描述：</p>
+<ul>
+<li><a href="https://link.juejin.im/?target=https://gist.github.com/lattner/429b9070918248274f25b714dcfc7619">Async&#x2F;Await proposal for Swift</a></li>
+</ul>
+<p>在实现之前，开发人员可以使用第三方库，例如 Google 的 <code>Promises</code> 库。</p>
+<h2 id="异步编程：Stream"><a href="#异步编程：Stream" class="headerlink" title="异步编程：Stream"></a>异步编程：Stream</h2><p>Dart 将 <code>Stream</code> 作为核心库的一部分来实现，但 Swift 没有。</p>
+<p>Dart 文档描述如下：</p>
+<blockquote>
+<p>Stream 是一个异步事件序列。</p>
+</blockquote>
+<p>Stream 是响应式程序的基础，它们在状态管理中发挥着重要作用。</p>
+<p>例如，Stream 是搜索内容的绝佳选择，每次用户更新搜索字段中的文本时，都会发出一组新结果。</p>
+<p>Stream 不包含在 Swift 核心库中。不过第三方库（如 <code>RxSwift</code>）提供了对流的支持。</p>
+<p>Stream 是一个广泛的主题，这里不详细讨论。</p>
+<h2 id="内存管理"><a href="#内存管理" class="headerlink" title="内存管理"></a>内存管理</h2><p>Dart 使用高级垃圾回收(garbage collection)方案管理内存。</p>
+<p>Swift 通过自动引用计数（ARC）管理内存。</p>
+<p>这可以保证良好的性能，因为内存在不再使用时会立即释放。</p>
+<p>然而，它确实将部分负担地从编译器转移到开发人员。</p>
+<p>在 Swift 中，我们需要考虑对象的生命周期和所有权，并正确使用适当的关键字（<code>weak</code>, <code>strong</code>, <code>unowned</code>）以避免循环引用。</p>
+<h2 id="编译和执行"><a href="#编译和执行" class="headerlink" title="编译和执行"></a>编译和执行</h2><p>首先来看看 <code>JIT</code> 和 <code>AOT</code> 编译器之间的重要区别：</p>
+<h3 id="JIT"><a href="#JIT" class="headerlink" title="JIT"></a>JIT</h3><p><code>JIT</code> 编译器在程序执行期间运行，也就是<strong>即时编译</strong>。</p>
+<p><code>JIT</code> 编译器通常与动态语言一起使用，其中类型不是提前确定的。<code>JIT</code> 程序通过解释器或虚拟机（VM）运行。</p>
+<h3 id="AOT"><a href="#AOT" class="headerlink" title="AOT"></a>AOT</h3><p>在运行之前，AOT 编译器在创建程序期间运行。</p>
+<p>AOT 编译器通常与静态语言一起使用，后者知道数据的类型。AOT 程序被编译为本机机器代码，在运行时由硬件直接执行。</p>
+<p>下面引用了 <code>Wm Leler</code> 的这篇文章：</p>
+<blockquote>
+<p>当在开发期间完成 AOT 编译时，它总是导致更长的开发周期（对程序进行更改和能够执行程序以查看更改结果之间的时间）。 但 AOT 编译让程序的运行更可预测，而不会在运行时暂停进行分析和编译。AOT 编译的程序也可以快速启动（因为它们已经被编译）。 相反，JIT 编译提供了更快的开发周期，但可能导致执行速度变慢或更加笨拙。特别是，JIT 编译器的启动时间较慢，因为当程序开始运行时，JIT 编译器必须在执行代码之前进行分析和编译。研究表明，如果开始执行的时间超过几秒钟，很多人都会放弃。</p>
+</blockquote>
+<p>作为一种静态语言，Swift 是提前编译的。</p>
+<p>Dart 则同时支持 <code>AOT</code> 和 <code>JIT</code>。与 Flutter 一起使用时，这提供了显著的优势。看看下面的描述：</p>
+<blockquote>
+<p>在开发过程中使用 JIT 编译，使用更快的编译器。然后，当应用程序准备好发布时，将它编译为 AOT。因此，借助先进的工具和编译器，Dart 可以提供两全其美的优势：极快的开发周期，快速的执行和启动时间。 - Wm Leler</p>
+</blockquote>
+<p>使用 Dart，可以两全其美。</p>
+<p>Swift 有 AOT 编译的主要缺点。即编译时间随着代码库的大小而增加。</p>
+<p>对于中型应用程序（10K 到 100K 行之间），编译应用程序很容易花费几分钟。</p>
+<p>对于 Flutter 应用程序来说并非如此，无论代码库的大小如何，我们都会不断进行亚秒级热加载。</p>
+<h2 id="其它未涵盖功能"><a href="#其它未涵盖功能" class="headerlink" title="其它未涵盖功能"></a>其它未涵盖功能</h2><p>本文未涵盖以下功能，因为它们在 Dart 和 Swift 中非常相似：</p>
+<ul>
+<li>运算符</li>
+<li>字符串</li>
+<li>Swift 中的可选链（在 Dart 中称为条件成员访问）。</li>
+</ul>
+<h3 id="并发"><a href="#并发" class="headerlink" title="并发"></a>并发</h3><ul>
+<li>并发编程在 Dart 中通过 <code>isolate</code> 来提供。</li>
+<li>Swift 使用 <code>Grand Central Dispatch（GCD）</code>和分发队列。</li>
+</ul>
+<h2 id="Dart-中缺失的那些我喜欢的-Swift-特性"><a href="#Dart-中缺失的那些我喜欢的-Swift-特性" class="headerlink" title="Dart 中缺失的那些我喜欢的 Swift 特性"></a>Dart 中缺失的那些我喜欢的 Swift 特性</h2><ul>
+<li><code>Structs</code></li>
+<li>带关联类型的 Enums</li>
+<li><code>Optionals</code></li>
+</ul>
+<h2 id="Swift-中缺失的那些我喜欢的-Dart-特性"><a href="#Swift-中缺失的那些我喜欢的-Dart-特性" class="headerlink" title="Swift 中缺失的那些我喜欢的 Dart 特性"></a>Swift 中缺失的那些我喜欢的 Dart 特性</h2><ul>
+<li>JIT 编译器</li>
+<li>Future 和 <code>await/async</code></li>
+<li>Stream 和 <code>yield/async*</code></li>
+</ul>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p>Dart 和 Swift 都是出色的语言，非常适合构建现代移动应用程序及其他应用程序。</p>
+<p>这两种语言都有自己独特的优点。</p>
+<p>在比较过移动应用程序开发和两种语言的工具时，我觉得 Dart 占了上风。这是由于 JIT 编译器，它是 Flutter 中有状态热加载的基础。</p>
+<p>在构建应用程序时，热加载可以大大提高生产力，因为它可以将开发周期从几秒或几分钟加速到不到一秒钟。</p>
+<p>开发时间比计算时间更耗费资源。</p>
+<p>因此，优化开发人员的时间是一个非常明智的举措。</p>
+<p>另一方面，我觉得 Swift 有一个非常强大的类型系统。类型安全性融入 Swift 的所有语言功能，能更自然地开发出健壮的程序。</p>
+<p>一旦我们抛开个人偏好，编程语言就是工具。作为开发人员，我们的任务是为工作选择最合适的工具。</p>
+<p>无论如何，我们可以希望两种语言在发展过程中互相借鉴最好的想法。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Swift/" rel="tag"># Swift</a>
+              <a href="/tags/Dart/" rel="tag"># Dart</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/14/iOS%E4%B8%AD%E5%B8%B8%E8%A7%81Crash%E6%80%BB%E7%BB%93/" rel="prev" title="iOS中常见Crash总结">
+                  <i class="fa fa-chevron-left"></i> iOS中常见Crash总结
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/21/Swift-vs-Objective-C/" rel="next" title="Swift vs Objective-C">
+                  Swift vs Objective-C <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Darren Kong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/DarrenKong" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>

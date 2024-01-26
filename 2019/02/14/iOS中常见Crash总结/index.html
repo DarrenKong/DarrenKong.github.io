@@ -1,0 +1,516 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="转自[花丶满楼]https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5c617b85e51d45015e0475ac  1、找不到方法的实现unrecognized selector sent to instance1.1、场景对应的Code123456789101112131415161718192021222324252627282930313233343536373839404142434445">
+<meta property="og:type" content="article">
+<meta property="og:title" content="iOS中常见Crash总结">
+<meta property="og:url" content="http://example.com/2019/02/14/iOS%E4%B8%AD%E5%B8%B8%E8%A7%81Crash%E6%80%BB%E7%BB%93/index.html">
+<meta property="og:site_name" content="DarrenKong&#39;s Blog">
+<meta property="og:description" content="转自[花丶满楼]https:&#x2F;&#x2F;juejin.im&#x2F;post&#x2F;5c617b85e51d45015e0475ac  1、找不到方法的实现unrecognized selector sent to instance1.1、场景对应的Code123456789101112131415161718192021222324252627282930313233343536373839404142434445">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://example.com/images/upload/168e72062c64f37c.jpg">
+<meta property="article:published_time" content="2019-02-14T03:33:22.000Z">
+<meta property="article:modified_time" content="2023-09-27T02:30:01.451Z">
+<meta property="article:author" content="Darren Kong">
+<meta property="article:tag" content="Crash">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://example.com/images/upload/168e72062c64f37c.jpg">
+
+
+<link rel="canonical" href="http://example.com/2019/02/14/iOS%E4%B8%AD%E5%B8%B8%E8%A7%81Crash%E6%80%BB%E7%BB%93/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/02/14/iOS%E4%B8%AD%E5%B8%B8%E8%A7%81Crash%E6%80%BB%E7%BB%93/","path":"2019/02/14/iOS中常见Crash总结/","title":"iOS中常见Crash总结"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>iOS中常见Crash总结 | DarrenKong's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DarrenKong's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry，stay foolish!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#1%E3%80%81%E6%89%BE%E4%B8%8D%E5%88%B0%E6%96%B9%E6%B3%95%E7%9A%84%E5%AE%9E%E7%8E%B0unrecognized-selector-sent-to-instance"><span class="nav-number">1.</span> <span class="nav-text">1、找不到方法的实现unrecognized selector sent to instance</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">1.1.</span> <span class="nav-text">1.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">1.2.</span> <span class="nav-text">1.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-3%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">1.3.</span> <span class="nav-text">1.3、解决方案：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#1-4%E3%80%81%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%EF%BC%9A%E5%8F%82%E8%80%83runtime-%E6%B6%88%E6%81%AF%E8%BD%AC%E5%8F%91"><span class="nav-number">1.4.</span> <span class="nav-text">1.4、知识归纳：参考runtime 消息转发</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#2%E3%80%81KVC%E9%80%A0%E6%88%90%E7%9A%84crash"><span class="nav-number">2.</span> <span class="nav-text">2、KVC造成的crash</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#2-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">2.1.</span> <span class="nav-text">2.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">2.2.</span> <span class="nav-text">2.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-3%E3%80%81%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">2.3.</span> <span class="nav-text">2.3、场景：</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#2-4%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">2.3.1.</span> <span class="nav-text">2.4、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-5%E3%80%81%E7%9F%A5%E8%AF%86%E5%BD%92%E7%BA%B3%EF%BC%9A%E5%8F%82%E8%80%83runtime-kvc%E5%8E%9F%E7%90%86%E5%88%86%E6%9E%90"><span class="nav-number">2.4.</span> <span class="nav-text">2.5、知识归纳：参考runtime kvc原理分析</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#3%E3%80%81EXC-BAD-ACCESS"><span class="nav-number">3.</span> <span class="nav-text">3、EXC_BAD_ACCESS</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#3-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">3.1.</span> <span class="nav-text">3.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">3.2.</span> <span class="nav-text">3.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#3-3%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">3.3.</span> <span class="nav-text">3.3、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#4%E3%80%81KVO%E5%BC%95%E8%B5%B7%E7%9A%84%E5%B4%A9%E6%BA%83"><span class="nav-number">4.</span> <span class="nav-text">4、KVO引起的崩溃</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#4-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">4.1.</span> <span class="nav-text">4.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">4.2.</span> <span class="nav-text">4.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#4-3%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">4.3.</span> <span class="nav-text">4.3、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#5%E3%80%81%E9%9B%86%E5%90%88%E7%B1%BB%E7%9B%B8%E5%85%B3%E5%B4%A9%E6%BA%83"><span class="nav-number">5.</span> <span class="nav-text">5、集合类相关崩溃</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#5-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">5.1.</span> <span class="nav-text">5.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">5.2.</span> <span class="nav-text">5.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-3%E3%80%81%E5%9C%BA%E6%99%AF%EF%BC%9A"><span class="nav-number">5.3.</span> <span class="nav-text">5.3、场景：</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#5-4%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">5.4.</span> <span class="nav-text">5.4、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#6%E3%80%81%E5%A4%9A%E7%BA%BF%E7%A8%8B%E4%B8%AD%E7%9A%84%E5%B4%A9%E6%BA%83"><span class="nav-number">6.</span> <span class="nav-text">6、多线程中的崩溃</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#6-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">6.1.</span> <span class="nav-text">6.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-2%E3%80%81%E5%8E%9F%E5%9B%A0"><span class="nav-number">6.2.</span> <span class="nav-text">6.2、原因</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-3%E3%80%81%E5%9C%BA%E6%99%AF"><span class="nav-number">6.3.</span> <span class="nav-text">6.3、场景</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#6-4%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">6.4.</span> <span class="nav-text">6.4、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#7%E3%80%81Socket%E9%95%BF%E8%BF%9E%E6%8E%A5%EF%BC%8C%E8%BF%9B%E5%85%A5%E5%90%8E%E5%8F%B0%E6%B2%A1%E6%9C%89%E5%85%B3%E9%97%AD"><span class="nav-number">7.</span> <span class="nav-text">7、Socket长连接，进入后台没有关闭</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#7-1%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">7.1.</span> <span class="nav-text">7.1、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#8%E3%80%81Watch-Dog%E8%B6%85%E6%97%B6%E9%80%A0%E6%88%90%E7%9A%84crash"><span class="nav-number">8.</span> <span class="nav-text">8、Watch Dog超时造成的crash</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#8-1%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88%EF%BC%9A"><span class="nav-number">8.1.</span> <span class="nav-text">8.1、解决方案：</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#9%E3%80%81%E5%90%8E%E5%8F%B0%E8%BF%94%E5%9B%9ENSNull%E5%AF%BC%E8%87%B4%E7%9A%84%E5%B4%A9%E6%BA%83%EF%BC%8C%E5%A4%9A%E8%A7%81%E4%BA%8EJava%E5%81%9A%E5%90%8E%E5%8F%B0%E6%9C%8D%E5%8A%A1%E5%99%A8%E5%BC%80%E5%8F%91%E8%AF%AD%E8%A8%80"><span class="nav-number">9.</span> <span class="nav-text">9、后台返回NSNull导致的崩溃，多见于Java做后台服务器开发语言</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#9-1%E3%80%81%E5%9C%BA%E6%99%AF%E5%AF%B9%E5%BA%94%E7%9A%84Code"><span class="nav-number">9.1.</span> <span class="nav-text">9.1、场景对应的Code</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#9-2%E3%80%81%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95"><span class="nav-number">9.2.</span> <span class="nav-text">9.2、解决方法</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#10%E3%80%81%E5%9C%A8iOS%E4%B8%AD%E6%8D%95%E8%8E%B7%E5%BC%82%E5%B8%B8%E4%BF%A1%E6%81%AF"><span class="nav-number">10.</span> <span class="nav-text">10、在iOS中捕获异常信息</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">10.0.1.</span> <span class="nav-text">参考资料</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#GitHub%E5%BC%80%E6%BA%90%E5%AE%9E%E7%8E%B0%EF%BC%9A"><span class="nav-number">10.0.1.1.</span> <span class="nav-text">GitHub开源实现：</span></a></li></ol></li></ol></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Darren Kong</p>
+  <div class="site-description" itemprop="description">Stay hungry，stay foolish!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DarrenKong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DarrenKong" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kong4221@163.com" title="E-Mail → mailto:kong4221@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/02/14/iOS%E4%B8%AD%E5%B8%B8%E8%A7%81Crash%E6%80%BB%E7%BB%93/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="iOS中常见Crash总结 | DarrenKong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          iOS中常见Crash总结
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-02-14 11:33:22" itemprop="dateCreated datePublished" datetime="2019-02-14T11:33:22+08:00">2019-02-14</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2023-09-27 10:30:01" itemprop="dateModified" datetime="2023-09-27T10:30:01+08:00">2023-09-27</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/iOS/" itemprop="url" rel="index"><span itemprop="name">iOS</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>转自[花丶满楼]<a target="_blank" rel="noopener" href="https://juejin.im/post/5c617b85e51d45015e0475ac">https://juejin.im/post/5c617b85e51d45015e0475ac</a></p>
+</blockquote>
+<h1 id="1、找不到方法的实现unrecognized-selector-sent-to-instance"><a href="#1、找不到方法的实现unrecognized-selector-sent-to-instance" class="headerlink" title="1、找不到方法的实现unrecognized selector sent to instance"></a>1、找不到方法的实现<em>unrecognized selector sent to instance</em></h1><h2 id="1-1、场景对应的Code"><a href="#1-1、场景对应的Code" class="headerlink" title="1.1、场景对应的Code"></a>1.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;UnrecognizedSelectorVC.h&quot;</span><br><span class="line">/**</span><br><span class="line"> 代理协议</span><br><span class="line"> */</span><br><span class="line">@protocol UnrecognizedSelectorVCDelegate &lt;NSObject&gt;</span><br><span class="line">@optional</span><br><span class="line">- (void)notImplementionFunc;</span><br><span class="line">@end</span><br><span class="line">/**</span><br><span class="line"> 测试控制器的代理对象</span><br><span class="line"> */</span><br><span class="line">@interface UnrecognizedSelectorVCObj : NSObject&lt;UnrecognizedSelectorVCDelegate&gt;</span><br><span class="line">@property (nonatomic, strong) NSString *name;</span><br><span class="line">@end</span><br><span class="line">@implementation UnrecognizedSelectorVCObj</span><br><span class="line">@end</span><br><span class="line">/**</span><br><span class="line"> 测试控制器</span><br><span class="line"> */</span><br><span class="line">@interface UnrecognizedSelectorVC ()</span><br><span class="line">@property(nonatomic, weak) id&lt;UnrecognizedSelectorVCDelegate&gt; delegate;</span><br><span class="line">@property(nonatomic, copy) NSMutableArray *mutableArray;</span><br><span class="line">@end</span><br><span class="line">@implementation UnrecognizedSelectorVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    [self case1];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景一：没有实现代理</span><br><span class="line"> */</span><br><span class="line">- (void)case1 &#123;</span><br><span class="line">    UnrecognizedSelectorVCObj* obj = [[UnrecognizedSelectorVCObj alloc] init];</span><br><span class="line">    self.delegate = obj;</span><br><span class="line">    // 崩溃：reason: &#x27;-[UnrecognizedSelectorVCObj notImplementionFunc]: unrecognized selector sent to instance 0x2808047f0&#x27;</span><br><span class="line">    [self.delegate notImplementionFunc];</span><br><span class="line">    // 解决办法：应该使用下面的代码</span><br><span class="line">    if ( [self.delegate respondsToSelector:@selector(notImplementionFunc)] ) &#123;</span><br><span class="line">        [self.delegate notImplementionFunc];</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景二：可变属性使用copy修饰</span><br><span class="line"> */</span><br><span class="line">- (void)case2 &#123;</span><br><span class="line">    NSMutableArray* array = [NSMutableArray arrayWithObjects:@1, @2, @3, nil];</span><br><span class="line">    self.mutableArray = array;</span><br><span class="line">    // 崩溃：reason: &#x27;-[__NSArrayI addObject:]: unrecognized selector sent to instance 0x281198a50&#x27;</span><br><span class="line">    [self.mutableArray addObject:@4];</span><br><span class="line">    // 原因：NSMutableArray经过copy之后变成NSArray</span><br><span class="line">	// @property (nonatomic, copy) NSMutableArray *mArray;</span><br><span class="line">	// 等同于</span><br><span class="line">	// - (void)setMArray:(NSMutableArray *)mArray &#123;</span><br><span class="line">	//    _mArray = mArray.copy;</span><br><span class="line">	//&#125;</span><br><span class="line">    // 解决办法：使用strong修饰或者重写set方法</span><br><span class="line"></span><br><span class="line">	// 知识点：集合类对象和非集合类对象的copy与mutableCopy</span><br><span class="line">	// [NSArray copy]                  // 浅复制(新的和原来的是一个array)</span><br><span class="line">	// [NSArray mutableCopy]           // 深复制(array是新的，但是内容还是原来的，内容的指针没有变化)</span><br><span class="line">	// [NSMutableArray copy]           // 深复制(array是新的，但是内容还是原来的，内容的指针没有变化)</span><br><span class="line">	// [NSMutableArray mutableCopy]    // 深复制(array是新的，但是内容还是原来的，内容的指针没有变化)</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景三：低版本系统使用高版本API</span><br><span class="line"> */</span><br><span class="line">- (void)case3 &#123;</span><br><span class="line">    if (@available(iOS 10.0, *)) &#123;</span><br><span class="line">        [NSTimer scheduledTimerWithTimeInterval:1 repeats:YES block:^(NSTimer * _Nonnull timer) &#123;</span><br><span class="line">            </span><br><span class="line">        &#125;];</span><br><span class="line">    &#125; else &#123;</span><br><span class="line">        // Fallback on earlier versions</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<h2 id="1-2、原因"><a href="#1-2、原因" class="headerlink" title="1.2、原因"></a>1.2、原因</h2><p>找不到方法iOS系统抛出异常崩溃</p>
+<h2 id="1-3、解决方案："><a href="#1-3、解决方案：" class="headerlink" title="1.3、解决方案："></a>1.3、解决方案：</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、实现<em>消息转发</em>的几个方法</li>
+<li><input checked="" disabled="" type="checkbox"> 2、尽量避免使用<em>performSelector</em>一系列方法</li>
+<li><input checked="" disabled="" type="checkbox"> 3、<em>delegate</em> 方法调用前进行 <em>respondsToSelector</em> 判断，或者Release模式下使用<a href="https://link.juejin.im/?target=https://github.com/forkingdog/ProtocolKit">ProtocolKit</a>给协议添加默认实现防止崩溃，Debug模式下关闭默认实现</li>
+<li><input checked="" disabled="" type="checkbox"> 4、<em>属性</em>和<em>成员变量</em>不要重名定义，合理使用 <em>synthesize</em> 生成属性的 <em>setter</em> 和 <em>getter</em> 方法</li>
+<li><input checked="" disabled="" type="checkbox"> 5、在<em>MRC</em>模式下，变量的 <em>retain</em> 和 <em>release</em> 要谨慎，建议采用安全 <em>release</em> 方法，即 <em>release</em> 的对象置为 nil</li>
+<li><input checked="" disabled="" type="checkbox"> 6、在.h中声明的方法如果用不到就去掉，用得到就同时在.m文件中实现</li>
+<li><input checked="" disabled="" type="checkbox"> 7、可变属性（如<em>NSMutableArray</em>），不要使用<em>copy</em>修饰，或者重写set方法</li>
+<li><input checked="" disabled="" type="checkbox"> 8、使用<em>高版本的系统方法</em>的时候做判断</li>
+</ul>
+<h2 id="1-4、知识归纳：参考runtime-消息转发"><a href="#1-4、知识归纳：参考runtime-消息转发" class="headerlink" title="1.4、知识归纳：参考runtime 消息转发"></a>1.4、知识归纳：参考runtime 消息转发</h2><p>消息转发机制主要包含三个步骤：</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 1、动态方法解析阶段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">+ (BOOL)resolveClassMethod:(SEL)sel </span><br><span class="line">或者</span><br><span class="line">+ (BOOL)resolveInstanceMethod:(SEL)sel</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 2、备用接收者阶段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">- (id)forwardingTargetForSelector:(SEL)aSelector</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><input checked="" disabled="" type="checkbox"> 3、完整消息转发阶段</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">- (NSMethodSignature *)methodSignatureForSelector:(SEL)aSelector </span><br><span class="line">和</span><br><span class="line">- (void)forwardInvocation:(NSInvocation *)anInvocation</span><br></pre></td></tr></table></figure>
+
+
+
+
+<p>图片摘自：<a href="https://link.juejin.im/?target=http://yulingtianxia.com/blog/2016/06/15/Objective-C-Message-Sending-and-Forwarding/">Objective-C 消息发送与转发机制原理</a></p>
+<p><img src="/images/upload/168e72062c64f37c.jpg"></p>
+<blockquote>
+<p>使用命令：<em>thread backtrace</em>查看线程堆栈</p>
+</blockquote>
+<h1 id="2、KVC造成的crash"><a href="#2、KVC造成的crash" class="headerlink" title="2、KVC造成的crash"></a>2、KVC造成的crash</h1><h2 id="2-1、场景对应的Code"><a href="#2-1、场景对应的Code" class="headerlink" title="2.1、场景对应的Code"></a>2.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;KvcCrashVC.h&quot;</span><br><span class="line"></span><br><span class="line">@interface KvcCrashVCObj : NSObject</span><br><span class="line">@property (nonatomic, strong) NSString *name;</span><br><span class="line">@end</span><br><span class="line">@implementation KvcCrashVCObj</span><br><span class="line">- (void)setValue:(id)value forUndefinedKey:(NSString *)key &#123;   </span><br><span class="line">&#125;</span><br><span class="line">- (id)valueForUndefinedKey:(NSString *)key &#123;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface KvcCrashVC ()</span><br><span class="line">@end</span><br><span class="line">@implementation KvcCrashVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    [self case1];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景一：对象不支持KVC</span><br><span class="line"> */</span><br><span class="line">- (void)case1 &#123;</span><br><span class="line">    // reason: &#x27;[&lt;NSObject 0x282fe7f90&gt; setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key key.&#x27;</span><br><span class="line">    NSObject* obj = [[NSObject alloc]init];</span><br><span class="line">    [obj setValue:@&quot;value&quot; forKey:@&quot;key&quot;];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景二：key为nil</span><br><span class="line"> */</span><br><span class="line">- (void)case2 &#123;</span><br><span class="line">    // reason: &#x27;*** -[KvcCrashVCObj setValue:forKey:]: attempt to set a value for a nil key&#x27;</span><br><span class="line">    KvcCrashVCObj* obj = [[KvcCrashVCObj alloc]init];</span><br><span class="line">    // value 为nil不会崩溃</span><br><span class="line">    [obj setValue:nil forKey:@&quot;name&quot;];</span><br><span class="line">    // key为nil会崩溃（直接写nil编译器会提示警告，更多时候我们传的是变量）</span><br><span class="line">    [obj setValue:@&quot;value&quot; forKey:nil];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景三：key不是object的属性产生的crash</span><br><span class="line"> */</span><br><span class="line">- (void)case3 &#123;</span><br><span class="line">    // reason: &#x27;[&lt;KvcCrashVCObj 0x2810bfa80&gt; setValue:forUndefinedKey:]: this class is not key value coding-compliant for the key falseKey.&#x27;</span><br><span class="line">    KvcCrashVCObj* obj = [[KvcCrashVCObj alloc]init];</span><br><span class="line">    [obj setValue:nil forKey:@&quot;falseKey&quot;];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="2-2、原因"><a href="#2-2、原因" class="headerlink" title="2.2、原因"></a>2.2、原因</h2><blockquote>
+<p>给不存在的key（包括key为nil）设置value</p>
+<ul>
+<li><input checked="" disabled="" type="checkbox"> [obj setValue:@”value” forKey:@”UndefinedKey”]</li>
+<li><input checked="" disabled="" type="checkbox"> [obj valueForKey:@”UndefinedKey”]</li>
+</ul>
+</blockquote>
+<h2 id="2-3、场景："><a href="#2-3、场景：" class="headerlink" title="2.3、场景："></a>2.3、场景：</h2><h3 id="2-4、解决方案："><a href="#2-4、解决方案：" class="headerlink" title="2.4、解决方案："></a>2.4、解决方案：</h3><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、如果属性存在，利用iOS的反射机制来规避，NSStringFromSelector(@selector())将SEL反射为字符串作为key。这样在@selector()中传入方法名的过程中，编译器会有合法性检查，如果方法不存在或未实现会报黄色警告。</li>
+<li><input checked="" disabled="" type="checkbox"> 2、重写类的setValue:forUndefinedKey:和valueForUndefinedKey:</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">-(void)setValue:(id)value forUndefinedKey:(NSString *)key&#123;</span><br><span class="line"></span><br><span class="line">&#125;</span><br><span class="line">-(id)valueForUndefinedKey:(NSString *)key&#123;</span><br><span class="line">    return nil;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="2-5、知识归纳：参考runtime-kvc原理分析"><a href="#2-5、知识归纳：参考runtime-kvc原理分析" class="headerlink" title="2.5、知识归纳：参考runtime kvc原理分析"></a>2.5、知识归纳：参考runtime kvc原理分析</h2><h1 id="3、EXC-BAD-ACCESS"><a href="#3、EXC-BAD-ACCESS" class="headerlink" title="3、EXC_BAD_ACCESS"></a>3、EXC_BAD_ACCESS</h1><blockquote>
+<p>经过ARC的洗礼之后，普通的访问释放对象产生的EXC_BAD_ACCESS已经大量减少了，现在出现的EXC_BAD_ACCESS有很大一部分来自malloc的对象或者越界访问。</p>
+</blockquote>
+<h2 id="3-1、场景对应的Code"><a href="#3-1、场景对应的Code" class="headerlink" title="3.1、场景对应的Code"></a>3.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;BadAccessCrashVC.h&quot;</span><br><span class="line">#import &lt;objc/runtime.h&gt;</span><br><span class="line">@interface BadAccessCrashVC (AssociatedObject)</span><br><span class="line">@property (nonatomic, strong) UIView *associateView;</span><br><span class="line">@end</span><br><span class="line">@implementation BadAccessCrashVC (AssociatedObject)</span><br><span class="line">- (void)setAssociateView:(UIView *)associateView &#123;</span><br><span class="line">    objc_setAssociatedObject(self, @selector(associateView), associateView, OBJC_ASSOCIATION_ASSIGN);</span><br><span class="line">    //objc_setAssociatedObject(self, @selector(associateView), associateView, OBJC_ASSOCIATION_RETAIN_NONATOMIC);</span><br><span class="line">&#125;</span><br><span class="line">- (UIView *)associateView &#123;</span><br><span class="line">    return objc_getAssociatedObject(self, _cmd);;</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface BadAccessCrashVC ()</span><br><span class="line">@property (nonatomic, copy)                         void(^blcok)(void);</span><br><span class="line">@property (nonatomic, weak) UIView*                 weakView;</span><br><span class="line">@property (nonatomic, unsafe_unretained) UIView*    unSafeView;</span><br><span class="line">@property (nonatomic, assign) UIView*               assignView;</span><br><span class="line">@end</span><br><span class="line">@implementation BadAccessCrashVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    [self case1];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 悬挂指针：访问没有实现的blcok</span><br><span class="line"> */</span><br><span class="line">- (void)case1 &#123;</span><br><span class="line">    self.blcok();</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 悬挂指针：对象没有被初始化</span><br><span class="line"> */</span><br><span class="line">- (void)case2 &#123;</span><br><span class="line">    UIView* view = [UIView alloc];</span><br><span class="line">    view.backgroundColor = [UIColor blackColor];</span><br><span class="line">    [self.view addSubview:view];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 悬挂指针：访问的对象已经被释放掉</span><br><span class="line"> */</span><br><span class="line">- (void)case3 &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        UIView* view = [[UIView alloc]init];</span><br><span class="line">        view.backgroundColor = [UIColor blackColor];</span><br><span class="line">        self.weakView = view;</span><br><span class="line">        self.unSafeView = view;</span><br><span class="line">        self.assignView = view;</span><br><span class="line">        self.associateView = view;</span><br><span class="line">    &#125;</span><br><span class="line">    // ARC下weak对象释放后会自动置nil，因此下面的代码不会崩溃</span><br><span class="line">    [self.view addSubview:self.weakView];</span><br><span class="line">    // 野指针场景一：unsafe_unretained修饰的对象释放后，不会自动置nil，变成野指针，因此下面的代码会崩溃</span><br><span class="line">    [self.view addSubview:self.unSafeView];</span><br><span class="line">    // 野指针场景二：应该使用strong/weak修饰的对象，却错误的使用assign修饰，释放后不会自动置nil</span><br><span class="line">    [self.view addSubview:self.assignView];</span><br><span class="line">    // 野指针场景三：给类添加添加关联变量的时候，类似场景二，应该使用OBJC_ASSOCIATION_RETAIN_NONATOMIC修饰，却错误使用OBJC_ASSOCIATION_ASSIGN</span><br><span class="line">    [self.view addSubview:self.associateView];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="3-2、原因"><a href="#3-2、原因" class="headerlink" title="3.2、原因"></a>3.2、原因</h2><blockquote>
+<p>出现悬挂指针，对象没有被初始化，或者访问的对象被释放</p>
+</blockquote>
+<h2 id="3-3、解决方案："><a href="#3-3、解决方案：" class="headerlink" title="3.3、解决方案："></a>3.3、解决方案：</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、Debug阶段开启僵尸模式，Release时关闭僵尸模式</li>
+<li><input checked="" disabled="" type="checkbox"> 2、使用Xcode的Address Sanitizer检查地址访问越界</li>
+<li><input checked="" disabled="" type="checkbox"> 3、创建对象的时候记得初始化</li>
+<li><input checked="" disabled="" type="checkbox"> 4、对象的属性使用正确的修饰方式（strong&#x2F;weak）</li>
+<li><input checked="" disabled="" type="checkbox"> 5、调用block的时候，做判断</li>
+</ul>
+<h1 id="4、KVO引起的崩溃"><a href="#4、KVO引起的崩溃" class="headerlink" title="4、KVO引起的崩溃"></a>4、KVO引起的崩溃</h1><h2 id="4-1、场景对应的Code"><a href="#4-1、场景对应的Code" class="headerlink" title="4.1、场景对应的Code"></a>4.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;KvoCrashVC.h&quot;</span><br><span class="line"></span><br><span class="line">@interface KvoCrashVCObj : NSObject</span><br><span class="line">@property (nonatomic, strong) NSString *name;</span><br><span class="line">@end</span><br><span class="line">@implementation KvoCrashVCObj</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@interface KvoCrashVC ()</span><br><span class="line">@property (nonatomic, strong) KvoCrashVCObj *sObj;</span><br><span class="line">@end</span><br><span class="line">@implementation KvoCrashVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    self.sObj = [[KvoCrashVCObj alloc] init];</span><br><span class="line">//#import &lt;XXShield/XXShield.h&gt;</span><br><span class="line">//    static dispatch_once_t onceToken;</span><br><span class="line">//    dispatch_once(&amp;onceToken, ^&#123;</span><br><span class="line">//        [XXShieldSDK registerStabilityWithAbility:(EXXShieldTypeKVO)];</span><br><span class="line">//    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    [self func4];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 观察者是局部变量，会崩溃</span><br><span class="line"> */</span><br><span class="line">- (void)func1 &#123;</span><br><span class="line">    // 崩溃日志：An -observeValueForKeyPath:ofObject:change:context: message was received but not handled.</span><br><span class="line">    KvoCrashVCObj* obj = [[KvoCrashVCObj alloc] init];</span><br><span class="line">    [self addObserver:obj</span><br><span class="line">           forKeyPath:@&quot;view&quot;</span><br><span class="line">              options:NSKeyValueObservingOptionNew</span><br><span class="line">              context:nil];</span><br><span class="line">    self.view = [[UIView alloc] init];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 被观察者是局部变量，会崩溃</span><br><span class="line"> */</span><br><span class="line">- (void)func2 &#123;</span><br><span class="line">    // 崩溃日志：An -observeValueForKeyPath:ofObject:change:context: message was received but not handled.</span><br><span class="line">    KvoCrashVCObj* obj = [[KvoCrashVCObj alloc] init];</span><br><span class="line">    [obj addObserver:self</span><br><span class="line">          forKeyPath:@&quot;name&quot;</span><br><span class="line">             options:NSKeyValueObservingOptionNew</span><br><span class="line">             context:nil];</span><br><span class="line">    obj.name = @&quot;&quot;;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 没有实现observeValueForKeyPath:ofObject:changecontext:方法:，会崩溃</span><br><span class="line"> */</span><br><span class="line">- (void)func3 &#123;</span><br><span class="line">    // 崩溃日志：An -observeValueForKeyPath:ofObject:change:context: message was received but not handled.</span><br><span class="line">    [self.sObj addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    self.sObj.name = @&quot;0&quot;;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 重复移除观察者，会崩溃</span><br><span class="line"> */</span><br><span class="line">- (void)func4 &#123;</span><br><span class="line">    // 崩溃日志：because it is not registered as an observer</span><br><span class="line">    [self.sObj addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    self.sObj.name = @&quot;0&quot;;</span><br><span class="line">    [self.sObj removeObserver:self forKeyPath:@&quot;name&quot;];</span><br><span class="line">    [self.sObj removeObserver:self forKeyPath:@&quot;name&quot;];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 重复添加观察者，不会崩溃，但是添加多少次，一次改变就会被观察多少次</span><br><span class="line"> */</span><br><span class="line">- (void)func5 &#123;</span><br><span class="line">    [self.sObj addObserver:self forKeyPath:@&quot;name&quot; options:NSKeyValueObservingOptionNew context:NULL];</span><br><span class="line">    self.sObj.name = @&quot;0&quot;;</span><br><span class="line">&#125;</span><br><span class="line">- (void)observeValueForKeyPath:(NSString *)keyPath ofObject:(id)object change:(NSDictionary&lt;NSKeyValueChangeKey,id&gt; *)change context:(void *)context &#123;</span><br><span class="line">    NSLog(@&quot;keyPath = %@&quot;, keyPath);</span><br><span class="line">&#125;</span><br><span class="line">// 总结：KVO有两种崩溃</span><br><span class="line">// 1、because it is not registered as an observer</span><br><span class="line">// 2、An -observeValueForKeyPath:ofObject:change:context: message was received but not handled.</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="4-2、原因"><a href="#4-2、原因" class="headerlink" title="4.2、原因"></a>4.2、原因</h2><blockquote>
+<p>添加了观察者，没有在正确的时机移除</p>
+</blockquote>
+<h2 id="4-3、解决方案："><a href="#4-3、解决方案：" class="headerlink" title="4.3、解决方案："></a>4.3、解决方案：</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、addObserver和removeObserver一定要成对出现</li>
+<li><input checked="" disabled="" type="checkbox"> 2、推荐使用FaceBook开源的第三方库 FBKVOController</li>
+</ul>
+<h1 id="5、集合类相关崩溃"><a href="#5、集合类相关崩溃" class="headerlink" title="5、集合类相关崩溃"></a>5、集合类相关崩溃</h1><h2 id="5-1、场景对应的Code"><a href="#5-1、场景对应的Code" class="headerlink" title="5.1、场景对应的Code"></a>5.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;CollectionCrashVC.h&quot;</span><br><span class="line"></span><br><span class="line">@interface CollectionCrashVC ()</span><br><span class="line">@end</span><br><span class="line">@implementation CollectionCrashVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">    [self case4];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景一：数组越界</span><br><span class="line"> */</span><br><span class="line">- (void)case1 &#123;</span><br><span class="line">    // reason: &#x27;*** -[__NSArrayI objectAtIndex:]: index 4 beyond bounds [0 .. 2]&#x27;</span><br><span class="line">    NSArray* array = [[NSArray alloc]initWithObjects:@1, @2, @3, nil];</span><br><span class="line">    NSNumber* number = [array objectAtIndex:4];</span><br><span class="line">    NSLog(@&quot;number = %@&quot;, number);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景二：向数组中添加nil元素</span><br><span class="line"> */</span><br><span class="line">- (void)case2 &#123;</span><br><span class="line">    // reason: &#x27;*** -[__NSArrayM insertObject:atIndex:]: object cannot be nil&#x27;</span><br><span class="line">    NSMutableArray* array = [[NSMutableArray alloc]initWithObjects:@1, @2, @3, nil];</span><br><span class="line">    [array addObject:nil];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景三：数组遍历的时候使用错误的方式移除元素</span><br><span class="line"> */</span><br><span class="line">- (void)case3 &#123;</span><br><span class="line">    NSMutableArray&lt;NSNumber*&gt;* array = [NSMutableArray array];</span><br><span class="line">    [array addObject:@1];</span><br><span class="line">    [array addObject:@2];</span><br><span class="line">    [array addObject:@3];</span><br><span class="line">    [array addObject:@4];</span><br><span class="line">    // 不崩溃</span><br><span class="line">    [array enumerateObjectsUsingBlock:^(NSNumber * _Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) &#123;</span><br><span class="line">        if (obj.integerValue == 1) &#123;</span><br><span class="line">            [array removeObject:obj];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;];</span><br><span class="line">    // 崩溃，reason: &#x27;*** Collection &lt;__NSArrayM: 0x2829946f0&gt; was mutated while being enumerated.&#x27;</span><br><span class="line">    for (NSNumber* obj in array) &#123;</span><br><span class="line">        if (obj.integerValue == 2) &#123;</span><br><span class="line">            [array removeObject:obj];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    //    dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">    //        self.view.backgroundColor = [UIColor blueColor];</span><br><span class="line">    //    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 场景四：使用setObject:forKey:向字典中添加value为nil的键值对，推荐使用KVC的setValue:nil forKey:</span><br><span class="line"> */</span><br><span class="line">- (void)case4 &#123;</span><br><span class="line">    NSMutableDictionary* dictionary = [NSMutableDictionary dictionary];</span><br><span class="line">    [dictionary setObject:@1 forKey:@1];</span><br><span class="line">    // 不崩溃：value为nil，只会移除key对应的键值对</span><br><span class="line">    [dictionary setValue:nil forKey:@1];</span><br><span class="line">    // 崩溃：reason: &#x27;*** -[__NSDictionaryM setObject:forKey:]: object cannot be nil (key: 1)&#x27;</span><br><span class="line">    [dictionary setObject:nil forKey:@1];</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="5-2、原因"><a href="#5-2、原因" class="headerlink" title="5.2、原因"></a>5.2、原因</h2><blockquote>
+<p>越界、添加nil、多线程非原子性操作、遍历的同时移除元素</p>
+</blockquote>
+<h2 id="5-3、场景："><a href="#5-3、场景：" class="headerlink" title="5.3、场景："></a>5.3、场景：</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、数组越界，访问下标大于数组的个数</li>
+<li><input checked="" disabled="" type="checkbox"> 2、向数组中添加空数据</li>
+<li><input checked="" disabled="" type="checkbox"> 3、多线程环境中，一个线程在读取，一个线程在移除</li>
+<li><input checked="" disabled="" type="checkbox"> 4、一边遍历数组，一边移除数组中的元素</li>
+<li><input checked="" disabled="" type="checkbox"> 5、多线程中操作可变数组（数组的扩容、访问僵尸对象）</li>
+</ul>
+<h2 id="5-4、解决方案："><a href="#5-4、解决方案：" class="headerlink" title="5.4、解决方案："></a>5.4、解决方案：</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、给集合类添加category重写原来的方法，在内部做判断</li>
+<li><input checked="" disabled="" type="checkbox"> 2、使用Runtime把原来的方法替换成自定义的安全方法</li>
+<li><input checked="" disabled="" type="checkbox"> 3、给NSMutableDictionary添加元素的时候，使用setObject:forKey:向字典中添加value为nil的键值对，推荐使用KVC的setValue:nil forKey:。[mutableDictionary setValue:nil ForKey:@”name”]不会崩溃，只是从字典中移除name键值对。</li>
+<li><input checked="" disabled="" type="checkbox"> 4、因为NSMutableArray、NSMutableDictionary不是线程安全的，所以在多线程环境下要保证读写操作的原子性，使用 加锁 、信号量 、GCD串行队列 、GCD栅栏dispatch_barrier_async、CGD组的dispatch_group_enter和dispatch_group_leave</li>
+</ul>
+<h1 id="6、多线程中的崩溃"><a href="#6、多线程中的崩溃" class="headerlink" title="6、多线程中的崩溃"></a>6、多线程中的崩溃</h1><h2 id="6-1、场景对应的Code"><a href="#6-1、场景对应的Code" class="headerlink" title="6.1、场景对应的Code"></a>6.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br><span class="line">125</span><br><span class="line">126</span><br><span class="line">127</span><br><span class="line">128</span><br><span class="line">129</span><br><span class="line">130</span><br><span class="line">131</span><br><span class="line">132</span><br></pre></td><td class="code"><pre><span class="line">#import &quot;ThreadCrashVC.h&quot;</span><br><span class="line"></span><br><span class="line">@interface ThreadCrashVC ()</span><br><span class="line">@property (nonatomic, strong) NSMutableArray *array;</span><br><span class="line">@end</span><br><span class="line"></span><br><span class="line">@implementation ThreadCrashVC</span><br><span class="line">- (void)viewDidLoad &#123;</span><br><span class="line">    [super viewDidLoad];</span><br><span class="line">&#125;</span><br><span class="line">- (void)touchesBegan:(NSSet&lt;UITouch *&gt; *)touches withEvent:(UIEvent *)event &#123;</span><br><span class="line">    [self case1];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> dispatch_group_leave比dispatch_group_enter执行的次数多</span><br><span class="line"> */</span><br><span class="line">- (void)case1 &#123;</span><br><span class="line">    // 崩溃：Thread 1: EXC_BREAKPOINT (code=1, subcode=0x1054f6348)</span><br><span class="line">    dispatch_group_t group = dispatch_group_create();</span><br><span class="line">    dispatch_group_leave(group);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 在子线程更新UI</span><br><span class="line"> */</span><br><span class="line">- (void)case2 &#123;</span><br><span class="line">    dispatch_async(dispatch_get_global_queue(0, 0), ^&#123;</span><br><span class="line">        self.view.backgroundColor = [UIColor redColor];</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 多个线程同时释放一个对象</span><br><span class="line"> */</span><br><span class="line">- (void)case3 &#123;   </span><br><span class="line">    // ==================使用信号量同步后不崩溃==================</span><br><span class="line">    &#123;</span><br><span class="line">        dispatch_semaphore_t semaphore = dispatch_semaphore_create(1);</span><br><span class="line">        __block NSObject *obj = [NSObject new];</span><br><span class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^&#123;</span><br><span class="line">            while (YES) &#123;</span><br><span class="line">                dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">                obj = [NSObject new];</span><br><span class="line">                dispatch_semaphore_signal(semaphore);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        while (YES) &#123;</span><br><span class="line">            dispatch_semaphore_wait(semaphore, DISPATCH_TIME_FOREVER);</span><br><span class="line">            obj = [NSObject new];</span><br><span class="line">            dispatch_semaphore_signal(semaphore);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    // ==================未同步则崩溃==================</span><br><span class="line">    &#123;</span><br><span class="line">        __block NSObject *obj = [NSObject new];</span><br><span class="line">        dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_HIGH, 0), ^&#123;</span><br><span class="line">            while (YES) &#123;</span><br><span class="line">                obj = [NSObject new];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;);</span><br><span class="line">        while (YES) &#123;</span><br><span class="line">            obj = [NSObject new];</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 多线程中的数组扩容、浅复制</span><br><span class="line"> 扩容：数组的地址已经改变，报错was mutated while being enumerated</span><br><span class="line"> 浅复制：访问僵尸对象，报错EXC_BAD_ACCESS</span><br><span class="line"> </span><br><span class="line"> // 知识点：集合类对象和非集合类对象的copy与mutableCopy</span><br><span class="line"> // [NSArray copy]                  // 浅复制</span><br><span class="line"> // [NSArray mutableCopy]           // 深复制</span><br><span class="line"> // [NSMutableArray copy]           // 深复制</span><br><span class="line"> // [NSMutableArray mutableCopy]    // 深复制</span><br><span class="line"> </span><br><span class="line"> 参考：</span><br><span class="line"> [Swift数组扩容原理](https://bestswifter.com/swiftarrayappend/)</span><br><span class="line"> [戴仓薯](https://juejin.im/post/5a9aa633518825556a71d9f3)</span><br><span class="line"> */</span><br><span class="line">-(void)case4 &#123;</span><br><span class="line">    &#123;</span><br><span class="line">        NSArray *array = @[@[@&quot;a&quot;, @&quot;b&quot;], @[@&quot;c&quot;, @&quot;d&quot;]];</span><br><span class="line">        NSArray *copyArray = [array copy];</span><br><span class="line">        NSMutableArray *mCopyArray = [array mutableCopy];</span><br><span class="line">        NSLog(@&quot;array = %p，copyArray = %p，mCopyArray = %p&quot;, array, copyArray, mCopyArray);</span><br><span class="line">    &#125;</span><br><span class="line">    &#123;</span><br><span class="line">        NSMutableArray *array = [NSMutableArray arrayWithObjects:[NSMutableString stringWithString:@&quot;a&quot;],@&quot;b&quot;,@&quot;c&quot;,nil];</span><br><span class="line">        NSArray *copyArray = [array copy];</span><br><span class="line">        NSMutableArray *mCopyArray = [array mutableCopy];</span><br><span class="line">        NSLog(@&quot;array = %p，copyArray = %p，mCopyArray = %p&quot;, array, copyArray, mCopyArray);</span><br><span class="line">    &#125;</span><br><span class="line">    </span><br><span class="line">    dispatch_queue_t queue1 = dispatch_queue_create(&quot;queue1&quot;, 0);</span><br><span class="line">    dispatch_queue_t queue2 = dispatch_queue_create(&quot;queue2&quot;, 0);</span><br><span class="line">    </span><br><span class="line">    NSMutableArray* array = [NSMutableArray array];</span><br><span class="line">    </span><br><span class="line">    dispatch_async(queue1, ^&#123;</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            if (array.count &lt; 10) &#123;</span><br><span class="line">                [array addObject:@(array.count)];</span><br><span class="line">            &#125; else &#123;</span><br><span class="line">                [array removeAllObjects];</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">    </span><br><span class="line">    dispatch_async(queue2, ^&#123;</span><br><span class="line">        while (true) &#123;</span><br><span class="line">            // case 1：数组扩容</span><br><span class="line">            for (NSNumber* number in array) &#123;</span><br><span class="line">              NSLog(@&quot;%@&quot;, number);</span><br><span class="line">            &#125;</span><br><span class="line">            // case 2：数组扩容</span><br><span class="line">            NSArray* immutableArray = array;</span><br><span class="line">            for (NSNumber* number in immutableArray) &#123;</span><br><span class="line">              NSLog(@&quot;%@&quot;, number);</span><br><span class="line">            &#125;</span><br><span class="line">            // case 3：数组扩容 [NSArray initWithArray:range:copyItems:]</span><br><span class="line">            NSArray* immutableArray1 = [array copy];</span><br><span class="line">            for (NSNumber* number in immutableArray1) &#123;</span><br><span class="line">                NSLog(@&quot;%@&quot;, number);</span><br><span class="line">            &#125;</span><br><span class="line">            // case 4：浅复制访问僵尸对象</span><br><span class="line">            NSArray* immutableArray2 = [array mutableCopy];</span><br><span class="line">            for (NSNumber* number in immutableArray2) &#123;</span><br><span class="line">                NSLog(@&quot;%@&quot;, number);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;);</span><br><span class="line">&#125;</span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="6-2、原因"><a href="#6-2、原因" class="headerlink" title="6.2、原因"></a>6.2、原因</h2><blockquote>
+<p>死锁、子线程中更新UI、多个线程同时释放一个对象</p>
+</blockquote>
+<h2 id="6-3、场景"><a href="#6-3、场景" class="headerlink" title="6.3、场景"></a>6.3、场景</h2><ul>
+<li><input checked="" disabled="" type="checkbox"> 1、在子线程中更新UI</li>
+<li><input checked="" disabled="" type="checkbox"> 2、dispatch_group crash，dispatch_group_leave的次数比dispatch_group_enter次数多。参考：iOS疑难问题排查之深入探究dispatch_group crash</li>
+<li><input checked="" disabled="" type="checkbox"> 3、多线程下非线程安全类的使用，如NSMutableArray、NSMutableDictionary。NSCache是线程安全的。</li>
+<li><input checked="" disabled="" type="checkbox"> 4、数据缓存到磁盘和读取。</li>
+</ul>
+<h2 id="6-4、解决方案："><a href="#6-4、解决方案：" class="headerlink" title="6.4、解决方案："></a>6.4、解决方案：</h2><p>多线程遇到需要同步的时候，加锁，添加信号量等进行同步操作。一般多线程发生的Crash，会收到SIGSEGV信号，表明试图访问未分配给自己的内存, 或试图往没有写权限的内存地址写数据。</p>
+<h1 id="7、Socket长连接，进入后台没有关闭"><a href="#7、Socket长连接，进入后台没有关闭" class="headerlink" title="7、Socket长连接，进入后台没有关闭"></a>7、Socket长连接，进入后台没有关闭</h1><blockquote>
+<p>当服务器close一个连接时，若client端接着发数据。根据TCP协议的规定，会收到一个RST响应，client再往这个服务器发送数据时，系统会发出一个SIGPIPE信号给进程，告诉进程这个连接已经断开了，不要再写了。而根据信号的默认处理规则，SIGPIPE信号的默认执行动作是terminate(终止、退出),所以client会退出。</p>
+</blockquote>
+<p>长连接socket或重定向管道进入后台，没有关闭导致崩溃的解决办法：</p>
+<h2 id="7-1、解决方案："><a href="#7-1、解决方案：" class="headerlink" title="7.1、解决方案："></a>7.1、解决方案：</h2><ul>
+<li>方法一：1、切换到后台是，关闭长连接和管道，回到前台重新创建。</li>
+<li>方法二：2、使用signal(SIGPIPE,SIG_IGN)，将SIGPIP交给系统处理，这么做将SIGPIPE设为SIG_IGN，使客户端不执行默认操作，即不退出。</li>
+</ul>
+<h1 id="8、Watch-Dog超时造成的crash"><a href="#8、Watch-Dog超时造成的crash" class="headerlink" title="8、Watch Dog超时造成的crash"></a>8、Watch Dog超时造成的crash</h1><blockquote>
+<p>主线程执行耗时操作，导致主线程被卡超过一定时间。一般异常编码是0x8badf00d，表示应用发生watch dog超时而被iOS终止，通常是应用花费太多的时间无法启动、终止或者响应系统事件。</p>
+</blockquote>
+<h2 id="8-1、解决方案："><a href="#8-1、解决方案：" class="headerlink" title="8.1、解决方案："></a>8.1、解决方案：</h2><blockquote>
+<p>主线程只负责更新UI和事件响应，将耗时操作（网络请求、数据库读写等）异步放到后台线程执行。</p>
+</blockquote>
+<h1 id="9、后台返回NSNull导致的崩溃，多见于Java做后台服务器开发语言"><a href="#9、后台返回NSNull导致的崩溃，多见于Java做后台服务器开发语言" class="headerlink" title="9、后台返回NSNull导致的崩溃，多见于Java做后台服务器开发语言"></a>9、后台返回NSNull导致的崩溃，多见于Java做后台服务器开发语言</h1><h2 id="9-1、场景对应的Code"><a href="#9-1、场景对应的Code" class="headerlink" title="9.1、场景对应的Code"></a>9.1、场景对应的Code</h2><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">// reason: &#x27;-[NSNull integerValue]: unrecognized selector sent to instance 0x2098f99b0&#x27;</span><br><span class="line">NSNull *nullStr = [[NSNull alloc] init];</span><br><span class="line">NSMutableDictionary* dic = [NSMutableDictionary dictionary];</span><br><span class="line">[dic setValue:nullStr forKey:@&quot;key&quot;];</span><br><span class="line">NSNumber* number = [dic valueForKey:@&quot;key&quot;];</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>NULL：用于普通类型，例如NSInteger</li>
+<li>nil：用于OC对象（除了类这个对象）,给nil对象发送消息不会crash</li>
+<li>Nil：用于Class类型对象的赋值（类是元类的实例，也是对象）</li>
+<li>NSNull：用于OC对象的站位，一般会作为集合中的占位元素，给NSNull对象发送消息会crash的，后台给我们返回的就是NSNull对象</li>
+</ul>
+<p>NULL：用于普通类型，例如NSInteger<br>nil：用于OC对象（除了类这个对象）,给nil对象发送消息不会crash<br>Nil：用于Class类型对象的赋值（类是元类的实例，也是对象）<br>NSNull：用于OC对象的站位，一般会作为集合中的占位元素，给NSNull对象发送消息会crash的，后台给我们返回的就是NSNull对象</p>
+<h2 id="9-2、解决方法"><a href="#9-2、解决方法" class="headerlink" title="9.2、解决方法"></a>9.2、解决方法</h2><blockquote>
+<p>利用消息转发。参考：NullSafe。当我们给一个NSNull对象发送消息的话，可能会崩溃（null是有内存的），而发送给nil的话，是不会崩溃的。</p>
+</blockquote>
+<h1 id="10、在iOS中捕获异常信息"><a href="#10、在iOS中捕获异常信息" class="headerlink" title="10、在iOS中捕获异常信息"></a>10、在iOS中捕获异常信息</h1><blockquote>
+<p>崩溃主要是由于 Mach 异常、Objective-C 异常（NSException）引起的，同时对于 Mach 异常，到了 BSD 层会转换为对应的 Signal 信号，那么我们也可以通过捕获信号，来捕获 Crash 事件。针对 NSException 可以通过注册 NSUncaughtExceptionHandler 捕获异常信息。</p>
+</blockquote>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br></pre></td><td class="code"><pre><span class="line">/**</span><br><span class="line"> 一、OC异常处理函数</span><br><span class="line"></span><br><span class="line"> @param exception exception</span><br><span class="line"> */</span><br><span class="line">static void uncaught_exception_handler (NSException *exception) &#123;</span><br><span class="line">    // 异常的堆栈信息</span><br><span class="line">    NSArray *stackArray = [exception callStackSymbols];</span><br><span class="line">    // 出现异常的原因</span><br><span class="line">    NSString *reason = [exception reason];</span><br><span class="line">    // 异常名称</span><br><span class="line">    NSString *name = [exception name];</span><br><span class="line">    NSString *exceptionInfo = [NSString stringWithFormat:@&quot;Exception reason：%@\nException name：%@\nException stack：%@&quot;,</span><br><span class="line">                               name,</span><br><span class="line">                               reason,</span><br><span class="line">                               stackArray];</span><br><span class="line">    NSLog(@&quot;%@&quot;, exceptionInfo);</span><br><span class="line">    NSMutableArray *tmpArr = [NSMutableArray arrayWithArray:stackArray];</span><br><span class="line">    [tmpArr insertObject:reason atIndex:0];</span><br><span class="line">    //保存到本地  --  当然你可以在下次启动的时候，上传这个log</span><br><span class="line">    [exceptionInfo writeToFile:[NSString stringWithFormat:@&quot;%@/Documents/error.log&quot;,NSHomeDirectory()]</span><br><span class="line">                    atomically:YES</span><br><span class="line">                      encoding:NSUTF8StringEncoding</span><br><span class="line">                         error:nil];</span><br><span class="line">    </span><br><span class="line">    /**</span><br><span class="line">     *  把异常崩溃信息发送至开发者邮件</span><br><span class="line">     */</span><br><span class="line">    NSString *content = [NSString stringWithFormat:@&quot;==异常错误报告==\nname:%@\nreason:\n%@\ncallStackSymbols:\n%@&quot;,</span><br><span class="line">                         name,</span><br><span class="line">                         reason,</span><br><span class="line">                         [stackArray componentsJoinedByString:@&quot;\n&quot;]];</span><br><span class="line">    NSMutableString *mailUrl = [NSMutableString string];</span><br><span class="line">    [mailUrl appendString:@&quot;mailto:test@qq.com&quot;];</span><br><span class="line">    [mailUrl appendString:@&quot;?subject=程序异常崩溃，请配合发送异常报告，谢谢合作！&quot;];</span><br><span class="line">    [mailUrl appendFormat:@&quot;&amp;body=%@&quot;, content];</span><br><span class="line">    // 打开地址</span><br><span class="line">    NSCharacterSet *set = [NSCharacterSet URLHostAllowedCharacterSet];</span><br><span class="line">    NSString *mailPath = [mailUrl stringByAddingPercentEncodingWithAllowedCharacters:set];</span><br><span class="line">    //NSString *mailPath = [mailUrl stringByAddingPercentEscapesUsingEncoding:NSUTF8StringEncoding];</span><br><span class="line">    [[UIApplication sharedApplication] openURL:[NSURL URLWithString:mailPath]];</span><br><span class="line">&#125;</span><br><span class="line">/**</span><br><span class="line"> 二、Unix标准的signal机制处理函数</span><br><span class="line"></span><br><span class="line"> @param sig sig</span><br><span class="line"> */</span><br><span class="line">static void handleSignal( int sig ) &#123;</span><br><span class="line">    </span><br><span class="line">&#125;</span><br><span class="line">- (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions &#123;</span><br><span class="line">    // OC层中未被捕获的异常，通过注册NSUncaughtExceptionHandler捕获异常信息</span><br><span class="line">    NSSetUncaughtExceptionHandler(&amp;uncaught_exception_handler);</span><br><span class="line">    // 内存访问错误，重复释放等错误就无能为力了，因为这种错误它抛出的是Signal，所以必须要专门做Signal处理</span><br><span class="line">    // OC中层不能转换的Mach异常，利用Unix标准的signal机制，注册SIGABRT, SIGBUS, SIGSEGV等信号发生时的处理函数。</span><br><span class="line">    signal(SIGSEGV,handleSignal);</span><br><span class="line">    return YES;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><p><a href="https://link.juejin.im/?target=https://neyoufan.github.io/2017/01/13/ios/BayMax_HTSafetyGuard/">大白健康系统–iOS APP运行时Crash自动修复系统</a><br><a href="https://link.juejin.im/?target=iOS%25E4%25B8%25AD%25E7%259A%2584crash%25E9%2598%25B2%25E6%258A%25A4%25EF%25BC%2588%25E4%25B8%2580%25EF%25BC%2589unrecognized%2520selector%2520sent%2520to%2520instance">iOS中的crash防护（一）unrecognized selector sent to instance</a><br><a href="https://link.juejin.im/?target=https://cloud.tencent.com/developer/article/1070342">小萝莉说Crash（一）：Unrecognized selector sent to instance xxxx</a><br><a href="https://link.juejin.im/?target=https://www.jianshu.com/p/3261493e6d9e">iOS实录14：浅谈iOS Crash（一）</a><br><a href="https://link.juejin.im/?target=iOS%25E5%25B4%25A9%25E6%25BA%2583%25E5%25BC%2582%25E5%25B8%25B8%25E5%2585%25A8%25E5%25B1%2580%25E6%258D%2595%25E8%258E%25B7">iOS崩溃异常全局捕获</a><br><a href="https://link.juejin.im/?target=https://zhongwuzw.github.io/2017/09/21/%25E8%2581%258A%25E8%2581%258Adealloc/">聊聊dealloc</a><br><a href="https://link.juejin.im/?target=https://www.zybuluo.com/qidiandasheng/note/342315">iOS崩溃crash大解析</a></p>
+<h4 id="GitHub开源实现："><a href="#GitHub开源实现：" class="headerlink" title="GitHub开源实现："></a>GitHub开源实现：</h4><ul>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/ValiantCat/XXShield">XXShield</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/qiyer/QYCrashProtector">QYCrashProtector</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/JackLee18/JKCrashProtect">JKCrashProtect</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/Wuou/WOCrashProtector">WOCrashProtector</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/chenfanfang/AvoidCrash">AvoidCrash</a></li>
+<li><input checked="" disabled="" type="checkbox"> <a href="https://link.juejin.im/?target=https://github.com/jseanj/NeverCrash">NeverCrash</a></li>
+</ul>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Crash/" rel="tag"># Crash</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/02/13/%E5%85%B3%E4%BA%8E%E9%80%89%E8%B4%AD%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E7%9A%84%E5%87%A0%E7%82%B9%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="prev" title="关于选购蓝牙耳机的几点注意事项">
+                  <i class="fa fa-chevron-left"></i> 关于选购蓝牙耳机的几点注意事项
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/16/Dart-vs-Swift/" rel="next" title="Dart vs Swift">
+                  Dart vs Swift <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Darren Kong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/DarrenKong" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
