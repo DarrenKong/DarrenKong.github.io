@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#222" media="(prefers-color-scheme: dark)"><meta name="generator" content="Hexo 6.3.0">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" integrity="sha256-HtsXJanqjKTc8vVQjO4YMhiqFoXkfBsjBWcX91T1jr8=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Mist","darkmode":true,"version":"8.15.1","exturl":false,"sidebar":{"position":"right","display":"post","padding":18,"offset":12},"copycode":{"enable":true,"style":"mac"},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"trigger":"auto","top_n_per_article":1,"unescape":false,"preload":false}}</script><script src="/js/config.js"></script>
+
+    <meta name="description" content="最近几天整理Chrome书签，发现结构有点乱。琢磨着写个脚本，把Chrome书签转成Markdown文档，然后把每年阅读、收藏的文章以书签形式归档一下。  浏览器之间能自由的导入和导出书签，是因为统一了书签的结构。了解书签结构格式，不仅可以方便我们对导出的书签进行编辑、合并、替换等操作，还可以自己手工创建适合各种浏览器的书签。这里我导出Chrome浏览器的书签作为参考分析： 1234567891">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Chrome书签结构分析">
+<meta property="og:url" content="http://example.com/2019/01/24/Chrome%E4%B9%A6%E7%AD%BE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="DarrenKong&#39;s Blog">
+<meta property="og:description" content="最近几天整理Chrome书签，发现结构有点乱。琢磨着写个脚本，把Chrome书签转成Markdown文档，然后把每年阅读、收藏的文章以书签形式归档一下。  浏览器之间能自由的导入和导出书签，是因为统一了书签的结构。了解书签结构格式，不仅可以方便我们对导出的书签进行编辑、合并、替换等操作，还可以自己手工创建适合各种浏览器的书签。这里我导出Chrome浏览器的书签作为参考分析： 1234567891">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-01-24T08:02:10.000Z">
+<meta property="article:modified_time" content="2020-12-08T07:21:00.641Z">
+<meta property="article:author" content="Darren Kong">
+<meta property="article:tag" content="Chrome">
+<meta property="article:tag" content="书签">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://example.com/2019/01/24/Chrome%E4%B9%A6%E7%AD%BE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"http://example.com/2019/01/24/Chrome%E4%B9%A6%E7%AD%BE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/","path":"2019/01/24/Chrome书签结构分析/","title":"Chrome书签结构分析"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>Chrome书签结构分析 | DarrenKong's Blog</title>
+  
+
+
+
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">DarrenKong's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Stay hungry，stay foolish!</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-archives"><a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">19</span></a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签<span class="badge">20</span></a></li><li class="menu-item menu-item-categories"><a href="/categories/" rel="section"><i class="fa fa-th fa-fw"></i>分类<span class="badge">9</span></a></li><li class="menu-item menu-item-about"><a href="/about/" rel="section"><i class="fa fa-user fa-fw"></i>关于</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup"><div class="search-header">
+  <span class="search-icon">
+    <i class="fa fa-search"></i>
+  </span>
+  <div class="search-input-container">
+    <input autocomplete="off" autocapitalize="off" maxlength="80"
+           placeholder="搜索..." spellcheck="false"
+           type="search" class="search-input">
+  </div>
+  <span class="popup-btn-close" role="button">
+    <i class="fa fa-times-circle"></i>
+  </span>
+</div>
+<div class="search-result-container no-result">
+  <div class="search-result-icon">
+    <i class="fa fa-spinner fa-pulse fa-5x"></i>
+  </div>
+</div>
+
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Darren Kong</p>
+  <div class="site-description" itemprop="description">Stay hungry，stay foolish!</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">19</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">9</span>
+        <span class="site-state-item-name">分类</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">20</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+  <div class="links-of-author animated">
+      <span class="links-of-author-item">
+        <a href="https://github.com/DarrenKong" title="GitHub → https:&#x2F;&#x2F;github.com&#x2F;DarrenKong" rel="noopener me" target="_blank"><i class="fab fa-github fa-fw"></i>GitHub</a>
+      </span>
+      <span class="links-of-author-item">
+        <a href="mailto:kong4221@163.com" title="E-Mail → mailto:kong4221@163.com" rel="noopener me" target="_blank"><i class="fa fa-envelope fa-fw"></i>E-Mail</a>
+      </span>
+  </div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2019/01/24/Chrome%E4%B9%A6%E7%AD%BE%E7%BB%93%E6%9E%84%E5%88%86%E6%9E%90/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Darren Kong">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="DarrenKong's Blog">
+      <meta itemprop="description" content="Stay hungry，stay foolish!">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="Chrome书签结构分析 | DarrenKong's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          Chrome书签结构分析
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2019-01-24 16:02:10" itemprop="dateCreated datePublished" datetime="2019-01-24T16:02:10+08:00">2019-01-24</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">更新于</span>
+      <time title="修改时间：2020-12-08 15:21:00" itemprop="dateModified" datetime="2020-12-08T15:21:00+08:00">2020-12-08</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">分类于</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/Chrome-Extension/" itemprop="url" rel="index"><span itemprop="name">Chrome Extension</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <blockquote>
+<p>最近几天整理Chrome书签，发现结构有点乱。琢磨着写个脚本，把Chrome书签转成Markdown文档，然后把每年阅读、收藏的文章以书签形式归档一下。</p>
+</blockquote>
+<p>浏览器之间能自由的导入和导出书签，是因为统一了书签的结构。了解书签结构格式，不仅可以方便我们对导出的书签进行编辑、合并、替换等操作，还可以自己手工创建适合各种浏览器的书签。这里我导出Chrome浏览器的书签作为参考分析：</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="keyword">NETSCAPE-Bookmark-file-1</span>&gt;</span></span><br><span class="line"><span class="comment">&lt;!-- This is an automatically generated file.</span></span><br><span class="line"><span class="comment">     It will be read and overwritten.</span></span><br><span class="line"><span class="comment">     DO NOT EDIT! --&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">META</span> <span class="attr">HTTP-EQUIV</span>=<span class="string">&quot;Content-Type&quot;</span> <span class="attr">CONTENT</span>=<span class="string">&quot;text/html; charset=UTF-8&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">TITLE</span>&gt;</span>Bookmarks<span class="tag">&lt;/<span class="name">TITLE</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">H1</span>&gt;</span>Bookmarks<span class="tag">&lt;/<span class="name">H1</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">H3</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1483867303&quot;</span> <span class="attr">LAST_MODIFIED</span>=<span class="string">&quot;1540376281&quot;</span> <span class="attr">PERSONAL_TOOLBAR_FOLDER</span>=<span class="string">&quot;true&quot;</span>&gt;</span>书签栏<span class="tag">&lt;/<span class="name">H3</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">H3</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467684027&quot;</span> <span class="attr">LAST_MODIFIED</span>=<span class="string">&quot;1483867914&quot;</span>&gt;</span>生活链接<span class="tag">&lt;/<span class="name">H3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;https://kyfw.12306.cn/otn/&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1386292463&quot;</span> <span class="attr">ICON</span>=<span class="string">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAC7UlEQVQ4jaWTXWiTdxjFz/mnSSohXS1Ju9YEFqkzpHE1euUEN6032krnxgYb4td2VT8mg6Fe7GbFjSm4DxwMiwreSe1IRaQ32zQV23XOxqr1i7Yo1TSrmUnjm6TJ+/6fXQxq1nnnuXx4zu/iec4hXiARUQA4f0xSz9+tmG/MTEzs+PPo4c5UPF6vZ4ugzQZlt8O7PJJIj49/8UogcKocxDKzd6yvr+tG10/tUiqJJ7yMzR27xOF2c7SrS5JDAwQpwa3bfw20btpCcmoOICLqYX/s58tfHWqvdLuxav8BuLy1SF79A9o04W1uhs3hxPCRb2AkHuGN3Z/2+lvWv0tSEwBmZ2bau3dsj5ozGVn3ZSdLzwwZPvYDpVgQpUibssmS9z6gb+06ufL5Z1T2Cnn7+x83Oz2eXgUAY/39HdnpaVS/vpTuRT4MfvctZ/M5lExNy9KwLIv3z55BIfWEDWveQimb5WTsYsfcER8MDbksCDyhJpkc+p35nCGBN1cz/OFHopTi5KWLMn4uysTgoNSEwnzQd0FSt2655gBGOg1LC0BSaw3TslgVCKAmGCQBGMkpmlENbWmCgBZh0cg+f6NyOGBqQeL2bQnu20faHXIzGiWopNrv4/UTJ8QSoXdFRFIjI7QgAqUAAAoA6sNhmFrjYTxO4+lTrPz4ExZyOSRHRzl95y6e/Z1iYGMbql4LcOK3XyACunz+54BgS0uPstthlky50NmJV5uaxBMKwdRaLMuC01srja2tuPz1ITHSaZgC8a9Ze7U8Bwtix4+PDJw82aiUQlVdHRY2NCC0cQOqvLW40d0NI5mEkXgEBaCxZf3U6gMHIySnKgCAZL5YLL6fefy4734sVhduaxO708lCZkYKmSzrIytEWyXeO39eqn2+3Mo9e/+bxLI4+6/19PQOnj4dySQSsCkFm1JQBFwLa7B88zvDka3bdjocjvj/ulBeKDOfX/XX2Jhr1jD+fVVlJTyLFxsL3O6BFzXypfQP9MtgN1/s0W0AAAAASUVORK5CYII=&quot;</span>&gt;</span>12306<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">H3</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467710882&quot;</span> <span class="attr">LAST_MODIFIED</span>=<span class="string">&quot;1516610024&quot;</span>&gt;</span>git<span class="tag">&lt;/<span class="name">H3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://www.bootcss.com/p/git-guide/&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467709151&quot;</span>&gt;</span>git 使用简易指南<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://danielkummer.github.io/git-flow-cheatsheet/index.zh_CN.html&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467709171&quot;</span>&gt;</span>git-flow 备忘清单<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://marklodato.github.io/visual-git-guide/index-zh-cn.html&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467709175&quot;</span>&gt;</span>图解Git<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://www.jianshu.com/p/9b6ceb3b7d35&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1476841970&quot;</span> <span class="attr">ICON</span>=<span class="string">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAACqklEQVQ4jT2TzW5bVRSFv73vOffa7Y2N7dbFLU3pX8oASoXKnwRCYsQMCQlEHwDBO/QRKmbMmCAmTBAPAKIIIQRMKlFEhdSGJCCn0KAkjuPE1/eesxmcwHRJa++z1/qOjG/dNATMBBGw0IAoogoiEGPSNEsaAhhmhoigiGAGgmHRyDp9tFVgIRAXFSaKG55BixzDsLrCYkREMDM0uQWzAL6k/877LD13FVyOf3yElCcY3HiP9sXzhNkB/uwFsnZaIALOABEhVDXlC6+Q9zuEE0/y2BuX8f0lmlmDOsiXn6LbO8exq9dZ/PIdO9/ehqxARZQ4n+HPPU35zApbn34EnTOwu8bej3dwrcg/n31CfukaTDfZ+vhDpnd/RlwOZqiFGu2O6Lz0IntffUF2egVZ7FBtT8mXR0y//5pmMqXaWMWyAj8YECa7cBSnYob4jP0fvuTgt3uEWYXv9ai3HmHVHDdcpnz2GvV4leLKywzeehdXtlI7IjhxnrjzF4EWvbc/oFm/y+SnO7QurlD/8QBTRz56gur3X6E1RBeeZncf8hZihpoZknlQwfVHaAHzB2uU11/FDXroUp/jz79G+8J5LATMwCzViAgqgAnQBOJsnzDbR7zDmhrRDBElHu6xePgnlrD5nwEgKYktQATRhIY1FYvNDRbjDawBbR9PsCVfegHggIRl5hDvsRCRwqFll3z5MrHJyNrHsLqBpgEKDEOOJjnMEANU0TxHVFGfUW+uU63dx8xRnT6Ldk/iTg0RPUAs3Q+GSxinSsAQ56k37rH99ypxfggWmXxzSOf1NymvXGLv9ueYZskfQca3bpphIA4/HBG2HxIXdYpH06ZYHaLdU+Qn+1Tr90Ey5AgllwJRsEA9XoPMI5rBf8HGiBZtbLbNfPIIyYtkTl+YfwFB8jD/X7vjBgAAAABJRU5ErkJggg==&quot;</span>&gt;</span>利用Github和CocoaPods搭建私人Pod开发环境 - 简书<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://blog.csdn.net/victor_barnett/article/details/51211282&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1516609567&quot;</span> <span class="attr">ICON</span>=<span class="string">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABWklEQVQ4jbVSwUoCURQ9V2fGmUwxagLNwAiDQaHc+AFu/Qt3FtRnuLf+oMCN4GL20c6FEhiU4UKDIFHLJipwGvW2GBUHqXDRhQvvXs55953zLlVBWCZcS6EBCM6S7SRADIWk8DYpCg+tUb9vtlo8MBcJUBKJzWzWn06LweB8f/Rm1NbW5wnsUpRwPr+RyYAWVbH11HY8iQRhV9d9qZRdGqVSv1AY3NXHH+8kK+JWyO3zOwjq4dEM/Xhy3D09ozn3zEZjdibbVu2mpsTjAMxm8zYaZWb6we6JrbKmzS5j5l++ZkIYGwYAEGRNI0HgPwmvxSIAAnkikZ2LcykcZjDADADskj0MdmhwBwJ7V5cr+wcAmBnMX60H67lHgiCqqtXp3CeTsFVVQVVQBbj2rrZzOav/Ml4IQ9crUyRNl286UZK8yaQciwmqSm73eGAOe93PcnlQr9sT6N+39RsgVo7oiKSelAAAAABJRU5ErkJggg==&quot;</span>&gt;</span>SourceTree里GitFlow的使用 - CSDN博客<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">H3</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467683920&quot;</span> <span class="attr">LAST_MODIFIED</span>=<span class="string">&quot;1541571524&quot;</span>&gt;</span>iOS<span class="tag">&lt;/<span class="name">H3</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">H3</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1467971905&quot;</span> <span class="attr">LAST_MODIFIED</span>=<span class="string">&quot;1542857718&quot;</span>&gt;</span>大牛blog<span class="tag">&lt;/<span class="name">H3</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br><span class="line">                <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://blog.ibireme.com/&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1447205476&quot;</span> <span class="attr">ICON</span>=<span class="string">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAADWElEQVQ4jW2TT2gcdRzF3+83Mzv7Z7Zjqm3tujTTcTDYhdH4Q9EWS2i6K0GE1rIJlLZIPSgFPYgHEcTePHmwtx4UQYo0lhwaMZgYzSElXcioDQ4eMq6rTpbNpnGz62b/zO5vfh6aQATf5X0P7/C+8HkAQPBAyo6TnZsAIOx0XgcAy7LU/8nJFICwbTthGJAASJZlJRljACCy45c+OnhYXz5+auxxz/O6QyeGkntzAEICQDEMQyqVSoFpmslYLNZ2XTc4PX7pQyrJVyHEr5TSeLNaPbn43XQFgDBNM14sFv/ZrUEAENM0kwMDAy3HcXqj5y6+HUtqn7Qbjfz81I1b2YnXfpYo0ZqN7rOry/PB+vp6J51OR3Td5wQAtSxL8zy9DTi9U2fP5+P79MlOs/E6lOhPpNMWzfXNP/cdfeyuCHljtvLH82nPU3Rdl1zXbVIAkud5TcDpj5w5/7SaiH8ZtFvvd8L+oqpIP0Imo0tL3/69tVF9mSrKkeyhI5/5vt92XbeVASIUQC+dTqsAk9V49FPeC2bW/qpcTya05V4QXJ+7deNjxtgjhbmvVztb9VdlJXJx9NyFMwCIOzISUsMwor7vB9n8sePg4VO1Wv1KavDwVNgPf5m9+fmbpmnqjuPUGGP6wvRXi2G//4WkyO8B4FhYCGnJMPoAOAhegiwtJ6KxQwTkRLsdvJEBIsVicTuVSql1uS4AkF4QzFGJDmYyL+wHQGlmY4MCgCCSjDBskyh9mFDS7FbWai7Qs21bBQCvMLwNgMqKWhOhiGhaXAHQp/V6XQIACL4K4Ilqc+ue4FxLHh3MAxDdbpeWy+UOY8UBABwhfxJArVCYrzIGhfq+37YsS201N2cFIQcOqg/leEhe4UH3N+TzkqZpHcbYfsdxNg3DiBKJvsMFbgMQAHvAfSqVUsrlcis7fuEDORK72mnUT/5we/LODvMSAG7bduLRzDOTlEjP1crl4cLCjA+A7pJIGWOa4zj13MTla3JEfqvP+c2Qd7+hQq4J9I/JinoFVIo07t8/e2dm6q5t2wnOV3p7SPS2GWOq4zit3MTlMSqJdyEwJAAFIJsAma6Ufr92b+n7Ndu2EwCwsrKyDQAyAAqAWBbUPfOGncslhl8cO4D/Ss5kENl97198lGjU3MC7AAAAAABJRU5ErkJggg==&quot;</span>&gt;</span>Garan no dou | 一只魔法师的工坊<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;/<span class="name">DL</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">DL</span>&gt;</span><span class="tag">&lt;/<span class="name">p</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">DT</span>&gt;</span><span class="tag">&lt;<span class="name">A</span> <span class="attr">HREF</span>=<span class="string">&quot;http://blog.csdn.net/li6185377/article/details/51774911&quot;</span> <span class="attr">ADD_DATE</span>=<span class="string">&quot;1474211165&quot;</span> <span class="attr">ICON</span>=<span class="string">&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAABWklEQVQ4jbVSwUoCURQ9V2fGmUwxagLNwAiDQaHc+AFu/Qt3FtRnuLf+oMCN4GL20c6FEhiU4UKDIFHLJipwGvW2GBUHqXDRhQvvXs55953zLlVBWCZcS6EBCM6S7SRADIWk8DYpCg+tUb9vtlo8MBcJUBKJzWzWn06LweB8f/Rm1NbW5wnsUpRwPr+RyYAWVbH11HY8iQRhV9d9qZRdGqVSv1AY3NXHH+8kK+JWyO3zOwjq4dEM/Xhy3D09ozn3zEZjdibbVu2mpsTjAMxm8zYaZWb6we6JrbKmzS5j5l++ZkIYGwYAEGRNI0HgPwmvxSIAAnkikZ2LcykcZjDADADskj0MdmhwBwJ7V5cr+wcAmBnMX60H67lHgiCqqtXp3CeTsFVVQVVQBbj2rrZzOav/Ml4IQ9crUyRNl286UZK8yaQciwmqSm73eGAOe93PcnlQr9sT6N+39RsgVo7oiKSelAAAAABJRU5ErkJggg==&quot;</span>&gt;</span>《优雅的插入开屏广告》-- 不改动任何一行代码 - li6185377的专栏 - 博客频道 - CSDN.NET<span class="tag">&lt;/<span class="name">A</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">DL</span>&gt;</span><span class="tag">&lt;<span class="name">p</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>从 Chrome 的书签我们可以看出，引用书签的 html 标签主要为 <em>DL</em> 和 <em>DT</em> ，其中 <em>DL</em> 引入开始，<em>DT</em> 标注书签或者文件夹。<br>其中文件夹有 <em>ADD_DATE</em> 、<em>LAST_MODIFIED</em> 、<em>FolderName</em>（ <em>DT</em> 标签中的 value 值），并且有 <em>H3</em> 标签样式标注是文件夹，文件夹下可以有子文件夹，也可以有书签块。用 Objective-C 来描述，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">@interface BookmarkFolderModel : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line">@property (nonatomic, assign) NSTimeInterval addDate;</span><br><span class="line">@property (nonatomic, assign) NSTimeInterval lastModified;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>书签有 <em>ADD_DATE</em> 、<em>LAST_MODIFIED</em> 、<em>HrefName</em>（<em>DT</em> 标签中的 value 值），并且有 <em>A</em> 标签标注是书签，书签下不能有子文件夹、子书签块，是 Chrome 书签文件的基本元数据，可以挂载在文件夹下，也可以直接挂载在跟块下。用 Objective-C 来描述，如下：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">@interface BookmarkModel : NSObject</span><br><span class="line"></span><br><span class="line">@property (nonatomic, copy) NSString *href;</span><br><span class="line">@property (nonatomic, assign) NSTimeInterval addDate;</span><br><span class="line">@property (nonatomic, copy) NSString *icon;</span><br><span class="line">@property (nonatomic, copy) NSString *name;</span><br><span class="line"></span><br><span class="line">@end</span><br></pre></td></tr></table></figure>
+
+<p>书签整理脚本另起文章，敬请期待…</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Chrome/" rel="tag"># Chrome</a>
+              <a href="/tags/%E4%B9%A6%E7%AD%BE/" rel="tag"># 书签</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2019/01/22/%E5%85%B3%E4%BA%8ECocoapods-Spec%E4%BB%93%E5%BA%93%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84/" rel="prev" title="关于Cocoapods Spec仓库目录结构">
+                  <i class="fa fa-chevron-left"></i> 关于Cocoapods Spec仓库目录结构
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2019/02/13/%E5%85%B3%E4%BA%8E%E9%80%89%E8%B4%AD%E8%93%9D%E7%89%99%E8%80%B3%E6%9C%BA%E7%9A%84%E5%87%A0%E7%82%B9%E6%B3%A8%E6%84%8F%E4%BA%8B%E9%A1%B9/" rel="next" title="关于选购蓝牙耳机的几点注意事项">
+                  关于选购蓝牙耳机的几点注意事项 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 2018 – 
+  <span itemprop="copyrightYear">2024</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">Darren Kong</span>
+</div>
+  <div class="powered-by">由 <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/mist/" rel="noopener" target="_blank">NexT.Mist</a> 强力驱动
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+  <a href="https://github.com/DarrenKong" class="github-corner" title="在 GitHub 上关注我" aria-label="在 GitHub 上关注我" rel="noopener" target="_blank"><svg width="80" height="80" viewBox="0 0 250 250" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"></path></svg></a>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.4.1/search.js" integrity="sha256-1kfA5uHPf65M5cphT2dvymhkuyHPQp5A53EGZOnOLmc=" crossorigin="anonymous"></script>
+<script src="/js/third-party/search/local-search.js"></script>
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
